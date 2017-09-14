@@ -37,19 +37,22 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String = TODO()
+fun ageDescription(age: Int): String {
+    return if (age%10==1&&age!=11&&age!=111)"$age год" else
+    if (age%10 in 2..4&&age !in 5..20)"$age года" else "$age лет"
+}
+
+    /**
+     * Проста
+     *
+     *
+     * Путник двигался t1 часов со скоростью v1 км/час, затем t2 часов — со скоростью v2 км/час
+     * и t3 часов — со скоростью v3 км/час.
+     * Определить, за какое время он одолел первую половину пути?
+     */
 
 
 
-
-/**
- * Простая
- *
- *
- * Путник двигался t1 часов со скоростью v1 км/час, затем t2 часов — со скоростью v2 км/час
- * и t3 часов — со скоростью v3 км/час.
- * Определить, за какое время он одолел первую половину пути?
- */
 fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
                    t3: Double, v3: Double): Double {
@@ -104,8 +107,11 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
-                          bishopX: Int, bishopY: Int): Int = TODO()
-
+                          bishopX: Int, bishopY: Int): Int {
+        return if ((abs(kingX-bishopX))==(abs(kingY-bishopY))&&kingX!=rookX&&kingY!=rookY)2 else
+            if ((abs(kingX-bishopX))==(abs(kingY-bishopY))&&(kingX==rookX||kingY==rookY))3 else
+                if ((abs(kingX-bishopX))!=(abs(kingY-bishopY))&&(kingX==rookX||kingY==rookY))1 else 0
+    }
         /**
          * Простая
          *
@@ -117,17 +123,14 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
 
 
 
+
+
+
 fun triangleKind(a: Double, b: Double, c: Double): Int {
             return if (a+b<c||a+c<b||c+b<a)-1 else
-                if (a>b&&a>c&&sqr(a)==sqr(b)+sqr(c))1 else
-                    if (b>a&&b>c&&sqr(b)==sqr(a)+sqr(c))1 else
-                        if (c>b&&c>a&&sqr(c)==sqr(b)+sqr(a))1 else
-                            if (a>b&&a>c&&sqr(a)>sqr(b)+sqr(c))2 else
-                                if (b>a&&b>c&&sqr(b)>sqr(a)+sqr(c))2 else
-                                    if (c>b&&c>a&&sqr(c)>sqr(b)+sqr(a))2 else
-                                        if (a>b&&a>c&&sqr(a)<sqr(b)+sqr(c))1 else
-                                            if (b>a&&b>c&&sqr(b)<sqr(a)+sqr(c))1 else
-                                                if (c>b&&c>a&&sqr(c)<sqr(b)+sqr(a))1 else 0
+                if ((a>b&&a>c&&sqr(a)==sqr(b)+sqr(c))||(c>b&&c>a&&sqr(c)==sqr(b)+sqr(a))||(b>a&&b>c&&sqr(b)==sqr(a)+sqr(c)))1 else
+                    if ((a>b&&a>c&&sqr(a)>sqr(b)+sqr(c))||(c>b&&c>a&&sqr(c)>sqr(b)+sqr(a))||(b>a&&b>c&&sqr(b)>sqr(a)+sqr(c)))2 else 0
+
         }
 
 
@@ -143,4 +146,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
 
 
 
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+             return if (a==b||c==d||b<c||(c<a&&d<a))-1 else
+                 if (b>d&&a<c)(d-c) else
+                     if (b<d&&a>c)(b-a) else
+                         if(b>c&&b<d&&c>a)(b-c) else
+                             if (c==b||d==a)0 else
+                                 if  (a==c&&b==d)(b-a) else (d-a)
+
+}
