@@ -92,7 +92,20 @@ fun fib(n: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int= TODO()
+fun lcm(m: Int, n: Int): Int{
+    var n1 = n
+        var m1 = m
+        while (m1 != n1) {
+                if (m1 > n1) {
+                        m1 -= n1
+                    }
+                if (m1 < n1) {
+                        n1 -= m1
+                    }
+           }
+        val k = m * n / n1
+        return k
+}
 
 
     /**
@@ -118,16 +131,36 @@ fun minDivisor(n: Int): Int {
 
 
 
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+            var k = n - 1
+            while (n%k!= 0) {
+                k--
+            }
+            return k
+        }
+            /**
+             * Простая
+             *
+             * Определить, являются ли два заданных числа m и n взаимно простыми.
+             * Взаимно простые числа не имеют общих делителей, кроме 1.
+             * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
+             */
 
-/**
- * Простая
- *
- * Определить, являются ли два заданных числа m и n взаимно простыми.
- * Взаимно простые числа не имеют общих делителей, кроме 1.
- * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
- */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+
+fun isCoPrime(m: Int, n: Int): Boolean {
+                var m1=m
+                var n1=n
+                while (m1 != n1) {
+                    if (m1 > n1) {
+                        m1 -= n1
+                    }
+                    if (m1 < n1) {
+                        n1 -= m1
+                    }
+                }
+                val x = n1 == 1
+                return x
+            }
 
 /**
  * Простая
