@@ -62,10 +62,11 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int { if (n==0) return 1
     var k=0
+    var maxi=n
     if (n==0) return 1 else
-     while (n>0) {if (n/10==0){
-         k=k+1 }
-        n/10
+     while (maxi>0) {
+         maxi/=10
+         k=k+1
     }
     return k
 }
