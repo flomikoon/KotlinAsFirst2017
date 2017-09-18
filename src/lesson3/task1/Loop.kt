@@ -84,7 +84,18 @@ fun digitNumber(n: Int): Int {
 
 
 
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var k1=1
+    var k2=1
+    var m=n
+    while(m!=0){
+        m=m-1
+     k1=k1+k2
+    }
+    if (m==0) return k1 else
+        k2=k1+k2
+    return k2
+}
 
 /**
  * Простая
