@@ -88,12 +88,16 @@ fun fib(n: Int): Int {
     var k1=1
     var k2=1
     var m=n
-    while(m!=0){
-        m=m-1
-     k1=k1+k2
+    if (m==1) return k1 else
+        if (m==2) return k2 else
+    while(m!=2) {
+        m = m - 1
+        k1 = k1 + k2
+        if (m == 2) return k1 else {
+            k2 = k1 + k2
+            m = m - 1
+        }
     }
-    if (m==0) return k1 else
-        k2=k1+k2
     return k2
 }
 
