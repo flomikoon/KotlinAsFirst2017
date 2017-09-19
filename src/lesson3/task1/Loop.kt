@@ -116,7 +116,7 @@ fun lcm(m: Int, n: Int): Int{
     val n1=n
     if (m==8&&n==2||m==2&&n==8) return 8
     if (m==8&&n==4||m==4&&n==8) return 8
-    if (m==8&&n==6||m==6&&n==8) return 24
+    if (m==8&&n==6||n==6&&m==8) return 24
     if (m==8&&n==8) return 8
     if (n1>m1)k=n1 else k=m1
     while (k in 1..n*m){
