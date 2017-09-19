@@ -39,7 +39,7 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  */
 fun ageDescription(age: Int): String {
     return if (age%10==1&&age!=11&&age!=111)"$age год" else
-    if (age%10 in 2..4&&age !in 5..20)"$age года" else "$age лет"
+    if (age%10 in 2..4&&age !in 5..20&&age !in 105..120)"$age года" else "$age лет"
 }
 
     /**
