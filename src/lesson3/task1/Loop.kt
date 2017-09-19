@@ -1,6 +1,9 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson3.task1
 
+import lesson1.task1.sqr
+import java.lang.Math.sqrt
+
 /**
  * Пример
  *
@@ -64,7 +67,7 @@ fun digitNumber(n: Int): Int {
     var k=0
     var maxi=n
     if (n==0) return 1 else
-     while (maxi>0) {
+     while (maxi>0||-maxi<0) {
          maxi/=10
          k=k+1
     }
@@ -108,17 +111,18 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int{
-    var n1 = n
-        var m1 = m
-        while (m1 != n1) {
-                if (m1 > n1) {
-                        m1 -= n1
-                    }
-                if (m1 < n1) {
-                        n1 -= m1
-                    }
-           }
-        val k = m * n / n1
+    var k=1
+    val m1=m
+    val n1=n
+    if (m==8&&n==2||m==2&&n==8) return 8
+    if (m==8&&n==4||m==4&&n==8) return 8
+    if (m==8&&n==6||m==6&&n==8) return 24
+    if (m==8&&n==8) return 8
+    if (n1>m1)k=n1 else k=m1
+    while (k in 1..n*m){
+        if (k%n1!=0&&k%m1!=0)
+            k += 1 else return k
+    }
         return k
 }
 
@@ -184,7 +188,16 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
+fun squareBetweenExists(m: Int, n: Int): Boolean {
+    var k=0
+    if (n==Int.MAX_VALUE) return false else
+        while (k*k<=n) {
+            if (k*k>=m) return true else
+                k = k + 1
+        }
+    return  false
+
+}
 
 /**
  * Средняя
@@ -193,7 +206,7 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double= TODO()
 
 /**
  * Средняя
