@@ -94,11 +94,11 @@ fun fib(n: Int): Int {
     if (m==1) return k1 else
         if (m==2) return k2 else
     while(m!=2) {
-        m = m - 1
-        k1 = k1 + k2
-        if (m == 2) return k1 else {
-            k2 = k1 + k2
-            m = m - 1
+        m= m-1
+        k1=k1+k2
+        if (m==2) return k1 else {
+            k2=k1+k2
+            m=m-1
         }
     }
     return k2
@@ -112,8 +112,9 @@ fun fib(n: Int): Int {
  */
 fun lcm(m: Int, n: Int): Int{
     var k=Math.max(n,m)
-    for (i in k..n*m){
-        if (k%n==0&&k%m==0) break
+    while (k in 1..n*m){
+        if (k%n!=0||k%m!=0)
+            k+=1 else return k
     }
     return k
 }
@@ -127,9 +128,9 @@ fun lcm(m: Int, n: Int): Int{
 
 
 fun minDivisor(n: Int): Int {
-        var k = 2
-        while (n % k != 0) {
-            k = k + 1
+        var k=2
+        while (n%k!=0) {
+            k=k+1
         }
         return k
     }
@@ -143,8 +144,8 @@ fun minDivisor(n: Int): Int {
 
 
 fun maxDivisor(n: Int): Int {
-            var k = n - 1
-            while (n%k!= 0) {
+            var k=n-1
+            while (n%k!=0) {
                 k--
             }
             return k
@@ -159,18 +160,11 @@ fun maxDivisor(n: Int): Int {
 
 
 fun isCoPrime(m: Int, n: Int): Boolean {
-                var m1=m
-                var n1=n
-                while (m1 != n1) {
-                    if (m1 > n1) {
-                        m1 -= n1
-                    }
-                    if (m1 < n1) {
-                        n1 -= m1
-                    }
+                        var d=Math.min(n,m)
+                for (i in 2..d){
+                    if (n%i==0&&m%i==0) return false
                 }
-                val x = n1 == 1
-                return x
+                return true
             }
 
 /**
@@ -185,7 +179,7 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
     if (n==Int.MAX_VALUE) return false else
         while (k*k<=n) {
             if (k*k>=m) return true else
-                k = k + 1
+                k=k+1
         }
     return  false
 
