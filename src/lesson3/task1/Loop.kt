@@ -268,7 +268,26 @@ fun isPalindrome(n: Int): Boolean{
  * Для заданного числа n определить, содержит ли оно различающиеся цифры.
  * Например, 54 и 323 состоят из разных цифр, а 111 и 0 из одинаковых.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+        var k=0
+    var n1=n
+    if (n in 0..9) return false
+        while (n1!=0) {
+            n1 /= 10
+            k+=1
+        }
+    var d=pow(10.0, k-2.toDouble()).toInt()
+    var d1=pow(10.0, k-1.toDouble()).toInt()
+    var n3=n/d1
+    var n2=n%d1
+    for (i in 1..k-1){
+        n1=n2/d
+        n2%=d
+        d/=10
+        if (n1!=n3) return true
+    }
+        return false
+}
 
 /**
  * Сложная
