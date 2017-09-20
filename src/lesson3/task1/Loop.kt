@@ -2,7 +2,7 @@
 package lesson3.task1
 
 import lesson1.task1.sqr
-import java.lang.Math.sqrt
+import java.lang.Math.*
 
 /**
  * Пример
@@ -111,19 +111,11 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int{
-    var k=1
-    val m1=m
-    val n1=n
-    if (m==8&&n==2||m==2&&n==8) return 8
-    if (m==8&&n==4||m==4&&n==8) return 8
-    if (m==8&&n==6||n==6&&m==8) return 24
-    if (m==8&&n==8) return 8
-    if (n1>m1)k=n1 else k=m1
-    while (k in 1..n*m){
-        if (k%n1!=0&&k%m1!=0)
-            k += 1 else return k
+    var k=Math.max(n,m)
+    for (i in k..n*m){
+        if (k%n==0&&k%m==0) break
     }
-        return k
+    return k
 }
 
 
