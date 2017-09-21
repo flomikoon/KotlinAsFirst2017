@@ -11,7 +11,7 @@ import java.lang.Math.sqrt
  * Лежит ли точка (x, y) внутри окружности с центром в (x0, y0) и радиусом r?
  */
 fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
-        sqr(x - x0) + sqr(y - y0) <= sqr(r)
+        sqr(x-x0)+sqr(y-y0)<=sqr(r)
 
 /**
  * Простая
@@ -30,7 +30,7 @@ fun isNumberHappy(number: Int): Boolean =
  * Считать, что ферзи не могут загораживать друг друга.
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
-        if(x1==x2||y1==y2||(x1-x2)==(y1-y2)||(x1-x2)==-(y1-y2))true else false
+        if(y1==y2||x1==x2||(x1-x2)==(y1-y2)||(x1-x2)==-(y1-y2))true else false
 
 /**
  * Средняя
