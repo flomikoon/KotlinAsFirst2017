@@ -192,7 +192,19 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double= TODO()
+fun sin(x: Double, eps: Double): Double{
+    var k=0.0
+    var s=0.0
+        for (i in 1..Int.MAX_VALUE step 2){
+                s=pow(x,i.toDouble())/factorial(i)
+                if (s<eps) break else
+                    if (i==1) k=k+s else
+                    if (i % 4 == 1)
+                        k = k + s else
+                        k = k - s
+        }
+    return k
+}
 
 /**
  * Средняя
@@ -296,7 +308,7 @@ fun hasDifferentDigits(n: Int): Boolean {
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int= TODO()
 
 /**
  * Сложная
@@ -305,4 +317,6 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  * 1123581321345589144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int= TODO()
+
+
