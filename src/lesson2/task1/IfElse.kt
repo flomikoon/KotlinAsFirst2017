@@ -56,15 +56,18 @@ fun ageDescription(age: Int): String {
 fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
                    t3: Double, v3: Double): Double {
-    val s=(t1*v1+t2*v2+t3*v3)/2
     val s1=t1*v1
     val s2=t2*v2
     val s3=t3*v3
-        return if (s==s1)t1 else
-        if (s<s1)(s/v1) else
-            if (s==(s1+s2))(t1+t2) else
-                if (s in s1..(s1+s2))(t1+(s-s1)/v2) else
-                    if (s==(s1+s2+s3))(t1+t2+t3) else (t1+t2+(s-s1-s2)/v3)
+        val s=(s1+s2+s3)/2
+        return when {
+            s==s1 -> t1
+            s<s1 -> s/v1
+            s==(s1+s2) -> t1+t2
+            s in s1..(s1+s2) -> t1+(s-s1)/v2
+            s==(s1+s2+s3) -> t1+t2+t3
+            else -> t1+t2+(s-s1-s2)/v3
+        }
                    }
 
 
@@ -79,11 +82,12 @@ fun timeForHalfWay(t1: Double, v1: Double,
  */
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
-                       rookX2: Int, rookY2: Int): Int {
-    return if ((kingX==rookX1&&kingX!=rookX2&&kingY!=rookY2)||(kingY==rookY1&&kingY!=rookY2&&kingX!=rookX2))1 else
-        if ((kingX==rookX2&&kingX!=rookX1&&kingY!=rookY1)||(kingY==rookY2&&kingY!=rookY1&&kingX!=rookX1))2 else
-            if ((kingY==rookY1&&kingY!=rookY2&&kingX==rookX2)||(kingY==rookY2&&kingY!=rookY1&&kingX==rookX1)||(kingX==rookX1&&kingX==rookX2)||(kingY==rookY1&&kingY==rookY2))3 else 0
-}
+                       rookX2: Int, rookY2: Int): Int = when {
+                           kingY==rookY1&&kingX==rookX2||kingY==rookY2&&kingX==rookX1||kingX==rookX1&&kingX==rookX2||kingY==rookY1&&kingY==rookY2 -> 3
+                           kingX==rookX2 || kingY==rookY2 -> 2
+                           kingX==rookX1 || kingY==rookY1 -> 1
+                           else -> 0
+                       }
 
 
     /**
@@ -101,11 +105,12 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
-                          bishopX: Int, bishopY: Int): Int {
-        return if ((abs(kingX-bishopX))==(abs(kingY-bishopY))&&kingX!=rookX&&kingY!=rookY)2 else
-            if ((abs(kingX-bishopX))==(abs(kingY-bishopY))&&(kingX==rookX||kingY==rookY))3 else
-                if ((abs(kingX-bishopX))!=(abs(kingY-bishopY))&&(kingX==rookX||kingY==rookY))1 else 0
-    }
+                          bishopX: Int, bishopY: Int): Int = when {
+                              abs(kingX-bishopX)==abs(kingY-bishopY)&&((kingX==rookX||kingY==rookY)) -> 3
+                              abs(kingX-bishopX)==abs(kingY-bishopY) -> 2
+                              kingX==rookX||kingY==rookY -> 1
+                              else -> 0
+                          }
         /**
          * Простая
          *
@@ -120,12 +125,12 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
 
 
 
-fun triangleKind(a: Double, b: Double, c: Double): Int {
-            return if (a+b<c||a+c<b||c+b<a)-1 else
-                if ((a>b&&a>c&&sqr(a)==sqr(b)+sqr(c))||(c>b&&c>a&&sqr(c)==sqr(b)+sqr(a))||(b>a&&b>c&&sqr(b)==sqr(a)+sqr(c)))1 else
-                    if ((a>b&&a>c&&sqr(a)>sqr(b)+sqr(c))||(c>b&&c>a&&sqr(c)>sqr(b)+sqr(a))||(b>a&&b>c&&sqr(b)>sqr(a)+sqr(c)))2 else 0
-
-        }
+fun triangleKind(a: Double, b: Double, c: Double): Int = when {
+    a+b<c||a+c<b||c+b<a -> -1
+    sqr(a)==sqr(b)+sqr(c)||sqr(c)==sqr(b)+sqr(a)||sqr(b)==sqr(a)+sqr(c) -> 1
+    sqr(a)>sqr(b)+sqr(c)||sqr(c)>sqr(b)+sqr(a)||sqr(b)>sqr(a)+sqr(c) -> 2
+    else -> 0
+}
 
 
 
@@ -140,13 +145,11 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
 
 
 
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-             return if (b<c||d<a)-1 else
-                 if (b>=d&&a<c)(d-c) else
-                     if (b<d&&a>c)(b-a) else
-                         if(b>c&&b<d&&c>a)(b-c) else
-                             if (c==b||d==a||a==b&&c==d&&c==b||a==b&&b==c||a==d&&d==b||a==d&&a==c||b==d&&b==c)0 else
-                                 if  (a==c&&b==d)(b-a) else
-                                     if (a==c&&b<d)(b-c) else (d-a)
-
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = when {
+    b<c || d<a -> -1
+    b>=d&&a<c -> d-c
+    b<=d&&a>=c -> b-a
+    b>c&&b<=d&&c>=a -> b-c
+    c==b || d==a || a==b || d==c-> 0
+    else -> d-a
 }
