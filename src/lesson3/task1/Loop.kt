@@ -70,7 +70,7 @@ fun digitNumber(n: Int): Int {
     if (n==Int.MAX_VALUE) return 10 else
      while (maxi!=0) {
          maxi/=10
-         k=k+1
+         k+=1
     }
     return k
 }
@@ -92,14 +92,16 @@ fun fib(n: Int): Int {
     var k1=1
     var k2=1
     var m=n
-    if (m==1) return k1 else
-        if (m==2) return k2 else
-    while(m!=2) {
-        m= m-1
-        k1=k1+k2
-        if (m==2) return k1 else {
-            k2=k1+k2
-            m=m-1
+    when (m) {
+        1 -> return k1
+        2 -> return k2
+        else -> while(m!=2) {
+            m-=1
+            k1+=k2
+            if (m==2) return k1 else {
+                k2+=k1
+                m-=1
+            }
         }
     }
     return k2
@@ -131,7 +133,7 @@ fun lcm(m: Int, n: Int): Int{
 fun minDivisor(n: Int): Int {
         var k=2
         while (n%k!=0) {
-            k=k+1
+            k+=1
         }
         return k
     }
@@ -147,7 +149,7 @@ fun minDivisor(n: Int): Int {
 fun maxDivisor(n: Int): Int {
             var k=n-1
             while (n%k!=0) {
-                k--
+                k-=1
             }
             return k
         }
@@ -161,7 +163,7 @@ fun maxDivisor(n: Int): Int {
 
 
 fun isCoPrime(m: Int, n: Int): Boolean {
-                        var d=Math.min(n,m)
+                        val d=Math.min(n,m)
                 for (i in 2..d){
                     if (n%i==0&&m%i==0) return false
                 }
@@ -177,13 +179,11 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
     var k=0
-    if (n==Int.MAX_VALUE) return false else
-        while (k*k<=n) {
+        while (k*k <=n) {
             if (k*k>=m) return true else
-                k=k+1
+                k+=1
         }
     return  false
-
 }
 
 /**
@@ -209,12 +209,12 @@ fun sin(x: Double, eps: Double): Double
     while (abs(s)>=abs(eps)){
         s=pow(d, i.toDouble())/ factorial(i)
         if (i%4==1){
-            k=k+s
+            k+=s
         }
         if (i%4==3){
-            k=k-s
+            k-=s
         }
-        i=i+2
+        i+=2
     }
     return k
 }
@@ -243,12 +243,12 @@ fun cos(x: Double, eps: Double): Double
     while (abs(s)>=abs(eps)){
         s=pow(d, i.toDouble())/ factorial(i)
         if (i%4==0){
-            k=k+s
+            k+=s
         }
         if (i%4==2){
-            k=k-s
+            k-=s
         }
-        i=i+2
+        i+=2
     }
     return k
 }
@@ -271,7 +271,7 @@ fun revert(n: Int): Int {
     }
     var d=pow(10.0, (k-1).toDouble()).toInt()
     var d2=1
-    var n3=n2/d
+    val n3=n2/d
     for (i in 1..k){
         n1/=d
         n1*=d2
@@ -294,22 +294,24 @@ fun revert(n: Int): Int {
 fun isPalindrome(n: Int): Boolean{
     var k=0
     var n1=n
-    var n2=n
+    var co=0
     if (n in 1..9) return true
     while (n1!=0) {
-        n1 /= 10
+        n1/=10
         k+=1
     }
-    var d=pow(10.0, k-1.toDouble()).toInt()
-    for (i in 1..(k-1)/2){
-      if  (n2%10==n2/d) {
-          n2/=10
-          n2%=d
-          d/=100
-      }
-        else return true
+    n1=n
+    var d=pow(10.0,k-1.toDouble()).toInt()
+    if (k%2==0) co=k else co=k-1
+    for (i in 1..co/2) {
+        if (n1 % 10 == n1 / d) {
+            n1 /= 10
+            d/=10
+            n1%=d
+            d/=10
+        } else return false
     }
-    return false
+    return true
 }
 
 /**
@@ -327,8 +329,8 @@ fun hasDifferentDigits(n: Int): Boolean {
             k+=1
         }
     var d=pow(10.0, k-2.toDouble()).toInt()
-    var d1=pow(10.0, k-1.toDouble()).toInt()
-    var n3=n/d1
+    val d1=pow(10.0, k-1.toDouble()).toInt()
+    val n3=n/d1
     var n2=n%d1
     for (i in 1..k-1){
         n1=n2/d
