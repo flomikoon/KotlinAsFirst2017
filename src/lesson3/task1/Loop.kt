@@ -66,7 +66,8 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var k=0
     var maxi=n
-    if (n==0) return 1 else
+    if (n==0) return 1
+    if (n==Int.MAX_VALUE) return 10 else
      while (maxi!=0) {
          maxi/=10
          k=k+1
@@ -345,15 +346,60 @@ fun hasDifferentDigits(n: Int): Boolean {
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int{
+    var k=0
+    var count=0
+    var i=1
+    while (n>count){
+        k=i*i
+        while (k>0){
+            k/=10
+            count+=1
+        }
+        k=i*i
+        i+=1
+    }
+    val c=count-n
+    if (count>n) {
+        for (j in 1..c) {
+            k/=10
+        }
+    }
+    return k%10
+}
 
 /**
  * Сложная
  *
  * Найти n-ю цифру последовательности из чисел Фибоначчи (см. функцию fib выше):
- * 1123581321345589144...
+ * 01123581321345589144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
-fun fibSequenceDigit(n: Int): Int= TODO()
+fun fibSequenceDigit(n: Int): Int{n==1
+    var k=0
+    var count=1
+    var d=0
+    var d1=1
+    var d2=0
+    if (n==1) k=1
+    while (n>count){
+        k=d+d1
+        while (k>0){
+            k/=10
+            count+=1
+        }
+        k=d+d1
+        d2=d
+        d=d1
+        d1=d2+d
+    }
+    val c=count-n
+    if (count>n) {
+        for (j in 1..c) {
+            k/=10
+        }
+    }
+    return k%10
+}
 
 
