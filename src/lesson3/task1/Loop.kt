@@ -189,16 +189,24 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * Средняя
  *
  * Для заданного x рассчитать с заданной точностью eps
- * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
+ * sin(x) = x - x^3 / 3! + x^5 /
+ * 5! - x^7 / 7! + ...
  s>0* Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun sin(x: Double, eps: Double): Double
 {
+    var d=x
+    if (d>2*PI) {
+        while (d>2*PI) d-=2*PI
+    }
+    if (d<-2*PI) {
+        while (d<2*PI) d+=2*PI
+    }
     var k=0.0
-    var s=x
+    var s=d
     var i=1
     while (abs(s)>=abs(eps)){
-        s=pow(x, i.toDouble())/ factorial(i)
+        s=pow(d, i.toDouble())/ factorial(i)
         if (i%4==1){
             k=k+s
         }
@@ -221,11 +229,18 @@ fun sin(x: Double, eps: Double): Double
  */
 fun cos(x: Double, eps: Double): Double
 {
+    var d=x
+    if (d>2*PI) {
+        while (d>2*PI) d-=2*PI
+    }
+    if (d<-2*PI) {
+        while (d<2*PI) d+=2*PI
+    }
     var k=1.0
-    var s=x
+    var s=d
     var i=2
     while (abs(s)>=abs(eps)){
-        s=pow(x, i.toDouble())/ factorial(i)
+        s=pow(d, i.toDouble())/ factorial(i)
         if (i%4==0){
             k=k+s
         }
@@ -330,7 +345,7 @@ fun hasDifferentDigits(n: Int): Boolean {
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-fun squareSequenceDigit(n: Int): Int= TODO()
+fun squareSequenceDigit(n: Int): Int = TODO()
 
 /**
  * Сложная
