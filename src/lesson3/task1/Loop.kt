@@ -190,9 +190,25 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  *
  * Для заданного x рассчитать с заданной точностью eps
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
- * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
+ s>0* Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double= TODO()
+fun sin(x: Double, eps: Double): Double
+{
+    var k=0.0
+    var s=x
+    var i=1
+    while (abs(s)>=abs(eps)){
+        s=pow(x, i.toDouble())/ factorial(i)
+        if (i%4==1){
+            k=k+s
+        }
+        if (i%4==3){
+            k=k-s
+        }
+        i=i+2
+    }
+    return k
+}
 
 
 
@@ -203,7 +219,23 @@ fun sin(x: Double, eps: Double): Double= TODO()
  * cos(x) = 1 - x^2 / 2! + x^4 / 4! - x^6 / 6! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double
+{
+    var k=1.0
+    var s=x
+    var i=2
+    while (abs(s)>=abs(eps)){
+        s=pow(x, i.toDouble())/ factorial(i)
+        if (i%4==0){
+            k=k+s
+        }
+        if (i%4==2){
+            k=k-s
+        }
+        i=i+2
+    }
+    return k
+}
 
 /**
  * Средняя
