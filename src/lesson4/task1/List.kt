@@ -238,7 +238,7 @@ fun factorize(n: Int): List<Int>{
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  */
 fun factorizeToString(n: Int): String{
-    val resoult= factorize(n)
+    val resoult=factorize(n)
     return resoult.sorted().joinToString(
             separator = "*"
     )

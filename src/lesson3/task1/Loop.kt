@@ -266,10 +266,10 @@ fun revert(n: Int): Int {
     var n2=n
     if (n in 0..9) return n else
     while (n1!=0) {
-        n1 /= 10
+        n1/= 10
         k+=1
     }
-    var d=pow(10.0, (k-1).toDouble()).toInt()
+    var d=pow(10.0,(k-1).toDouble()).toInt()
     var d2=1
     val n3=n2/d
     for (i in 1..k){
