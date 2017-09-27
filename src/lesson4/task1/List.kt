@@ -2,6 +2,8 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import java.lang.Math.pow
+import java.lang.Math.sqrt
 
 /**
  * Пример
@@ -106,14 +108,28 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double = TODO()
+fun abs(v: List<Double>): Double{
+    var r=0.0
+    for (element in v){
+        r+=element*element
+    }
+    return sqrt(r)
+}
 
 /**
  * Простая
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double = TODO()
+fun mean(list: List<Double>): Double{
+    var r=0.0
+    val d=list.size
+    if (d==0) return 0.0
+    for (element in list){
+        r+=element
+    }
+    return r/d
+}
 
 /**
  * Средняя
@@ -123,7 +139,20 @@ fun mean(list: List<Double>): Double = TODO()
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun center(list: MutableList<Double>): MutableList<Double> = TODO()
+fun center(list: MutableList<Double>): MutableList<Double>{
+    var r=0.0
+    val d=list.size
+    for (i in 0 until d){
+        val element=list[i]
+        r+=element
+    }
+    r/=d
+    for (j in 0 until d){
+        val element=list[j]
+        list[j]=element-r
+    }
+    return list
+}
 
 /**
  * Средняя
@@ -132,7 +161,16 @@ fun center(list: MutableList<Double>): MutableList<Double> = TODO()
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.0.
  */
-fun times(a: List<Double>, b: List<Double>): Double = TODO()
+fun times(a: List<Double>, b: List<Double>): Double {
+    var r=0.0
+    for (i in 0 until a.size){
+        val element=a[i]
+        val element1=b[i]
+        r+=element*element1
+    }
+    return r
+}
+
 
 /**
  * Средняя
@@ -142,7 +180,14 @@ fun times(a: List<Double>, b: List<Double>): Double = TODO()
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0.0 при любом x.
  */
-fun polynom(p: List<Double>, x: Double): Double = TODO()
+fun polynom(p: List<Double>, x: Double): Double{
+    var r=0.0
+    for (i in 0 until p.size){
+        val element=p[i]
+        r+=element*pow(x, i.toDouble())
+    }
+    return r
+}
 
 /**
  * Средняя
