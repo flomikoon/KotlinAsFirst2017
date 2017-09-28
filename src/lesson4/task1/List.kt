@@ -309,7 +309,65 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String= TODO()
+fun roman(n: Int): String{
+    var n1=n
+    val resoult=mutableListOf<String>()
+    while (n1-1000>=0){
+        resoult.add("M")
+        n1-=1000
+    }
+    while (n1-900>=0){
+        resoult.add("CM")
+        n1-=900
+    }
+    while (n1-500>=0){
+        resoult.add("D")
+        n1-=500
+    }
+    while(n1-400>=0){
+        resoult.add("CD")
+        n1-=400
+    }
+    while (n1-100>=0){
+        resoult.add("C")
+        n1-=100
+    }
+    while (n1-90>=0){
+        resoult.add("XC")
+        n1-=90
+    }
+    while (n1-50>=0){
+        resoult.add("L")
+        n1-=50
+    }
+    while (n1-40>=0){
+        resoult.add("XL")
+        n1-=40
+    }
+    while (n1-10>=0){
+        resoult.add("X")
+        n1-=10
+    }
+    while (n1-9>=0){
+        resoult.add("IX")
+        n1-=9
+    }
+    while (n1-5>=0){
+        resoult.add("V")
+        n1-=5
+    }
+    while (n1-4>=0){
+        resoult.add("IV")
+        n1-=4
+    }
+    while (n1-1>=0){
+        resoult.add("I")
+        n1-=1
+    }
+    return resoult.joinToString (
+            separator = ""
+    )
+}
 
 /**
  * Очень сложная
@@ -320,7 +378,6 @@ fun roman(n: Int): String= TODO()
  */
 fun russian(n: Int): String{
     var n1=n
-    var n2=0
     val resoult=mutableListOf<String>()
     var d=100000
     val n3=n/1000
@@ -355,7 +412,7 @@ fun russian(n: Int): String{
         }
         n1 = n % d
         d /= 100
-        n2 = n1
+        val n2 = n1
         n1 /= d
         if (10 < n1 && n1 < 20) {
             if (n1 == 11) {
@@ -483,7 +540,7 @@ fun russian(n: Int): String{
         }
     n1 = n % d
     d /= 100
-    n2 = n1
+    val n2 = n1
     n1 /= d
     if (10 < n1 && n1 < 20) {
         if (n1 == 11) {
