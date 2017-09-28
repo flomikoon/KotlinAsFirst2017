@@ -84,8 +84,8 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int = when {
                            kingY==rookY1&&(kingX==rookX2||kingY==rookY2)||kingX==rookX1&&(kingY==rookY2||kingX==rookX2) -> 3
-                           kingX==rookX2 || kingY==rookY2 -> 2
-                           kingX==rookX1 || kingY==rookY1 -> 1
+                           kingX==rookX2||kingY==rookY2 -> 2
+                           kingX==rookX1||kingY==rookY1 -> 1
                            else -> 0
                        }
 
@@ -152,9 +152,8 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
 
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = when {
     b<c||d<a -> -1
-    b>=d&&a<c -> d-c
+    b>=d&&a<=c -> d-c
     b<=d&&a>=c -> b-a
-    b>c&&b<=d&&c>=a -> b-c
-    c==b||d==a||a==b||d==c-> 0
+    b>=c&&b<=d&&c>=a -> b-c
     else -> d-a
 }
