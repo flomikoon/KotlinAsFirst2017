@@ -434,7 +434,7 @@ fun russian(n: Int): String{
                 resoult.add("шестнадцать тысяч")
             }
             if (n1 == 17) {
-                resoult.add("семнадцать тысяч ")
+                resoult.add("семнадцать тысяч")
             }
             if (n1 == 18) {
                 resoult.add("восемнадцать тысяч")
