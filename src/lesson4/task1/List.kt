@@ -254,6 +254,7 @@ fun factorizeToString(n: Int): String{
 fun convert(n: Int, base: Int): List<Int>{
     val resoult=mutableListOf<Int>()
     var n1=n
+    if (n==0) resoult.add(0)
     while (n1>0){
        val d=n1%base
             resoult.add(d)
@@ -270,12 +271,7 @@ fun convert(n: Int, base: Int): List<Int>{
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
-fun convertToString(n: Int, base: Int): String{
-    val resoult=convert(n,base)
-    return resoult.joinToString(
-            separator =""
-    )
-}
+fun convertToString(n: Int, base: Int): String= TODO()
 
 /**
  * Средняя
@@ -340,7 +336,7 @@ fun russian(n: Int): String{
             resoult.add("триста")
         }
         if (n1 == 4) {
-            resoult.add("четыресто")
+            resoult.add("четыреста")
         }
         if (n1 == 5) {
             resoult.add("пятьсот")
@@ -468,7 +464,7 @@ fun russian(n: Int): String{
             resoult.add("триста")
         }
         if(n1==4){
-            resoult.add("четыресто")
+            resoult.add("четыреста")
         }
         if(n1==5){
             resoult.add("пятьсот")
