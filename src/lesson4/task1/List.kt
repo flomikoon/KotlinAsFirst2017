@@ -380,9 +380,8 @@ fun russian(n: Int): String{
     var n1=n
     val resoult=mutableListOf<String>()
     var d=100000
-    val d1=1000
-    var n4=n
-    while (n1>0){
+    val n3=n/1000
+    if(0<n3) {
         n1 /= d
         if (n1 == 1) {
             resoult.add("сто")
@@ -412,38 +411,39 @@ fun russian(n: Int): String{
             resoult.add("девятьсот")
         }
         n1 = n % d
-        d /= 10
+        d /= 100
         val n2 = n1
-        n1 /= d1
+        n1 /= d
         if (10 < n1 && n1 < 20) {
             if (n1 == 11) {
-                resoult.add("одинадцать")
+                resoult.add("одинадцать тысяч")
             }
             if (n1 == 12) {
-                resoult.add("двенадцать")
+                resoult.add("двенадцать тысяч")
             }
             if (n1 == 13) {
-                resoult.add("тринадцать")
+                resoult.add("тринадцать тысяч")
             }
             if (n1 == 14) {
-                resoult.add("четырнадцать")
+                resoult.add("четырнадцать тысяч")
             }
             if (n1 == 15) {
-                resoult.add("пятнадцать")
+                resoult.add("пятнадцать тысяч")
             }
             if (n1 == 16) {
-                resoult.add("шестнадцать")
+                resoult.add("шестнадцать тысяч")
             }
             if (n1 == 17) {
-                resoult.add("семнадцать")
+                resoult.add("семнадцать тысяч")
             }
             if (n1 == 18) {
-                resoult.add("восемнадцать")
+                resoult.add("восемнадцать тысяч")
             }
             if (n1 == 19) {
-                resoult.add("девятнадцать")
+                resoult.add("девятнадцать тысяч")
             }
         } else {
+            d *= 10
             n1 = n2
             n1 /= d
             if (n1 == 1) {
@@ -476,82 +476,163 @@ fun russian(n: Int): String{
             n1 = n % d
             d /= 10
             n1 /= d
-            if (n4>1000) {
-                if (n1 == 1) {
-                    resoult.add("одна")
-                }
-                if (n1 == 2) {
-                    resoult.add("две")
-                }
-                if (n1 == 3) {
-                    resoult.add("три")
-                }
-                if (n1 == 4) {
-                    resoult.add("четыре")
-                }
-                if (n1 == 5) {
-                    resoult.add("пять")
-                }
-                if (n1 == 6) {
-                    resoult.add("шесть")
-                }
-                if (n1 == 7) {
-                    resoult.add("семь")
-                }
-                if (n1 == 8) {
-                    resoult.add("восемь")
-                }
-                if (n1 == 9) {
-                    resoult.add("девять")
-                }
-            }else {
-                if (n1==1){
-                    resoult.add("один")
-                }
-                if (n1 == 2) {
-                    resoult.add("два")
-                }
-                if (n1 == 3) {
-                    resoult.add("три")
-                }
-                if (n1 == 4) {
-                    resoult.add("четыре")
-                }
-                if (n1 == 5) {
-                    resoult.add("пять")
-                }
-                if (n1 == 6) {
-                    resoult.add("шесть")
-                }
-                if (n1 == 7) {
-                    resoult.add("семь")
-                }
-                if (n1 == 8) {
-                    resoult.add("восемь")
-                }
-                if (n1 == 9) {
-                    resoult.add("девять")
-                }
+            if (n1 == 0) {
+                resoult.add("тысяч")
+            }
+            if (n1 == 1) {
+                resoult.add("одна тысяча")
+            }
+            if (n1 == 2) {
+                resoult.add("две тысячи")
+            }
+            if (n1 == 3) {
+                resoult.add("три тысячи")
+            }
+            if (n1 == 4) {
+                resoult.add("четыре тысячи")
+            }
+            if (n1 == 5) {
+                resoult.add("пять тысяч")
+            }
+            if (n1 == 6) {
+                resoult.add("шесть тысяч")
+            }
+            if (n1 == 7) {
+                resoult.add("семь тысяч")
+            }
+            if (n1 == 8) {
+                resoult.add("восемь тысяч")
+            }
+            if (n1 == 9) {
+                resoult.add("девять тысяч")
             }
         }
-        val k=n4%100000/1000
-        val k2=n4%10000/1000
-        if(k !in 11..19){
-            if (k==1){
-                resoult.add("тысяча")
-            }
-            if (k2==2||k2==3||k2==4){
-                resoult.add("тысячи")
-            }
-        }
-        if (n4>1000&&k2 !in 1..4){
-            resoult.add("тысяч")
-        }
-        n1=n%d
-        d/=10
-        n4=0
+    } else d/=100
+    n1=n%d
+    d/=10
+    n1/=d
+    if(n1==1){
+        resoult.add("сто")
     }
-        return resoult.joinToString(
-                separator =" "
-        )
+    if(n1==2){
+        resoult.add("двести")
+    }
+    if(n1==3){
+        resoult.add("триста")
+    }
+    if(n1==4){
+        resoult.add("четыреста")
+    }
+    if(n1==5){
+        resoult.add("пятьсот")
+    }
+    if(n1==6){
+        resoult.add("шестьсот")
+    }
+    if(n1==7){
+        resoult.add("семьсот")
+    }
+    if(n1==8){
+        resoult.add("восемьсот")
+    }
+    if(n1==9){
+        resoult.add("девятьсот")
+    }
+    n1 = n % d
+    d /= 100
+    val n2 = n1
+    n1 /= d
+    if (10 < n1 && n1 < 20) {
+        if (n1 == 11) {
+            resoult.add("одинадцать")
+        }
+        if (n1 == 12) {
+            resoult.add("двенадцать")
+        }
+        if (n1 == 13) {
+            resoult.add("тринадцать")
+        }
+        if (n1 == 14) {
+            resoult.add("четырнадцать")
+        }
+        if (n1 == 15) {
+            resoult.add("пятнадцать")
+        }
+        if (n1 == 16) {
+            resoult.add("шестнадцать")
+        }
+        if (n1 == 17) {
+            resoult.add("семнадцать")
+        }
+        if (n1 == 18) {
+            resoult.add("восемнадцать")
+        }
+        if (n1 == 19) {
+            resoult.add("девятнадцать")
+        }
+    } else {
+        d *= 10
+        n1 = n2
+        n1 /= d
+        if (n1 == 1) {
+            resoult.add("десять")
+        }
+        if (n1 == 2) {
+            resoult.add("двадцать")
+        }
+        if (n1 == 3) {
+            resoult.add("тридцать")
+        }
+        if (n1 == 4) {
+            resoult.add("сорок")
+        }
+        if (n1 == 5) {
+            resoult.add("пятьдесят")
+        }
+        if (n1 == 6) {
+            resoult.add("шестьдесят")
+        }
+        if (n1 == 7) {
+            resoult.add("семьдесят")
+        }
+        if (n1 == 8) {
+            resoult.add("восемьдесят")
+        }
+        if (n1 == 9) {
+            resoult.add("девяносто")
+        }
+        n1 = n % d
+        d /= 10
+        n1 /= d
+        if (n1 == 1) {
+            resoult.add("один")
+        }
+        if (n1 == 2) {
+            resoult.add("два")
+        }
+        if (n1 == 3) {
+            resoult.add("три")
+        }
+        if (n1 == 4) {
+            resoult.add("четыре")
+        }
+        if (n1 == 5) {
+            resoult.add("пять")
+        }
+        if (n1 == 6) {
+            resoult.add("шесть")
+        }
+        if (n1 == 7) {
+            resoult.add("семь")
+        }
+        if (n1 == 8) {
+            resoult.add("восемь")
+        }
+        if (n1 == 9) {
+            resoult.add("девять")
+        }
+    }
+    return resoult.joinToString(
+            separator =" "
+    )
 }
