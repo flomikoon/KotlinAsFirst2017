@@ -377,262 +377,84 @@ fun roman(n: Int): String{
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String{
-    var n1=n
+    val sot=listOf<String>("сто","двести","триста","четыресто","пятьсот","шестьсот","семьсот","восемьсот","девятьсот")
+    val des=listOf<String>("десять","двадцать","тридцать","сорок","пятьдесят","шестьдесят","семьдесят","восемьдесят","девяносто")
+    val dvdes=listOf<String>("одинадцать","двенадцать","тринадцать","четырнадцать","пятнадцать","шестнадцать","семнадцать","восемнадцать","девятнадцать")
+    val edt=listOf<String>("одна тысяча","две тысячи","три тысячи","четыре тысячи")
+    val eds=listOf<String>("один","два","три","четыре")
+    val ed=listOf<String>("пять","шесть","семь","восемь","девять")
     val resoult=mutableListOf<String>()
+    var n1=n
     var d=100000
-    val n3=n/1000
-    if(0<n3) {
-        n1 /= d
-        if (n1 == 1) {
-            resoult.add("сто")
-        }
-        if (n1 == 2) {
-            resoult.add("двести")
-        }
-        if (n1 == 3) {
-            resoult.add("триста")
-        }
-        if (n1 == 4) {
-            resoult.add("четыреста")
-        }
-        if (n1 == 5) {
-            resoult.add("пятьсот")
-        }
-        if (n1 == 6) {
-            resoult.add("шестьсот")
-        }
-        if (n1 == 7) {
-            resoult.add("семьсот")
-        }
-        if (n1 == 8) {
-            resoult.add("восемьсот")
-        }
-        if (n1 == 9) {
-            resoult.add("девятьсот")
-        }
-        n1 = n % d
-        d /= 100
-        val n2 = n1
-        n1 /= d
-        if (10 < n1 && n1 < 20) {
-            if (n1 == 11) {
-                resoult.add("одинадцать тысяч")
-            }
-            if (n1 == 12) {
-                resoult.add("двенадцать тысяч")
-            }
-            if (n1 == 13) {
-                resoult.add("тринадцать тысяч")
-            }
-            if (n1 == 14) {
-                resoult.add("четырнадцать тысяч")
-            }
-            if (n1 == 15) {
-                resoult.add("пятнадцать тысяч")
-            }
-            if (n1 == 16) {
-                resoult.add("шестнадцать тысяч")
-            }
-            if (n1 == 17) {
-                resoult.add("семнадцать тысяч")
-            }
-            if (n1 == 18) {
-                resoult.add("восемнадцать тысяч")
-            }
-            if (n1 == 19) {
-                resoult.add("девятнадцать тысяч")
-            }
-        } else {
-            d *= 10
-            n1 = n2
-            n1 /= d
-            if (n1 == 1) {
-                resoult.add("десять")
-            }
-            if (n1 == 2) {
-                resoult.add("двадцать")
-            }
-            if (n1 == 3) {
-                resoult.add("тридцать")
-            }
-            if (n1 == 4) {
-                resoult.add("сорок")
-            }
-            if (n1 == 5) {
-                resoult.add("пятьдесят")
-            }
-            if (n1 == 6) {
-                resoult.add("шестьдесят")
-            }
-            if (n1 == 7) {
-                resoult.add("семьдесят")
-            }
-            if (n1 == 8) {
-                resoult.add("восемьдесят")
-            }
-            if (n1 == 9) {
-                resoult.add("девяносто")
-            }
-            n1 = n % d
-            d /= 10
-            n1 /= d
-            if (n1 == 0) {
-                resoult.add("тысяч")
-            }
-            if (n1 == 1) {
-                resoult.add("одна тысяча")
-            }
-            if (n1 == 2) {
-                resoult.add("две тысячи")
-            }
-            if (n1 == 3) {
-                resoult.add("три тысячи")
-            }
-            if (n1 == 4) {
-                resoult.add("четыре тысячи")
-            }
-            if (n1 == 5) {
-                resoult.add("пять тысяч")
-            }
-            if (n1 == 6) {
-                resoult.add("шесть тысяч")
-            }
-            if (n1 == 7) {
-                resoult.add("семь тысяч")
-            }
-            if (n1 == 8) {
-                resoult.add("восемь тысяч")
-            }
-            if (n1 == 9) {
-                resoult.add("девять тысяч")
-            }
-        }
-    } else d/=100
+    n1/=d
+    if (n1!=0){
+        val element=sot[n1-1]
+        resoult.add(element)
+    }
     n1=n%d
     d/=10
-    n1/=d
-    if(n1==1){
-        resoult.add("сто")
-    }
-    if(n1==2){
-        resoult.add("двести")
-    }
-    if(n1==3){
-        resoult.add("триста")
-    }
-    if(n1==4){
-        resoult.add("четыреста")
-    }
-    if(n1==5){
-        resoult.add("пятьсот")
-    }
-    if(n1==6){
-        resoult.add("шестьсот")
-    }
-    if(n1==7){
-        resoult.add("семьсот")
-    }
-    if(n1==8){
-        resoult.add("восемьсот")
-    }
-    if(n1==9){
-        resoult.add("девятьсот")
-    }
-    n1 = n % d
-    d /= 100
-    val n2 = n1
-    n1 /= d
-    if (10 < n1 && n1 < 20) {
-        if (n1 == 11) {
-            resoult.add("одинадцать")
-        }
-        if (n1 == 12) {
-            resoult.add("двенадцать")
-        }
-        if (n1 == 13) {
-            resoult.add("тринадцать")
-        }
-        if (n1 == 14) {
-            resoult.add("четырнадцать")
-        }
-        if (n1 == 15) {
-            resoult.add("пятнадцать")
-        }
-        if (n1 == 16) {
-            resoult.add("шестнадцать")
-        }
-        if (n1 == 17) {
-            resoult.add("семнадцать")
-        }
-        if (n1 == 18) {
-            resoult.add("восемнадцать")
-        }
-        if (n1 == 19) {
-            resoult.add("девятнадцать")
-        }
+    val n2=n1/1000
+    if (n2 in 11..19){
+        val element=dvdes[n2-11]
+        resoult.add(element)
+        resoult.add("тысяч")
+        d/=10
     } else {
-        d *= 10
-        n1 = n2
         n1 /= d
-        if (n1 == 1) {
-            resoult.add("десять")
-        }
-        if (n1 == 2) {
-            resoult.add("двадцать")
-        }
-        if (n1 == 3) {
-            resoult.add("тридцать")
-        }
-        if (n1 == 4) {
-            resoult.add("сорок")
-        }
-        if (n1 == 5) {
-            resoult.add("пятьдесят")
-        }
-        if (n1 == 6) {
-            resoult.add("шестьдесят")
-        }
-        if (n1 == 7) {
-            resoult.add("семьдесят")
-        }
-        if (n1 == 8) {
-            resoult.add("восемьдесят")
-        }
-        if (n1 == 9) {
-            resoult.add("девяносто")
+        if (n1 != 0) {
+            val element = des[n1 - 1]
+            resoult.add(element)
         }
         n1 = n % d
         d /= 10
         n1 /= d
-        if (n1 == 1) {
-            resoult.add("один")
+        if (n1 != 0 && n1 in 1..4) {
+            val element = edt[n1 - 1]
+            resoult.add(element)
         }
-        if (n1 == 2) {
-            resoult.add("два")
+        if (n1 != 0 && n1 !in 0..4) {
+            val element = ed[n1 - 5]
+            resoult.add(element)
+            resoult.add("тысяч")
         }
-        if (n1 == 3) {
-            resoult.add("три")
-        }
-        if (n1 == 4) {
-            resoult.add("четыре")
-        }
-        if (n1 == 5) {
-            resoult.add("пять")
-        }
-        if (n1 == 6) {
-            resoult.add("шесть")
-        }
-        if (n1 == 7) {
-            resoult.add("семь")
-        }
-        if (n1 == 8) {
-            resoult.add("восемь")
-        }
-        if (n1 == 9) {
-            resoult.add("девять")
+        if (n1==0&&n>1000){
+            resoult.add("тысяч")
         }
     }
-    return resoult.joinToString(
-            separator =" "
-    )
+    n1=n%d
+    d/=10
+    n1/=d
+    if (n1!=0){
+        val element=sot[n1-1]
+        resoult.add(element)
+    }
+    n1=n%d
+    d/=10
+    if (n1 in 11..19){
+        val element=dvdes[n1-11]
+        resoult.add(element)
+        d/=10
+    } else{
+        n1/=d
+        if (n1!=0){
+            val element=des[n1-1]
+            resoult.add(element)
+        }
+    }
+    n1=n%d
+    d/=10
+    if(d!=0) {
+        n1 /= d
+        if (n1 != 0 && n1 in 1..4) {
+            val element = eds[n1 - 1]
+            resoult.add(element)
+        }
+        if (n1 != 0 && n1 !in 0..4) {
+            val element = ed[n1 - 5]
+            resoult.add(element)
+        }
+    }
+    return resoult.joinToString (
+        separator = " "
+        )
 }
