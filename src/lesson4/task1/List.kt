@@ -311,58 +311,17 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  */
 fun roman(n: Int): String{
     var n1=n
+    val rim=listOf<String>("M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I")
     val resoult=mutableListOf<String>()
-    while (n1-1000>=0){
-        resoult.add("M")
-        n1-=1000
-    }
-    while (n1-900>=0){
-        resoult.add("CM")
-        n1-=900
-    }
-    while (n1-500>=0){
-        resoult.add("D")
-        n1-=500
-    }
-    while(n1-400>=0){
-        resoult.add("CD")
-        n1-=400
-    }
-    while (n1-100>=0){
-        resoult.add("C")
-        n1-=100
-    }
-    while (n1-90>=0){
-        resoult.add("XC")
-        n1-=90
-    }
-    while (n1-50>=0){
-        resoult.add("L")
-        n1-=50
-    }
-    while (n1-40>=0){
-        resoult.add("XL")
-        n1-=40
-    }
-    while (n1-10>=0){
-        resoult.add("X")
-        n1-=10
-    }
-    while (n1-9>=0){
-        resoult.add("IX")
-        n1-=9
-    }
-    while (n1-5>=0){
-        resoult.add("V")
-        n1-=5
-    }
-    while (n1-4>=0){
-        resoult.add("IV")
-        n1-=4
-    }
-    while (n1-1>=0){
-        resoult.add("I")
-        n1-=1
+    val del=listOf<Int>(1000,900,500,400,100,90,50,40,10,9,5,4,1)
+    for (i in 0..del.size-1){
+        val el=del[i]
+        while (n1>=el){
+            n1-=el
+            val element=rim[i]
+            resoult.add(element)
+        }
+        if (n1==0) break
     }
     return resoult.joinToString (
             separator = ""
