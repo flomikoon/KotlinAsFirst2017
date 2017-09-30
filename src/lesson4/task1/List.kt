@@ -356,10 +356,8 @@ fun russian(n: Int): String{
         }
         n1 = n % d
         d /= 10
-        if (n>1000){
             n2=n1/1000
             n3=n1/1
-        }
         if ((n2 in 11..19&&n1>1000)||(n3 in 11..19&&n1<1000)) {
             if (n2!=0) {
                 val element = dvdes[n2 - 11]
@@ -403,7 +401,7 @@ fun russian(n: Int): String{
                 resoult.add("тысяч")
             }
         }
-        if(n<100) break
+        if(n<20&&n>10) break
         n1=n%d
         d/=10
     }
