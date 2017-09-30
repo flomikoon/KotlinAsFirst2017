@@ -345,73 +345,67 @@ fun russian(n: Int): String{
     val resoult=mutableListOf<String>()
     var n1=n
     var d=100000
-    n1/=d
-    if (n1!=0){
-        val element=sot[n1-1]
-        resoult.add(element)
-    }
-    n1=n%d
-    d/=10
-    val n2=n1/1000
-    if (n2 in 11..19){
-        val element=dvdes[n2-11]
-        resoult.add(element)
-        resoult.add("тысяч")
-        d/=10
-    } else {
+    var n2 = n
+    var n3=n
+    for (i in 1..2) {
+        val n5=n1/1000
         n1 /= d
         if (n1 != 0) {
-            val element = des[n1 - 1]
+            val element = sot[n1 - 1]
             resoult.add(element)
         }
         n1 = n % d
         d /= 10
-        n1 /= d
-        if (n1 != 0 && n1 in 1..4) {
-            val element = edt[n1 - 1]
-            resoult.add(element)
+        if (n>1000){
+            n2=n1/1000
+            n3=n1/1
         }
-        if (n1 != 0 && n1 !in 0..4) {
-            val element = ed[n1 - 5]
-            resoult.add(element)
-            resoult.add("тысяч")
+        if ((n2 in 11..19&&n1>1000)||(n3 in 11..19&&n1<1000)) {
+            if (n2!=0) {
+                val element = dvdes[n2 - 11]
+                resoult.add(element)
+            } else{
+                val element=dvdes[n3-11]
+                resoult.add(element)
+            }
+            if (n1>1000) {
+                resoult.add("тысяч")
+            }
+            d /= 10
+        } else {
+            n1 /= d
+            if (n1 != 0) {
+                val element = des[n1 - 1]
+                resoult.add(element)
+            }
+            n1 = n % d
+            val n4=n1
+            d /= 10
+            n1 /= d
+            if (n1 != 0 && n1 in 1..4) {
+                if (n4>1000) {
+                    val element = edt[n1 - 1]
+                    resoult.add(element)
+                }
+                if (n4<1000){
+                    val element = eds[n1 - 1]
+                    resoult.add(element)
+                }
+            }
+            if (n1 != 0 && n1 !in 0..4) {
+                val element = ed[n1 - 5]
+                resoult.add(element)
+                if (n4>1000) {
+                    resoult.add("тысяч")
+                }
+            }
+            if (n1 == 0 && n5 > 0) {
+                resoult.add("тысяч")
+            }
         }
-        if (n1==0&&n>1000){
-            resoult.add("тысяч")
-        }
-    }
-    n1=n%d
-    d/=10
-    n1/=d
-    if (n1!=0){
-        val element=sot[n1-1]
-        resoult.add(element)
-    }
-    n1=n%d
-    d/=10
-    if (n1 in 11..19){
-        val element=dvdes[n1-11]
-        resoult.add(element)
+        if(n<100) break
+        n1=n%d
         d/=10
-    } else{
-        n1/=d
-        if (n1!=0){
-            val element=des[n1-1]
-            resoult.add(element)
-        }
-    }
-    n1=n%d
-    d/=10
-    if(d!=0) {
-        n1 /= d
-        if (n1 != 0 && n1 in 1..4) {
-            val element = eds[n1 - 1]
-            resoult.add(element)
-        }
-        if (n1 != 0 && n1 !in 0..4) {
-            val element = ed[n1 - 5]
-            resoult.add(element)
-        }
     }
     return resoult.joinToString (
         separator = " "
