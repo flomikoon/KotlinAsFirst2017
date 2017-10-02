@@ -130,16 +130,14 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
 
 
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-            val a1=sqr(a)
-            val b1=sqr(b)
-            val c1=sqr(c)
-            val bc=b1+c1
-            val ba=b1+a1
-            val ac=a1+c1
+            val min= minOf(a,b,c)
+            val max=maxOf(a,b,c)
+            val sr=a+b+c-min-max
+            val mima=sqr(min)+sqr(sr)
             return when {
-                a+b<c||a+c<b||c+b<a -> -1
-                a1==bc||c1==ba||b1==ac -> 1
-                a1>bc||c1>ba||b1>ac -> 2
+                min+sr<max -> -1
+                sqr(max)==mima -> 1
+                sqr(max)>mima -> 2
                 else -> 0
             }
 }
