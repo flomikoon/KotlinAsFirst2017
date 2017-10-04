@@ -73,6 +73,7 @@ fun dateStrToDigit(str: String): String{
     val resout=mutableListOf<String>()
     val res=mutableListOf<String>()
     var count=0
+    var c=0
     try {
         for (part in parts) {
             var elements = part
@@ -88,9 +89,15 @@ fun dateStrToDigit(str: String): String{
         for (j in 0 until resout.size) {
             val el = resout[j].toInt()
             if (el < 10) {
-                res.add("0$el")
+                if (c==2){
+                    res.add("$el")
+                } else {
+                    res.add("0$el")
+                }
             } else res.add("$el")
+            c+=1
         }
+
         return if (count==4) {
             res.joinToString(
                     separator = "."
