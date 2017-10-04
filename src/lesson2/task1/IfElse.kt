@@ -100,8 +100,8 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int {
     var resoult=0
-    if(kingX==rookX||kingY==rookY) resoult+=1
-    if(abs(kingX-bishopX)==abs(kingY-bishopY)) resoult+=2
+    if(kingX==rookX||kingY==rookY)resoult+=1
+    if(abs(kingX-bishopX)==abs(kingY-bishopY))resoult+=2
     return resoult
 }
 
