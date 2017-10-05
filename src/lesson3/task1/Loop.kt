@@ -51,7 +51,7 @@ fun isPerfect(n: Int): Boolean {
  * Найти число вхождений цифры m в число n
  */
 fun digitCountInNumber(n: Int, m: Int): Int =
-        when {
+        when{
             n == m -> 1
             n < 10 -> 0
             else -> digitCountInNumber(n / 10, m) + digitCountInNumber(n % 10, m)
@@ -75,36 +75,27 @@ fun digitNumber(n: Int): Int {
     return k
 }
 
-
 /**
-     * Простая
-     *
-     * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
-     * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
-     */
-
-
-
-
-
-
+ * Простая
+ *
+ * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
+ * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
+ */
 fun fib(n: Int): Int {
-    var k1=1
-    var k2=1
+    var k=0
+    var d=0
+    var d1=1
     var m=n
-    when (m) {
-        1 -> return k1
-        2 -> return k2
-        else -> while(m!=2) {
+    if (n==1) k=1 else{
+        while(m>1){
+            k=d+d1
+            val d2=d
+            d=d1
+            d1=d2+d
             m-=1
-            k1+=k2
-            if (m==2) return k1 else {
-                k2+=k1
-                m-=1
-            }
         }
     }
-    return k2
+    return k
 }
 
 /**
@@ -122,53 +113,46 @@ fun lcm(m: Int, n: Int): Int{
     return k
 }
 
-
-    /**
-     * Простая
-     *
-     * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
-     */
-
-
-fun minDivisor(n: Int): Int {
-        var k=2
-        while (n%k!=0) {
-            k+=1
-        }
-        return k
+/**
+ * Простая
+ *
+ * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
+ */
+fun minDivisor(n: Int): Int{
+    var k=2
+    while(n%k!=0){
+        k+=1
     }
+    return k
+}
 
-        /**
-         * Простая
-         *
-         * Для заданного числа n > 1 найти максимальный делитель, меньший n
-         */
-
-
-
+/**
+ * Простая
+ *
+ * Для заданного числа n > 1 найти максимальный делитель, меньший n
+ * */
 fun maxDivisor(n: Int): Int {
-            var k=n-1
-            while (n%k!=0) {
-                k-=1
-            }
-            return k
-        }
-            /**
-             * Простая
-             *
-             * Определить, являются ли два заданных числа m и n взаимно простыми.
-             * Взаимно простые числа не имеют общих делителей, кроме 1.
-             * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
-             */
+    var k=n-1
+    while(n%k!=0){
+        k-=1
+    }
+    return k
+}
 
-
-fun isCoPrime(m: Int, n: Int): Boolean {
-                        val d=Math.min(n,m)
-                for (i in 2..d){
-                    if (n%i==0&&m%i==0) return false
-                }
-                return true
-            }
+/**
+ * Простая
+ *
+ * Определить, являются ли два заданных числа m и n взаимно простыми.
+ * Взаимно простые числа не имеют общих делителей, кроме 1.
+ * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
+ */
+fun isCoPrime(m: Int, n: Int): Boolean{
+    val d=Math.min(n,m)
+    for (i in 2..d){
+        if (n%i==0&&m%i==0)return false
+    }
+    return true
+}
 
 /**
  * Простая
@@ -177,13 +161,12 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean {
+fun squareBetweenExists(m: Int, n: Int): Boolean{
     var k=0
-        while (k<=sqrt(n.toDouble())) {
-            if (k*k>=m) return true else
-    k+=1
-}
-return  false
+        while(k<=sqrt(n.toDouble())){
+            if(k*k>=m)return true else k+=1
+        }
+    return false
 }
 
 /**
@@ -207,7 +190,7 @@ fun sin(x: Double, eps: Double): Double
     var s=d
     var i=1
     while (abs(s)>=abs(eps)){
-        s=pow(d, i.toDouble())/ factorial(i)
+        s=pow(d,i.toDouble())/factorial(i)
         if (i%4==1){
             k+=s
         }
@@ -241,7 +224,7 @@ fun cos(x: Double, eps: Double): Double
     var s=d
     var i=2
     while (abs(s)>=abs(eps)){
-        s=pow(d, i.toDouble())/ factorial(i)
+        s=pow(d,i.toDouble())/factorial(i)
         if (i%4==0){
             k+=s
         }
@@ -302,10 +285,10 @@ fun isPalindrome(n: Int): Boolean{
     }
     n1=n
     var d=pow(10.0,k-1.toDouble()).toInt()
-    if (k%2==0) co=k else co=k-1
-    for (i in 1..co/2) {
-        if (n1 % 10 == n1 / d) {
-            n1 /= 10
+    co = if (k%2==0) k else k-1
+    for (i in 1..co/2){
+        if (n1%10==n1/d){
+            n1/=10
             d/=10
             n1%=d
             d/=10
@@ -323,7 +306,7 @@ fun isPalindrome(n: Int): Boolean{
 fun hasDifferentDigits(n: Int): Boolean {
     var k=0
     var n1=n
-   while (n1>10){
+   while (n1>9){
        if (n1%10!=n1%100/10){
            k+=1
        }
