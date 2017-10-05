@@ -75,6 +75,7 @@ fun dateStrToDigit(str: String): String{
     try {
         for (part in parts) {
             var elements = part
+            var el=part
             for (i in 0 until mess.size) {
                 if (elements == mess[i]) {
                     elements = mesc[i].toString()
@@ -82,7 +83,7 @@ fun dateStrToDigit(str: String): String{
                 }
             }
             if (elements.toInt()<10) {
-                 if (count!=3){
+                 if (count!=3&&el!="01"&&el!="02"&&el!="03"&&el!="04"&&el!="05"&&el!="06"&&el!="07"&&el!="08"&&el!="09"){
                    elements="0$elements"}
             }
             res.add(elements)
