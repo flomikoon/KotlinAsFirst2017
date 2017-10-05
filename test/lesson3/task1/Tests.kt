@@ -150,8 +150,8 @@ class Tests {
     @Tag("Normal")
     fun sin() {
         assertEquals(0.0, sin(0.0, 1e-5), 1e-5)
-        assertEquals(1.0, sin(Math.PI / 2.0, 1e-5), 1e-5)
         assertEquals(0.0, sin(Math.PI, 1e-5), 1e-5)
+        assertEquals(1.0, sin(Math.PI / 2.0, 1e-5), 1e-5)
         assertEquals(-1.0, sin(3.0 * Math.PI / 2.0, 1e-5), 1e-5)
         assertEquals(0.0, sin(100 * Math.PI, 1e-5), 1e-5)
     }
@@ -182,8 +182,8 @@ class Tests {
     fun isPalindrome() {
         assertTrue(isPalindrome(3))
         assertFalse(isPalindrome(3653))
-        assertTrue(isPalindrome(15751))
         assertTrue(isPalindrome(24688642))
+        assertTrue(isPalindrome(15751))
     }
 
     @Test
@@ -213,8 +213,8 @@ class Tests {
         assertEquals(1, fibSequenceDigit(1))
         assertEquals(1, fibSequenceDigit(2))
         assertEquals(3, fibSequenceDigit(4))
-        assertEquals(2, fibSequenceDigit(9))
         assertEquals(5, fibSequenceDigit(14))
+        assertEquals(2, fibSequenceDigit(9))
         assertEquals(2, fibSequenceDigit(20))
     }
 }

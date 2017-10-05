@@ -68,14 +68,14 @@ fun main(args: Array<String>) {
  */
 fun dateStrToDigit(str: String): String{
     val parts=str.split(" ")
-    val mess=listOf<String>("января","Февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря")
+    val mess=listOf<String>("января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря")
     val mesc=listOf<Int>(1,2,3,4,5,6,7,8,9,10,11,12)
     val res=mutableListOf<String>()
     var count=0
     try {
         for (part in parts) {
             var elements = part
-            var el=part
+            val el=part
             for (i in 0 until mess.size) {
                 if (elements == mess[i]) {
                     elements = mesc[i].toString()
