@@ -107,7 +107,7 @@ fun dateStrToDigit(str: String): String{
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateDigitToStr(digital: String): String{
-    val matchResult = Regex("""([0-9]{2}).([0-9]{2}).([^a-z])""").find(digital) ?: return ""
+    val matchResult = Regex("""([0-9]{2}).([0-9]{2})""").find(digital) ?: return ""
     val mess=listOf<String>("января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря")
     val res= mutableListOf<String>()
     val med= mutableListOf<String>()
@@ -195,13 +195,13 @@ fun flattenPhoneNumber(phone: String): String{
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int{
-    var parts=jumps.split("- ","% ")
+    val matchResult = Regex("""[^a-z][-%]""").find(jumps) ?: return -1
+    var parts=jumps.split("-","%")
     val res= mutableListOf<String>()
     var k=0
     if (jumps=="") return -1
-    try {
         for (part in parts) {
-            res.add(part)
+                res.add(part)
         }
         val r = res.joinToString(
                 separator = ""
@@ -214,9 +214,6 @@ fun bestLongJump(jumps: String): Int{
             }
         }
         return k
-    } catch (e: NumberFormatException){
-        return -1
-    }
 }
 
 /**
