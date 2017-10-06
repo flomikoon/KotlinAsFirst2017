@@ -107,7 +107,7 @@ fun dateStrToDigit(str: String): String{
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateDigitToStr(digital: String): String{
-    val matchResult = Regex("""([0-9]{2}).([0-9]{2}).([^0])""").find(digital) ?: return ""
+    val matchResult = Regex("""([0-9]{2}).([0-9]{2}).([^a-z])""").find(digital) ?: return ""
     val mess=listOf<String>("января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря")
     val res= mutableListOf<String>()
     val med= mutableListOf<String>()
