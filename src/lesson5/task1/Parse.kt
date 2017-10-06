@@ -66,37 +66,37 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateStrToDigit(str: String): String{
-    val parts=str.split(" ")
+fun dateStrToDigit(str: String): String {
+    var itog = ""
     val mess=listOf<String>("января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря")
-    val mesc=listOf<Int>(1,2,3,4,5,6,7,8,9,10,11,12)
-    val res=mutableListOf<String>()
-    var count=0
-    try {
-        for (part in parts) {
-            var elements = part
-            val el=part
-            for (i in 0 until mess.size) {
-                if (elements == mess[i]) {
-                    elements = mesc[i].toString()
-                    count+=1
-                }
-            }
-            if (elements.toInt()<10) {
-                 if (count!=3&&el!="01"&&el!="02"&&el!="03"&&el!="04"&&el!="05"&&el!="06"&&el!="07"&&el!="08"&&el!="09"){
-                   elements="0$elements"}
-            }
-            res.add(elements)
-            count+=1
+    val mesc=listOf<String>("01.","02.","03.","04.","05.","06.","07.","08.","09.","10.","11.","12.")
+    val red= mutableListOf<String>()
+    var k=0
+    if (str.matches(Regex("""^\d{1,2} [а-я]{3,} \d+$"""))) {
+        val parks=str.split(" ")
+        for (park in parks){
+            red.add(park)
         }
-        return if (count==4) {
-            res.joinToString(
-                    separator = "."
-            )
-        } else ""
-    } catch (e: NumberFormatException) {
-        return ""
+        for (i in 0 until red.size){
+            val el=red[i]
+            if (i==0&&el.toInt()<10){
+                itog="0"+el.toInt().toString()+"."
+            } else if(i==1){
+                for (j in 0 until mess.size){
+                    val eld=mess[j]
+                    if (eld==el){
+                        itog += mesc[j]
+                        k+=1
+                    }
+                }
+            }else if (i!=2){
+                itog=itog+el+"."
+            } else {
+                itog += el
+            }
+        }
     }
+    return if (k==0) "" else itog
 }
 
 /**
@@ -107,29 +107,36 @@ fun dateStrToDigit(str: String): String{
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateDigitToStr(digital: String): String{
-    val matchResult = Regex("""([0-9]{2}).([0-9]{2})""").find(digital) ?: return ""
-    val mess=listOf<String>("января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря")
-    val res= mutableListOf<String>()
-    val med= mutableListOf<String>()
-    val parts=digital.split(".")
-    var j=0
-    for (part in parts){
-        med.add(part)
-    }
-    for (i in 0 until med.size) {
-        val el = med[i].toInt()
-        if (el == 0||med[1].toInt()>12||med[0].toInt()>31) return "" else {
-            if (i == 1) {
-                res.add(mess[el - 1])
-            } else res.add(el.toString())
+    var itog = ""
+    val mess=listOf<String>("января ","февраля ","марта ","апреля ","мая ","июня ","июля ","августа ","сентября ","октября ","ноября ","декабря ")
+    val mesc=listOf<String>("01","02","03","04","05","06","07","08","09","10","11","12")
+    val red= mutableListOf<String>()
+    var k=0
+    if (digital.matches(Regex("""^\d{2}.\d{2}.\d+$"""))) {
+        val parks=digital.split(".")
+        for (park in parks){
+            red.add(park)
         }
-        j++
+        for (i in 0 until red.size){
+            val el=red[i]
+            if (i==0&&el.toInt()<10){
+                itog=itog+el.toInt().toString()+" "
+            } else if(i==1){
+                for (j in 0 until mesc.size){
+                    val eld=mesc[j]
+                    if (eld==el){
+                        itog += mess[j]
+                        k+=1
+                    }
+                }
+            }else if (i!=2){
+                itog=itog+el+" "
+            } else {
+                itog += el
+            }
+        }
     }
-    return if (j<4) {
-        res.joinToString(
-                separator = " "
-        )
-    } else ""
+    return if (k==0) "" else itog
 }
 
 /**
@@ -195,25 +202,16 @@ fun flattenPhoneNumber(phone: String): String{
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int{
-    val matchResult = Regex("""[^a-z][-%]""").find(jumps) ?: return -1
-    var parts=jumps.split("-","%")
-    val res= mutableListOf<String>()
+    val parts=jumps.split(" ","%","-")
     var k=0
-    if (jumps=="") return -1
-        for (part in parts) {
-                res.add(part)
-        }
-        val r = res.joinToString(
-                separator = ""
-        )
-        parts = r.split(" ")
-        for (part in parts) {
-            val el = part.toInt()
-            if (el > k) {
-                k = el
+    if (parts.joinToString(separator = "").matches(Regex("""\d+"""))){
+        for (part in parts){
+            if(part!=""&&part.toInt()>k){
+                k=part.toInt()
             }
         }
-        return k
+    } else k-=1
+    return k
 }
 
 /**
