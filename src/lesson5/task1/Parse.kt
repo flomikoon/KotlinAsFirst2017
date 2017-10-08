@@ -229,23 +229,24 @@ fun bestHighJump(jumps: String): Int{
     var k=0
     val res= mutableListOf<String>()
     val red= mutableListOf<String>()
-        if (s.joinToString(separator = "").matches(Regex("""\d+"""))){
-            val parts=jumps.split(" ")
-            for (part in parts){
+    if (s.joinToString(separator = "").matches(Regex("""\d+"""))){
+        val parts=jumps.split(" ")
+        for (part in parts){
                 res.add(part)
+        }
+        for (i in 0 until res.size){
+            val el=res[i]
+            if("+" in el){
+                red.add(res[i-1])
             }
-            for (i in 0 until res.size){
-                val el=res[i]
-                if("+" in el){
-                    red.add(res[i-1])
-                }
+        }
+        for (j in 0 until red.size){
+            val eld=red[j]
+            if(eld.toInt()>k){
+                k=eld.toInt()
             }
-            for (j in 0 until red.size){
-                val eld=red[j]
-                if(eld.toInt()>k){
-                    k=eld.toInt()
-                }
-            }
+        }
+        if(k==0) k-=1
     } else k-=1
     return k
 }
