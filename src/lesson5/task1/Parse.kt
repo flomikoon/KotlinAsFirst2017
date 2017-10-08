@@ -114,26 +114,19 @@ fun dateDigitToStr(digital: String): String{
     var k=0
     if (digital.matches(Regex("""^\d{2}.\d{2}.\d+$"""))) {
         val parks=digital.split(".")
-        for (park in parks){
-            red.add(park)
-        }
+        for (park in parks){ red.add(park) }
         for (i in 0 until red.size){
             val el=red[i]
-            if (i==0&&el.toInt()<10){
-                itog=itog+el.toInt().toString()+" "
-            } else if(i==1){
-                for (j in 0 until mesc.size){
-                    val eld=mesc[j]
-                    if (eld==el){
+            if (i==0&&el.toInt()<10){ itog=itog+el.toInt().toString()+" " }
+            else if(i==1){
+                for (j in 0 until mesc.size) {
+                    val eld = mesc[j]
+                    if (eld == el) {
                         itog += mess[j]
-                        k+=1
-                    }
+                        k += 1 }
                 }
-            }else if (i!=2){
-                itog=itog+el+" "
-            } else {
-                itog += el
-            }
+            }else if (i!=2){ itog=itog+el+" " }
+            else { itog += el }
         }
     }
     return if (k==0) "" else itog
@@ -161,29 +154,17 @@ fun flattenPhoneNumber(phone: String): String{
     try {
         parts = if (s == "+") {
             val p = phone.substring(1, phone.length).toString()
-            p.split(")", "(", "-")
-        } else {
-            phone.split(")", "(", "-", " ")
-        }
-        for (part in parts) {
-            res.add(part)
-        }
-        val r = res.joinToString(
-                separator = ""
-        )
+            p.split(")", "(", "-") }
+        else { phone.split(")", "(", "-", " ") }
+        for (part in parts) { res.add(part) }
+        val r = res.joinToString(separator = "")
         parts = r.split(" ")
         for (part in parts) {
             val el = part.toInt()
             resd.add(el)
         }
-        return if (s == "+") {
-            resd.joinToString(
-                    prefix = "+",
-                    separator = ""
-            )
-        } else resd.joinToString(
-                separator = ""
-        )
+        return if (s == "+") { resd.joinToString(prefix = "+", separator = "") }
+        else resd.joinToString(separator = "")
     } catch (e: NumberFormatException){
         return ""
     }
@@ -206,9 +187,7 @@ fun bestLongJump(jumps: String): Int{
     var k=0
     if (parts.joinToString(separator = "").matches(Regex("""\d+"""))){
         for (part in parts){
-            if(part!=""&&part.toInt()>k){
-                k=part.toInt()
-            }
+            if(part!=""&&part.toInt()>k){ k=part.toInt() }
         }
     } else k-=1
     return k
@@ -231,20 +210,14 @@ fun bestHighJump(jumps: String): Int{
     val red= mutableListOf<String>()
     if (s.joinToString(separator = "").matches(Regex("""\d+"""))){
         val parts=jumps.split(" ")
-        for (part in parts){
-                res.add(part)
-        }
+        for (part in parts){ res.add(part) }
         for (i in 0 until res.size){
             val el=res[i]
-            if("+" in el){
-                red.add(res[i-1])
-            }
+            if("+" in el){ red.add(res[i-1]) }
         }
         for (j in 0 until red.size){
             val eld=red[j]
-            if(eld.toInt()>k){
-                k=eld.toInt()
-            }
+            if(eld.toInt()>k){ k=eld.toInt() }
         }
         if(k==0) k-=1
     } else k-=1
@@ -260,7 +233,31 @@ fun bestHighJump(jumps: String): Int{
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int{
+    var k=0
+    val res= mutableListOf<String>()
+    val parts = expression.split(" ")
+    try {
+        for (part in parts) {
+            res.add(part)
+        }
+        for (i in 0 until res.size) {
+            if (i == 0) {
+                k = res[0].toInt()
+            }
+            val el = res[i]
+            if ("+" in el) {
+                k += res[i + 1].toInt()
+            }
+            if ("-" in el) {
+                k -= res[i + 1].toInt()
+            }
+        }
+        return k
+    } catch (e:IllegalArgumentException){
+        return -1
+    }
+}
 
 /**
  * Сложная
