@@ -278,7 +278,7 @@ fun mostExpensive(description: String): String{
     val reskon= mutableListOf<String>()
     var k=0.0
     var l=0
-    if (s.joinToString("").matches(Regex("""^((\D)+\d+.\d+;?)*$"""))) {
+    if (s.joinToString("").matches(Regex("""^((\S)+\d+.\d+;?)*$"""))) {
         for (part in s) {
             res.add(part)
         }
