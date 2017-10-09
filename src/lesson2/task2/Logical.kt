@@ -20,9 +20,9 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
 fun isNumberHappy(number: Int): Boolean =
-        sumIsHalf(number/100)==sumIsHalf(number%100)
+        sumIsHalf(number / 100) == sumIsHalf(number % 100)
 
-fun sumIsHalf(n: Int):Int=n%10+n/10
+fun sumIsHalf(n: Int): Int = n % 10 + n / 10
 /**
  * Простая
  *
@@ -31,7 +31,7 @@ fun sumIsHalf(n: Int):Int=n%10+n/10
  * Считать, что ферзи не могут загораживать друг друга.
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
-        y1==y2||x1==x2||Math.abs(x1-x2)==Math.abs(y1-y2)
+        y1 == y2 || x1 == x2 || Math.abs(x1 - x2) == Math.abs(y1 - y2)
 
 /**
  * Средняя
@@ -41,9 +41,9 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
  * Вернуть true, если утверждение верно
  */
 fun circleInside(x1: Double, y1: Double, r1: Double,
-                 x2: Double, y2: Double, r2: Double): Boolean{
-    val d=sqrt(sqr(x2-x1)+ sqr(y2-y1))
-    return (d+r1)<=r2
+                 x2: Double, y2: Double, r2: Double): Boolean {
+    val d = sqrt(sqr(x2 - x1) + sqr(y2 - y1))
+    return (d + r1) <= r2
 }
 
 /**
@@ -55,10 +55,10 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean{
-    val mink=minOf(a,b,c)
-    val mino=Math.min(r,s)
-    val maxo=Math.max(s,r)
-    val midk=a+b+c-mink-maxOf(a,b,c)
-    return mink<=mino&&midk<=maxo
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+    val mink = minOf(a, b, c)
+    val mino = Math.min(r, s)
+    val maxo = Math.max(s, r)
+    val midk = a + b + c - mink - maxOf(a, b, c)
+    return mink <= mino && midk <= maxo
 }
