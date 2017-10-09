@@ -1,6 +1,8 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson5.task1
 
+import lesson8.task2.parseExpr
+
 /**
  * Пример
  *
@@ -79,9 +81,7 @@ fun dateStrToDigit(str: String): String {
         }
         for (i in 0 until red.size){
             val el=red[i]
-            if (i==0&&el.toInt()<10){
-                itog="0"+el.toInt().toString()+"."
-            } else if(i==1){
+            if (i==0&&el.toInt()<10){ itog="0"+el.toInt().toString()+"." } else if(i==1){
                 for (j in 0 until mess.size){
                     val eld=mess[j]
                     if (eld==el){
@@ -89,11 +89,8 @@ fun dateStrToDigit(str: String): String {
                         k+=1
                     }
                 }
-            }else if (i!=2){
-                itog=itog+el+"."
-            } else {
-                itog += el
-            }
+            }else if (i!=2){ itog=itog+el+"." }
+            else { itog += el }
         }
     }
     return if (k==0) "" else itog
@@ -208,26 +205,21 @@ fun bestHighJump(jumps: String): Int{
     var k=0
     val res= mutableListOf<String>()
     val red= mutableListOf<String>()
-    if (s.joinToString(separator = "").matches(Regex("""\d+"""))) {
+    if (s.joinToString(separator = "").matches(Regex("""\d+"""))){
         val parts = jumps.split(" ")
-        for (part in parts) {
-            res.add(part)
-        }
+        for (part in parts) { res.add(part) }
         for (i in 0 until res.size) {
             val el = res[i]
             if ("+" in el) {
                 red.add(res[i - 1])
                 for (j in 0 until red.size) {
                     val eld = red[j]
-                    if (eld.toInt() > k) {
-                        k = eld.toInt()
-                    }
+                    if (eld.toInt() > k) { k = eld.toInt() }
                 }
             }
+
         }
-        if (k==0&&"+" !in jumps){
-            k-=1
-        }
+        if (k==0&&"+" !in jumps){ k-=1 }
     }else k-=1
     return k
 }
@@ -245,26 +237,15 @@ fun plusMinus(expression: String): Int{
     var k=0
     val res= mutableListOf<String>()
     val parts = expression.split(" ")
-    try {
-        for (part in parts) {
-            res.add(part)
-        }
+    require(parts.joinToString("").matches(Regex("""\d+([+-]\d+)*""")))
+        for (part in parts) { res.add(part) }
         for (i in 0 until res.size) {
-            if (i == 0) {
-                k = res[0].toInt()
-            }
+            if (i == 0) k = res[0].toInt()
             val el = res[i]
-            if ("+" in el) {
-                k += res[i + 1].toInt()
-            }
-            if ("-" in el) {
-                k -= res[i + 1].toInt()
-            }
+            if ("+" in el) k += res[i + 1].toInt()
+            if ("-" in el) k -= res[i + 1].toInt()
         }
         return k
-    } catch (e:IllegalArgumentException){
-        return -1
-    }
 }
 
 /**
@@ -276,7 +257,7 @@ fun plusMinus(expression: String): Int{
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int= TODO()
 
 /**
  * Сложная
@@ -289,7 +270,39 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть положительными
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String{
+    val s=description.split(" ","; ")
+    val res= mutableListOf<String>()
+    val resnazv= mutableListOf<String>()
+    val reschena= mutableListOf<String>()
+    val reskon= mutableListOf<String>()
+    var k=0.0
+    var l=0
+    if (s.joinToString("").matches(Regex("""^((\D)+\d+.\d+;?)*((\D)+\d+.\d+)$"""))) {
+        for (part in s) {
+            res.add(part)
+        }
+        for (i in 0 until res.size) {
+            val el = res[i]
+            if (i % 2 == 0) {
+                resnazv.add(el)
+            } else reschena.add(el)
+        }
+        reschena.reversed()
+        for (j in 0 until reschena.size) {
+            val eld = reschena[j]
+            if (eld.toDouble() > k) {
+                k = eld.toDouble()
+                l = j
+            }
+        }
+        val d = resnazv[l]
+        reskon.add(d)
+        return reskon.joinToString(
+                separator = ""
+        )
+    } else return ""
+}
 
 /**
  * Сложная
@@ -302,7 +315,7 @@ fun mostExpensive(description: String): String = TODO()
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+fun fromRoman(roman: String): Int= TODO()
 
 /**
  * Очень сложная

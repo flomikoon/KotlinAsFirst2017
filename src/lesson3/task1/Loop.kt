@@ -107,8 +107,8 @@ fun fib(n: Int): Int {
 fun lcm(m: Int, n: Int): Int{
     var k=Math.max(n,m)
     while (k in 1..n*m){
-        if (k%n!=0||k%m!=0)
-            k+=1 else return k
+        if (k%n!=0||k%m!=0) k+=1
+        else return k
     }
     return k
 }
@@ -120,9 +120,7 @@ fun lcm(m: Int, n: Int): Int{
  */
 fun minDivisor(n: Int): Int{
     var k=2
-    while(n%k!=0){
-        k+=1
-    }
+    while(n%k!=0){ k+=1 }
     return k
 }
 
@@ -133,9 +131,7 @@ fun minDivisor(n: Int): Int{
  * */
 fun maxDivisor(n: Int): Int {
     var k=n-1
-    while(n%k!=0){
-        k-=1
-    }
+    while(n%k!=0){ k-=1 }
     return k
 }
 
@@ -148,9 +144,7 @@ fun maxDivisor(n: Int): Int {
  */
 fun isCoPrime(m: Int, n: Int): Boolean{
     val d=Math.min(n,m)
-    for (i in 2..d){
-        if (n%i==0&&m%i==0)return false
-    }
+    for (i in 2..d){ if (n%i==0&&m%i==0)return false }
     return true
 }
 
@@ -163,9 +157,7 @@ fun isCoPrime(m: Int, n: Int): Boolean{
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean{
     var k=0
-        while(k<=sqrt(n.toDouble())){
-            if(k*k>=m)return true else k+=1
-        }
+        while(k<=sqrt(n.toDouble())){ if(k*k>=m)return true else k+=1 }
     return false
 }
 
@@ -180,23 +172,15 @@ fun squareBetweenExists(m: Int, n: Int): Boolean{
 fun sin(x: Double, eps: Double): Double
 {
     var d=x
-    if (d>2*PI) {
-        while (d>2*PI) d-=2*PI
-    }
-    if (d<-2*PI) {
-        while (d<2*PI) d+=2*PI
-    }
+    if (d>2*PI) { while (d>2*PI) d-=2*PI }
+    if (d<-2*PI) { while (d<2*PI) d+=2*PI }
     var k=0.0
     var s=d
     var i=1
     while (abs(s)>=abs(eps)){
         s=pow(d,i.toDouble())/factorial(i)
-        if (i%4==1){
-            k+=s
-        }
-        if (i%4==3){
-            k-=s
-        }
+        if (i%4==1) k+=s
+        if (i%4==3) k-=s
         i+=2
     }
     return k
@@ -214,23 +198,15 @@ fun sin(x: Double, eps: Double): Double
 fun cos(x: Double, eps: Double): Double
 {
     var d=x
-    if (d>2*PI) {
-        while (d>2*PI) d-=2*PI
-    }
-    if (d<-2*PI) {
-        while (d<2*PI) d+=2*PI
-    }
+    if (d>2*PI) { while (d>2*PI) d-=2*PI }
+    if (d<-2*PI) { while (d<2*PI) d+=2*PI }
     var k=1.0
     var s=d
     var i=2
     while (abs(s)>=abs(eps)){
         s=pow(d,i.toDouble())/factorial(i)
-        if (i%4==0){
-            k+=s
-        }
-        if (i%4==2){
-            k-=s
-        }
+        if (i%4==0)k+=s
+        if (i%4==2)k-=s
         i+=2
     }
     return k
@@ -307,9 +283,7 @@ fun hasDifferentDigits(n: Int): Boolean {
     var k=0
     var n1=n
    while (n1>9){
-       if (n1%10!=n1%100/10){
-           k+=1
-       }
+       if (n1%10!=n1%100/10)k+=1
        n1/=10
    }
     return k!=0
@@ -336,11 +310,7 @@ fun squareSequenceDigit(n: Int): Int{
         i+=1
     }
     val c=count-n
-    if (count>n) {
-        for (j in 1..c) {
-            k/=10
-        }
-    }
+    if (count>n) { for (j in 1..c) { k/=10 } }
     return k%10
 }
 
@@ -371,10 +341,7 @@ fun fibSequenceDigit(n: Int): Int{n==1
     }
     val c=count-n
     if (count>n) {
-        for (j in 1..c) {
-            k/=10
-        }
-    }
+        for (j in 1..c) { k/=10 } }
     return k%10
 }
 
