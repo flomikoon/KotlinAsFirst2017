@@ -272,23 +272,17 @@ fun firstDuplicateIndex(str: String): Int= TODO()
  */
 fun mostExpensive(description: String): String{
     val s=description.split(" ","; ")
-    val res= mutableListOf<String>()
     val resnazv= mutableListOf<String>()
     val reschena= mutableListOf<String>()
     val reskon= mutableListOf<String>()
     var k=0.0
     var l=0
-    if (s.joinToString("").matches(Regex("""^((\S)+\d+.\d+;?)*$"""))) {
-        for (part in s) {
-            res.add(part)
+    if (description=="") return ""
+    try{
+        for (i in 0 until s.size step 2) {
+            resnazv.add(s[i])
+            reschena.add(s[i+1])
         }
-        for (i in 0 until res.size) {
-            val el = res[i]
-            if (i % 2 == 0) {
-                resnazv.add(el)
-            } else reschena.add(el)
-        }
-        reschena.reversed()
         for (j in 0 until reschena.size) {
             val eld = reschena[j]
             if (eld.toDouble() > k) {
@@ -301,7 +295,9 @@ fun mostExpensive(description: String): String{
         return reskon.joinToString(
                 separator = ""
         )
-    } else return ""
+    } catch (e: NumberFormatException){
+        return ""
+    }
 }
 
 /**
