@@ -311,7 +311,7 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  */
 fun roman(n: Int): String {
     var n1 = n
-    val rim = listOf<String>("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    val rim = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
     val resoult = mutableListOf<String>()
     val del = listOf<Int>(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
     for (i in 0 until del.size) {
@@ -342,70 +342,27 @@ fun russian(n: Int): String {
     val edt = listOf("одна тысяча", "две тысячи", "три тысячи", "четыре тысячи")
     val eds = listOf("один", "два", "три", "четыре")
     val ed = listOf("пять", "шесть", "семь", "восемь", "девять")
-    val resoult = mutableListOf<String>()
-    var n1 = n
-    var d = 100000
-    var n2 = n
-    var n3 = n
-    for (i in 1..2) {
-        val n5 = n1 / 1000
-        n1 /= d
-        if (n1 != 0) {
-            val element = sot[n1 - 1]
-            resoult.add(element)
-        }
-        n1 = n % d
-        d /= 10
-        n2 = n1 / 1000
-        n3 = n1 / 1
-        if ((n2 in 11..19 && n1 > 1000) || (n3 in 11..19 && n1 < 1000)) {
-            if (n2 != 0) {
-                val element = dvdes[n2 - 11]
-                resoult.add(element)
-            } else {
-                val element = dvdes[n3 - 11]
-                resoult.add(element)
-            }
-            if (n1 > 1000) {
-                resoult.add("тысяч")
-            }
-            d /= 10
-        } else {
-            n1 /= d
-            if (n1 != 0) {
-                val element = des[n1 - 1]
-                resoult.add(element)
-            }
-            n1 = n % d
-            val n4 = n1
-            d /= 10
-            n1 /= d
-            if (n1 != 0 && n1 in 1..4) {
-                if (n4 > 1000) {
-                    val element = edt[n1 - 1]
-                    resoult.add(element)
-                }
-                if (n4 < 1000) {
-                    val element = eds[n1 - 1]
-                    resoult.add(element)
-                }
-            }
-            if (n1 != 0 && n1 !in 0..4) {
-                val element = ed[n1 - 5]
-                resoult.add(element)
-                if (n4 > 1000) {
-                    resoult.add("тысяч")
-                }
-            }
-            if (n1 == 0 && n5 > 0) {
-                resoult.add("тысяч")
-            }
-        }
-        if (n in 11..19) break
-        n1 = n % d
-        d /= 10
+    val string = mutableListOf<String>()
+    val c1 = n / 100000
+    val c2 = n / 10000 % 10
+    val c3 = n / 1000 % 10
+    val c4 = n / 100 % 10
+    val c5 = n / 10 % 10
+    val c6 = n % 10
+    val c23 = n % 100000 / 1000
+    val c56 = n % 100
+    if (c1 != 0) string.add(sot[c1 - 1])
+    if (c23 in 11..19) string.add(dvdes[c23 - 11]) else {
+        if (c2 != 0) string.add(des[c2 - 1])
+        if (c3 != 0 && c3 < 5) string.add(edt[c3 - 1])
+        if (c3 != 0 && c3 > 4) string.add(ed[c3 - 5])
     }
-    return resoult.joinToString(
-            separator = " "
-    )
+    if ((c3 == 0 || c3 > 4) && n > 1000) string.add("тысяч")
+    if (c4 != 0) string.add(sot[c4 - 1])
+    if (c56 in 11..19) string.add(dvdes[c56 - 11]) else {
+        if (c5 != 0) string.add(des[c5 - 1])
+        if (c6 != 0 && c6 < 5) string.add(eds[c6 - 1])
+        if (c6 != 0 && c6 > 4) string.add(ed[c6 - 5])
+    }
+    return string.joinToString(separator = " ")
 }
