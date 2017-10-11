@@ -64,14 +64,14 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Например, число 1 содержит 1 цифру, 456 -- 3 цифры, 65536 -- 5 цифр.
  */
 fun digitNumber(n: Int): Int {
-    var k = 0
+    var k = 1
     var n1 = n
-    if (n == 0) return 1
-    if (n == Int.MAX_VALUE) return 10 else
-        while (n1 != 0) {
+    if (n == Int.MAX_VALUE) k = 10 else {
+        while (n1 > 9) {
             n1 /= 10
             k += 1
         }
+    }
     return k
 }
 
@@ -82,18 +82,16 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    var k = 0
+    var k = 1
     var d = 0
     var d1 = 1
     var n1 = n
-    if (n == 1) k = 1 else {
-        while (n1 > 1) {
-            k = d + d1
-            val d2 = d
-            d = d1
-            d1 = d2 + d
-            n1 -= 1
-        }
+    while (n1 > 1) {
+        k = d + d1
+        val d2 = d
+        d = d1
+        d1 = d2 + d
+        n1 -= 1
     }
     return k
 }
@@ -175,7 +173,7 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * Для заданного x рассчитать с заданной точностью eps
  * sin(x) = x - x^3 / 3! + x^5 /
  * 5! - x^7 / 7! + ...
- s>0* Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
+s>0* Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun sin(x: Double, eps: Double): Double {
     var d = x
@@ -196,7 +194,6 @@ fun sin(x: Double, eps: Double): Double {
     }
     return k
 }
-
 
 
 /**
@@ -233,18 +230,12 @@ fun cos(x: Double, eps: Double): Double {
  * Не использовать строки при решении задачи.
  */
 fun revert(n: Int): Int {
-    var k = 0
+    val k = digitNumber(n)
     var s = 0
     var n1 = n
     var n2 = n
-    if (n in 0..9) return n else
-        while (n1 != 0) {
-            n1 /= 10
-            k += 1
-        }
     var d = pow(10.0, (k - 1).toDouble()).toInt()
     var d2 = 1
-    val n3 = n2 / d
     for (i in 1..k) {
         n1 /= d
         n1 *= d2
@@ -254,7 +245,7 @@ fun revert(n: Int): Int {
         d /= 10
         d2 *= 10
     }
-    return s + n3
+    return s
 }
 
 /**
@@ -265,17 +256,10 @@ fun revert(n: Int): Int {
  * 15751 -- палиндром, 3653 -- нет.
  */
 fun isPalindrome(n: Int): Boolean {
-    var k = 0
+    val k = digitNumber(n)
     var n1 = n
-    if (n in 1..9) return true
-    while (n1 != 0) {
-        n1 /= 10
-        k += 1
-    }
-    n1 = n
     var d = pow(10.0, k - 1.toDouble()).toInt()
-    val count = if (k % 2 == 0) k else k - 1
-    for (i in 1..count / 2) {
+    for (i in 1..k / 2) {
         if (n1 % 10 == n1 / d) {
             n1 /= 10
             d /= 10
@@ -339,12 +323,10 @@ fun squareSequenceDigit(n: Int): Int {
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
 fun fibSequenceDigit(n: Int): Int {
-    var k = 0
+    var k = 1
     var count = 1
     var d = 0
     var d1 = 1
-    var d2 = 0
-    if (n == 1) k = 1
     while (n > count) {
         k = d + d1
         while (k > 0) {
@@ -352,7 +334,7 @@ fun fibSequenceDigit(n: Int): Int {
             count += 1
         }
         k = d + d1
-        d2 = d
+        val d2 = d
         d = d1
         d1 = d2 + d
     }
