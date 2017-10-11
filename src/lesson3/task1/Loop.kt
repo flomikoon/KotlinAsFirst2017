@@ -67,7 +67,7 @@ fun digitNumber(n: Int): Int {
     var k = 1
     var n1 = n
     if (n == Int.MAX_VALUE) k = 10 else {
-        while (n1 > 9) {
+        while (abs(n1) > 9) {
             n1 /= 10
             k += 1
         }
