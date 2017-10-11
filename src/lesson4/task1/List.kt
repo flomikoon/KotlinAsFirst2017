@@ -354,15 +354,13 @@ fun russian(n: Int): String {
     if (c1 != 0) string.add(sot[c1 - 1])
     if (c23 in 11..19) string.add(dvdes[c23 - 11]) else {
         if (c2 != 0) string.add(des[c2 - 1])
-        if (c3 != 0 && c3 < 5) string.add(edt[c3 - 1])
-        if (c3 != 0 && c3 > 4) string.add(ed[c3 - 5])
+        if (c3 != 0) { if (c3 < 5) string.add(edt[c3 - 1]) else string.add(ed[c3 - 5]) }
     }
-    if ((c3 == 0 || c3 > 4) && n > 1000) string.add("тысяч")
+    if ((c3 == 0 || c3 > 4||c23 in 11..19) && n > 1000) string.add("тысяч")
     if (c4 != 0) string.add(sot[c4 - 1])
     if (c56 in 11..19) string.add(dvdes[c56 - 11]) else {
         if (c5 != 0) string.add(des[c5 - 1])
-        if (c6 != 0 && c6 < 5) string.add(eds[c6 - 1])
-        if (c6 != 0 && c6 > 4) string.add(ed[c6 - 5])
+        if (c6 != 0) { if (c6 < 5) string.add(eds[c6 - 1]) else string.add(ed[c6 - 5]) }
     }
     return string.joinToString(separator = " ")
 }
