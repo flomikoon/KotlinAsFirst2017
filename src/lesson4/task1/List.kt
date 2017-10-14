@@ -174,10 +174,10 @@ fun times(a: List<Double>, b: List<Double>): Double {
  */
 fun polynom(p: List<Double>, x: Double): Double {
     var r = 0.0
-    var x1=1.0
+    var x1 = 1.0
     for (i in 0 until p.size) {
         r += p[i] * x1
-        x1*=x
+        x1 *= x
     }
     return r
 }
@@ -196,7 +196,7 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
     var r = 0.0
     for (i in 0 until list.size) {
         list[i] += r
-        r += list[i]-r
+        r += list[i] - r
     }
     return list
 }
@@ -274,10 +274,10 @@ fun convertToString(n: Int, base: Int): String = TODO()
 fun decimal(digits: List<Int>, base: Int): Int {
     var r = 0.0
     val list = digits.reversed()
-    var base1=1
+    var base1 = 1
     for (i in 0 until list.size) {
         r += list[i] * base1
-        base1*=base
+        base1 *= base
     }
     return r.toInt()
 }
@@ -305,10 +305,10 @@ fun roman(n: Int): String {
     var n1 = n
     val rnumbers = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
     val result = mutableListOf<String>()
-    val del = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
-    for (i in 0 until del.size) {
-        while (n1 >= del[i]) {
-            n1 -= del[i]
+    val integers = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    for (i in 0 until integers.size) {
+        while (n1 >= integers[i]) {
+            n1 -= integers[i]
             result.add(rnumbers[i])
         }
         if (n1 == 0) break
@@ -324,12 +324,12 @@ fun roman(n: Int): String {
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    val sot = listOf("сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
-    val des = listOf("десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто")
-    val dvdes = listOf("одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать")
-    val edt = listOf("одна тысяча", "две тысячи", "три тысячи", "четыре тысячи")
-    val eds = listOf("один", "два", "три", "четыре")
-    val ed = listOf("пять", "шесть", "семь", "восемь", "девять")
+    val hundreds = listOf("сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
+    val ten = listOf("десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто")
+    val twoten = listOf("одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать")
+    val onet = listOf("одна тысяча", "две тысячи", "три тысячи", "четыре тысячи")
+    val oneend = listOf("один", "два", "три", "четыре")
+    val one = listOf("пять", "шесть", "семь", "восемь", "девять")
     val string = mutableListOf<String>()
     val number1 = n / 100000
     val number2 = n / 10000 % 10
@@ -339,24 +339,24 @@ fun russian(n: Int): String {
     val number6 = n % 10
     val number23 = n % 100000 / 1000
     val number56 = n % 100
-    if (number1 != 0) string.add(sot[number1 - 1])
+    if (number1 != 0) string.add(hundreds[number1 - 1])
     when (number23) {
-        in 11..19 -> string.add(dvdes[number23 - 11])
+        in 11..19 -> string.add(twoten[number23 - 11])
         else -> {
-            if (number2 != 0) string.add(des[number2 - 1])
+            if (number2 != 0) string.add(ten[number2 - 1])
             if (number3 != 0) {
-                if (number3 < 5) string.add(edt[number3 - 1]) else string.add(ed[number3 - 5])
+                if (number3 < 5) string.add(onet[number3 - 1]) else string.add(one[number3 - 5])
             }
         }
     }
     if ((number3 == 0 || number3 > 4 || number23 in 11..19) && n > 1000) string.add("тысяч")
-    if (number4 != 0) string.add(sot[number4 - 1])
+    if (number4 != 0) string.add(hundreds[number4 - 1])
     when (number56) {
-        in 11..19 -> string.add(dvdes[number56 - 11])
+        in 11..19 -> string.add(twoten[number56 - 11])
         else -> {
-            if (number5 != 0) string.add(des[number5 - 1])
+            if (number5 != 0) string.add(ten[number5 - 1])
             if (number6 != 0) {
-                if (number6 < 5) string.add(eds[number6 - 1]) else string.add(ed[number6 - 5])
+                if (number6 < 5) string.add(oneend[number6 - 1]) else string.add(one[number6 - 5])
             }
         }
     }
