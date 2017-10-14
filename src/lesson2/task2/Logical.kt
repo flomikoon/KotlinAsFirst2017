@@ -20,9 +20,9 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
 fun isNumberHappy(number: Int): Boolean =
-        sumIsHalf(number / 100) == sumIsHalf(number % 100)
+        sumTwoNumbers(number / 100) == sumTwoNumbers(number % 100)
 
-fun sumIsHalf(n: Int): Int = n % 10 + n / 10
+fun sumTwoNumbers(n: Int): Int = n % 10 + n / 10
 /**
  * Простая
  *
@@ -56,9 +56,9 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    val mink = minOf(a, b, c)
-    val mino = Math.min(r, s)
-    val maxo = Math.max(s, r)
-    val midk = a + b + c - mink - maxOf(a, b, c)
-    return mink <= mino && midk <= maxo
+    val minb = minOf(a, b, c)
+    val minhole = Math.min(r, s)
+    val maxhole = Math.max(s, r)
+    val midk = a + b + c - minb - maxOf(a, b, c)
+    return minb <= minhole && midk <= maxhole
 }

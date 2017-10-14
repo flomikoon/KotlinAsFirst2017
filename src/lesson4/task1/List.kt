@@ -140,16 +140,10 @@ fun mean(list: List<Double>): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    var r = 0.0
     val d = list.size
-    for (i in 0 until d) {
-        val element = list[i]
-        r += element
-    }
-    r /= d
+    val r = mean(list)
     for (j in 0 until d) {
-        val element = list[j]
-        list[j] = element - r
+        list[j] -= r
     }
     return list
 }
@@ -164,9 +158,7 @@ fun center(list: MutableList<Double>): MutableList<Double> {
 fun times(a: List<Double>, b: List<Double>): Double {
     var r = 0.0
     for (i in 0 until a.size) {
-        val element = a[i]
-        val element1 = b[i]
-        r += element * element1
+        r += a[i] * b[i]
     }
     return r
 }
@@ -182,9 +174,10 @@ fun times(a: List<Double>, b: List<Double>): Double {
  */
 fun polynom(p: List<Double>, x: Double): Double {
     var r = 0.0
+    var x1=1.0
     for (i in 0 until p.size) {
-        val element = p[i]
-        r += element * pow(x, i.toDouble())
+        r += p[i] * x1
+        x1*=x
     }
     return r
 }
@@ -202,9 +195,8 @@ fun polynom(p: List<Double>, x: Double): Double {
 fun accumulate(list: MutableList<Double>): MutableList<Double> {
     var r = 0.0
     for (i in 0 until list.size) {
-        val element = list[i]
-        list[i] = element + r
-        r += element
+        list[i] += r
+        r += list[i]-r
     }
     return list
 }
@@ -217,18 +209,18 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  * Множители в списке должны располагаться по возрастанию.
  */
 fun factorize(n: Int): List<Int> {
-    val resoult = mutableListOf<Int>()
+    val result = mutableListOf<Int>()
     var n1 = n
     var i = 2
     while (n1 > 1) {
         if (n1 % i == 0) {
-            resoult.add(i)
+            result.add(i)
             n1 /= i
             i = 1
         }
         i += 1
     }
-    return resoult.sorted()
+    return result.sorted()
 }
 
 /**
@@ -238,8 +230,8 @@ fun factorize(n: Int): List<Int> {
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  */
 fun factorizeToString(n: Int): String {
-    val resoult = factorize(n)
-    return resoult.sorted().joinToString(
+    val result = factorize(n)
+    return result.joinToString(
             separator = "*"
     )
 }
@@ -252,15 +244,14 @@ fun factorizeToString(n: Int): String {
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
 fun convert(n: Int, base: Int): List<Int> {
-    val resoult = mutableListOf<Int>()
+    val result = mutableListOf<Int>()
     var n1 = n
-    if (n == 0) resoult.add(0)
+    if (n == 0) result.add(0)
     while (n1 > 0) {
-        val d = n1 % base
-        resoult.add(d)
+        result.add(n1 % base)
         n1 /= base
     }
-    return resoult.reversed()
+    return result.reversed()
 }
 
 /**
@@ -282,10 +273,11 @@ fun convertToString(n: Int, base: Int): String = TODO()
  */
 fun decimal(digits: List<Int>, base: Int): Int {
     var r = 0.0
-    val spisok = digits.reversed()
-    for (i in 0 until spisok.size) {
-        val element = spisok[i]
-        r += element * pow(base.toDouble(), i.toDouble())
+    val list = digits.reversed()
+    var base1=1
+    for (i in 0 until list.size) {
+        r += list[i] * base1
+        base1*=base
     }
     return r.toInt()
 }
@@ -311,21 +303,17 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  */
 fun roman(n: Int): String {
     var n1 = n
-    val rim = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
-    val resoult = mutableListOf<String>()
-    val del = listOf<Int>(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    val rnumbers = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    val result = mutableListOf<String>()
+    val del = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
     for (i in 0 until del.size) {
-        val el = del[i]
-        while (n1 >= el) {
-            n1 -= el
-            val element = rim[i]
-            resoult.add(element)
+        while (n1 >= del[i]) {
+            n1 -= del[i]
+            result.add(rnumbers[i])
         }
         if (n1 == 0) break
     }
-    return resoult.joinToString(
-            separator = ""
-    )
+    return result.joinToString(separator = "")
 }
 
 /**
@@ -343,24 +331,34 @@ fun russian(n: Int): String {
     val eds = listOf("один", "два", "три", "четыре")
     val ed = listOf("пять", "шесть", "семь", "восемь", "девять")
     val string = mutableListOf<String>()
-    val c1 = n / 100000
-    val c2 = n / 10000 % 10
-    val c3 = n / 1000 % 10
-    val c4 = n / 100 % 10
-    val c5 = n / 10 % 10
-    val c6 = n % 10
-    val c23 = n % 100000 / 1000
-    val c56 = n % 100
-    if (c1 != 0) string.add(sot[c1 - 1])
-    if (c23 in 11..19) string.add(dvdes[c23 - 11]) else {
-        if (c2 != 0) string.add(des[c2 - 1])
-        if (c3 != 0) { if (c3 < 5) string.add(edt[c3 - 1]) else string.add(ed[c3 - 5]) }
+    val number1 = n / 100000
+    val number2 = n / 10000 % 10
+    val number3 = n / 1000 % 10
+    val number4 = n / 100 % 10
+    val number5 = n / 10 % 10
+    val number6 = n % 10
+    val number23 = n % 100000 / 1000
+    val number56 = n % 100
+    if (number1 != 0) string.add(sot[number1 - 1])
+    when (number23) {
+        in 11..19 -> string.add(dvdes[number23 - 11])
+        else -> {
+            if (number2 != 0) string.add(des[number2 - 1])
+            if (number3 != 0) {
+                if (number3 < 5) string.add(edt[number3 - 1]) else string.add(ed[number3 - 5])
+            }
+        }
     }
-    if ((c3 == 0 || c3 > 4||c23 in 11..19) && n > 1000) string.add("тысяч")
-    if (c4 != 0) string.add(sot[c4 - 1])
-    if (c56 in 11..19) string.add(dvdes[c56 - 11]) else {
-        if (c5 != 0) string.add(des[c5 - 1])
-        if (c6 != 0) { if (c6 < 5) string.add(eds[c6 - 1]) else string.add(ed[c6 - 5]) }
+    if ((number3 == 0 || number3 > 4 || number23 in 11..19) && n > 1000) string.add("тысяч")
+    if (number4 != 0) string.add(sot[number4 - 1])
+    when (number56) {
+        in 11..19 -> string.add(dvdes[number56 - 11])
+        else -> {
+            if (number5 != 0) string.add(des[number5 - 1])
+            if (number6 != 0) {
+                if (number6 < 5) string.add(eds[number6 - 1]) else string.add(ed[number6 - 5])
+            }
+        }
     }
     return string.joinToString(separator = " ")
 }
