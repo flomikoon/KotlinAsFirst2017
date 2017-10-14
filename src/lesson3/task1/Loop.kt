@@ -98,12 +98,12 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    for (i in max(m,n)..n * m) {
-        if (i%m==0&&i%n==0) {
+    for (i in max(m, n)..n * m) {
+        if (i % m == 0 && i % n == 0) {
             return i
         }
     }
-    return m*n
+    return m * n
 }
 
 /**
@@ -170,10 +170,10 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
 s>0* Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun sin(x: Double, eps: Double): Double {
-    val d=coercion(x)
-    var k=0.0
-    var i=1
-    var s=d
+    val d = coercion(x)
+    var k = 0.0
+    var i = 1
+    var s = d
     while (abs(s) >= abs(eps)) {
         s = pow(d, i.toDouble()) / factorial(i)
         if (i % 4 == 1) k += s
@@ -183,8 +183,8 @@ fun sin(x: Double, eps: Double): Double {
     return k
 }
 
-fun coercion(x:Double):Double {
-    var d=x
+fun coercion(x: Double): Double {
+    var d = x
     if (d > 2 * PI) {
         while (d > 2 * PI) d -= 2 * PI
     }
@@ -203,7 +203,7 @@ fun coercion(x:Double):Double {
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun cos(x: Double, eps: Double): Double {
-    val d=coercion(x)
+    val d = coercion(x)
     var k = 1.0
     var s = d
     var i = 2
