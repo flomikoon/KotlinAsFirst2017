@@ -331,32 +331,32 @@ fun russian(n: Int): String {
     val oneend = listOf("один", "два", "три", "четыре")
     val one = listOf("пять", "шесть", "семь", "восемь", "девять")
     val string = mutableListOf<String>()
-    val number1 = n / 100000
-    val number2 = n / 10000 % 10
-    val number3 = n / 1000 % 10
-    val number4 = n / 100 % 10
-    val number5 = n / 10 % 10
-    val number6 = n % 10
-    val number23 = n % 100000 / 1000
-    val number56 = n % 100
-    if (number1 != 0) string.add(hundreds[number1 - 1])
-    when (number23) {
-        in 11..19 -> string.add(twoten[number23 - 11])
+    val n1 = mutableListOf<Int>()
+    var n2 = n
+    for (i in 0..5) {
+        n1.add(n2 % 10)
+        n2 /= 10
+    }
+    n1.add(n / 1000 % 100)
+    n1.add(n % 100)
+    if (n1[5] != 0) string.add(hundreds[n1[5] - 1])
+    when {
+        n1[6] in 11..19 -> string.add(twoten[n1[6] - 11])
         else -> {
-            if (number2 != 0) string.add(ten[number2 - 1])
-            if (number3 != 0) {
-                if (number3 < 5) string.add(onet[number3 - 1]) else string.add(one[number3 - 5])
+            if (n1[4] != 0) string.add(ten[n1[4] - 1])
+            when {
+                n1[3] != 0 -> if (n1[3] < 5) string.add(onet[n1[3] - 1]) else string.add(one[n1[3] - 5])
             }
         }
     }
-    if ((number3 == 0 || number3 > 4 || number23 in 11..19) && n > 1000) string.add("тысяч")
-    if (number4 != 0) string.add(hundreds[number4 - 1])
-    when (number56) {
-        in 11..19 -> string.add(twoten[number56 - 11])
+    if ((n1[3] == 0 || n1[3] > 4 || n1[6] in 11..19) && n > 1000) string.add("тысяч")
+    if (n1[2] != 0) string.add(hundreds[n1[2] - 1])
+    when {
+        n1[7] in 11..19 -> string.add(twoten[n1[7] - 11])
         else -> {
-            if (number5 != 0) string.add(ten[number5 - 1])
-            if (number6 != 0) {
-                if (number6 < 5) string.add(oneend[number6 - 1]) else string.add(one[number6 - 5])
+            if (n1[1] != 0) string.add(ten[n1[1] - 1])
+            when {
+                n1[0] != 0 -> if (n1[0] < 5) string.add(oneend[n1[0] - 1]) else string.add(one[n1[0] - 5])
             }
         }
     }
