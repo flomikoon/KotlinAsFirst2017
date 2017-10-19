@@ -2,6 +2,7 @@
 package lesson5.task1
 
 import lesson8.task2.parseExpr
+import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
 
 /**
  * Пример
@@ -69,36 +70,35 @@ fun main(args: Array<String>) {
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateStrToDigit(str: String): String {
-    var itog = ""
-    val mess = listOf<String>("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
-    val mesc = listOf<String>("01.", "02.", "03.", "04.", "05.", "06.", "07.", "08.", "09.", "10.", "11.", "12.")
-    val red = mutableListOf<String>()
+    var result = ""
+    val mon = listOf<String>("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
+    val monnumber= listOf<String>("01.", "02.", "03.", "04.", "05.", "06.", "07.", "08.", "09.", "10.", "11.", "12.")
+    val list = mutableListOf<String>()
     var k = 0
     if (str.matches(Regex("""^\d{1,2} [а-я]{3,} \d+$"""))) {
         val parks = str.split(" ")
         for (park in parks) {
-            red.add(park)
+            list.add(park)
         }
-        for (i in 0 until red.size) {
-            val el = red[i]
-            if (i == 0 && el.toInt() < 10) {
-                itog = "0" + el.toInt().toString() + "."
+        for (i in 0 until list.size) {
+            val el = list[i]
+            if (i == 0 && list[i].toInt() < 10) {
+                result = "0" + list[i].toInt().toString() + "."
             } else if (i == 1) {
-                for (j in 0 until mess.size) {
-                    val eld = mess[j]
-                    if (eld == el) {
-                        itog += mesc[j]
+                for (j in 0 until mon.size) {
+                    if (mon[j] == el) {
+                        result += monnumber[j]
                         k += 1
                     }
                 }
             } else if (i != 2) {
-                itog = itog + el + "."
+                result = result + el + "."
             } else {
-                itog += el
+                result += el
             }
         }
     }
-    return if (k == 0) "" else itog
+    return if (k == 0) "" else result
 }
 
 /**
@@ -109,36 +109,35 @@ fun dateStrToDigit(str: String): String {
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateDigitToStr(digital: String): String {
-    var itog = ""
-    val mess = listOf<String>("января ", "февраля ", "марта ", "апреля ", "мая ", "июня ", "июля ", "августа ", "сентября ", "октября ", "ноября ", "декабря ")
-    val mesc = listOf<String>("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
-    val red = mutableListOf<String>()
+    var result = ""
+    val mon = listOf<String>("января ", "февраля ", "марта ", "апреля ", "мая ", "июня ", "июля ", "августа ", "сентября ", "октября ", "ноября ", "декабря ")
+    val monnumber = listOf<String>("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
+    val list = mutableListOf<String>()
     var k = 0
     if (digital.matches(Regex("""^\d{2}.\d{2}.\d+$"""))) {
         val parks = digital.split(".")
         for (park in parks) {
-            red.add(park)
+            list.add(park)
         }
-        for (i in 0 until red.size) {
-            val el = red[i]
-            if (i == 0 && el.toInt() < 10) {
-                itog = itog + el.toInt().toString() + " "
+        for (i in 0 until list.size) {
+            val el = list[i]
+            if (i == 0 && list[i].toInt() < 10) {
+                result = result + list[i].toInt().toString() + " "
             } else if (i == 1) {
-                for (j in 0 until mesc.size) {
-                    val eld = mesc[j]
-                    if (eld == el) {
-                        itog += mess[j]
+                for (j in 0 until monnumber.size) {
+                    if (monnumber[j] == el) {
+                        result += mon[j]
                         k += 1
                     }
                 }
             } else if (i != 2) {
-                itog = itog + el + " "
+                result = result + el + " "
             } else {
-                itog += el
+                result += el
             }
         }
     }
-    return if (k == 0) "" else itog
+    return if (k == 0) "" else result
 }
 
 /**
@@ -157,28 +156,26 @@ fun dateDigitToStr(digital: String): String {
 fun flattenPhoneNumber(phone: String): String {
     if (phone == "") return ""
     val s = phone.substring(0, 1)
-    var parts = phone.split("")
-    val res = mutableListOf<String>()
-    val resd = mutableListOf<Int>()
+    val list = mutableListOf<String>()
+    val result = mutableListOf<Int>()
     try {
-        parts = if (s == "+") {
-            val p = phone.substring(1, phone.length).toString()
+        var parts = if (s == "+") {
+            val p = phone.substring(1, phone.length)
             p.split(")", "(", "-")
         } else {
             phone.split(")", "(", "-", " ")
         }
         for (part in parts) {
-            res.add(part)
+            list.add(part)
         }
-        val r = res.joinToString(separator = "")
+        val r = list.joinToString(separator = "")
         parts = r.split(" ")
         for (part in parts) {
-            val el = part.toInt()
-            resd.add(el)
+            result.add(part.toInt())
         }
         return if (s == "+") {
-            resd.joinToString(prefix = "+", separator = "")
-        } else resd.joinToString(separator = "")
+            result.joinToString(prefix = "+", separator = "")
+        } else result.joinToString(separator = "")
     } catch (e: NumberFormatException) {
         return ""
     }
@@ -197,15 +194,15 @@ fun flattenPhoneNumber(phone: String): String {
  */
 fun bestLongJump(jumps: String): Int {
     val parts = jumps.split(" ", "%", "-")
-    var k = 0
+    var max = 0
     if (parts.joinToString(separator = "").matches(Regex("""\d+"""))) {
         for (part in parts) {
-            if (part != "" && part.toInt() > k) {
-                k = part.toInt()
+            if (part != "" && part.toInt() > max) {
+                max = part.toInt()
             }
         }
-    } else k -= 1
-    return k
+    } else max -= 1
+    return max
 }
 
 /**
@@ -219,33 +216,31 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    val s = jumps.split(" ", "%", "-", "+")
-    var k = 0
-    val res = mutableListOf<String>()
-    val red = mutableListOf<String>()
-    if (s.joinToString(separator = "").matches(Regex("""\d+"""))) {
+    val l = jumps.split(" ", "%", "-", "+")
+    var max = 0
+    val list = mutableListOf<String>()
+    val list1 = mutableListOf<String>()
+    if (l.joinToString(separator = "").matches(Regex("""\d+"""))) {
         val parts = jumps.split(" ")
         for (part in parts) {
-            res.add(part)
+            list.add(part)
         }
-        for (i in 0 until res.size) {
-            val el = res[i]
-            if ("+" in el) {
-                red.add(res[i - 1])
-                for (j in 0 until red.size) {
-                    val eld = red[j]
-                    if (eld.toInt() > k) {
-                        k = eld.toInt()
+        for (i in 0 until list.size) {
+            if ("+" in list[i]) {
+                list1.add(list[i - 1])
+                for (j in 0 until list1.size) {
+                    if (list1[j].toInt() > max) {
+                        max = list1[j].toInt()
                     }
                 }
             }
 
         }
-        if (k == 0 && "+" !in jumps) {
-            k -= 1
+        if (max == 0 && "+" !in jumps) {
+            max -= 1
         }
-    } else k -= 1
-    return k
+    } else max -= 1
+    return max
 }
 
 /**
@@ -258,20 +253,19 @@ fun bestHighJump(jumps: String): Int {
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    var k = 0
-    val res = mutableListOf<String>()
+    var result = 0
+    val list = mutableListOf<String>()
     val parts = expression.split(" ")
     require(parts.joinToString("").matches(Regex("""\d+([+-]\d+)*""")))
     for (part in parts) {
-        res.add(part)
+        list.add(part)
     }
-    for (i in 0 until res.size) {
-        if (i == 0) k = res[0].toInt()
-        val el = res[i]
-        if ("+" in el) k += res[i + 1].toInt()
-        if ("-" in el) k -= res[i + 1].toInt()
+    for (i in 0 until list.size) {
+        if (i == 0) result = list[0].toInt()
+        if ("+" in list[i]) result += list[i + 1].toInt()
+        if ("-" in list[i]) result -= list[i + 1].toInt()
     }
-    return k
+    return result
 }
 
 /**
@@ -298,27 +292,25 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  */
 fun mostExpensive(description: String): String {
     val s = description.split(" ", "; ")
-    val resnazv = mutableListOf<String>()
-    val reschena = mutableListOf<String>()
-    val reskon = mutableListOf<String>()
-    var k = 0.0
+    val name = mutableListOf<String>()
+    val list = mutableListOf<String>()
+    val result = mutableListOf<String>()
+    var max = 0.0
     var l = 0
     if (description == "") return ""
     try {
         for (i in 0 until s.size step 2) {
-            resnazv.add(s[i])
-            reschena.add(s[i + 1])
+            name.add(s[i])
+            list.add(s[i + 1])
         }
-        for (j in 0 until reschena.size) {
-            val eld = reschena[j]
-            if (eld.toDouble() > k) {
-                k = eld.toDouble()
+        for (j in 0 until list.size) {
+            if (list[j].toDouble() > max) {
+                max = list[j].toDouble()
                 l = j
             }
         }
-        val d = resnazv[l]
-        reskon.add(d)
-        return reskon.joinToString(
+        result.add(name[l])
+        return result.joinToString(
                 separator = ""
         )
     } catch (e: NumberFormatException) {
@@ -376,3 +368,45 @@ fun fromRoman(roman: String): Int = TODO()
  *
  */
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+/**
+{
+    var number=cells/2
+    val com=commands.toMutableList()
+    val list= mutableListOf<Int>()
+    var k=0
+    var i=0
+    //require(commands.matches(Regex("""[><+-]*""")))
+    for (l in 0 until cells){
+        list.add(0)
+    }
+    //for (i in 0 until com.size) {
+    while (i < com.size){
+        k+=1
+        val s=com[i]
+        if (s == '>') number += 1
+        if (s == '<') number -= 1
+        if (s == '+') list[number] += 1
+        if (s == '-') list[number] -= 1
+        //if (s == ' ') continue
+        if (s=='[' && list[number]==0){
+            for (j in i until com.size){
+                if (com[j]==']'){
+                    i=j
+                    break
+                }
+            }
+        }
+        if (s==']'&&list[number]!=0){
+            for (j in i downTo 0){
+                if (com[j]=='['){
+                    i=j
+                    break
+                }
+            }
+        }
+        if (k==limit) break
+        i+=1
+    }
+    return list
+}
+**/
