@@ -262,11 +262,15 @@ fun plusMinus(expression: String): Int {
     }
     for (i in 0 until list.size) {
         if (i == 0) result = list[0].toInt()
-        if ("+" in list[i]) result += list[i + 1].toInt()
-        if ("-" in list[i]) result -= list[i + 1].toInt()
+        val el = list[i]
+        if ("+" in el) result += list[i + 1].toInt()
+        if ("-" in el) result -= list[i + 1].toInt()
     }
     return result
 }
+
+
+
 
 /**
  * Сложная
