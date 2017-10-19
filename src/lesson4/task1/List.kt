@@ -331,33 +331,29 @@ fun russian(n: Int): String {
     val oneend = listOf("один", "два", "три", "четыре")
     val one = listOf("пять", "шесть", "семь", "восемь", "девять")
     val string = mutableListOf<String>()
-    val n1 = mutableListOf<Int>()
+    val listnumber = mutableListOf<Int>()
     var n2 = n
     for (i in 0..5) {
-        n1.add(n2 % 10)
+        listnumber.add(n2 % 10)
         n2 /= 10
     }
-    n1.add(n / 1000 % 100)
-    n1.add(n % 100)
-    if (n1[5] != 0) string.add(hundreds[n1[5] - 1])
+    listnumber.add(n / 1000 % 100)
+    listnumber.add(n % 100)
+    if (listnumber[5] != 0) string.add(hundreds[listnumber[5] - 1])
     when {
-        n1[6] in 11..19 -> string.add(twoten[n1[6] - 11])
+        listnumber[6] in 11..19 -> string.add(twoten[listnumber[6] - 11])
         else -> {
-            if (n1[4] != 0) string.add(ten[n1[4] - 1])
-            when {
-                n1[3] != 0 -> if (n1[3] < 5) string.add(onet[n1[3] - 1]) else string.add(one[n1[3] - 5])
-            }
+            if (listnumber[4] != 0) string.add(ten[listnumber[4] - 1])
+            if (listnumber[3] != 0) string.add(if (listnumber[3] < 5) (onet[listnumber[3] - 1]) else (one[listnumber[3] - 5]))
         }
     }
-    if ((n1[3] == 0 || n1[3] > 4 || n1[6] in 11..19) && n > 1000) string.add("тысяч")
-    if (n1[2] != 0) string.add(hundreds[n1[2] - 1])
+    if ((listnumber[3] == 0 || listnumber[3] > 4 || listnumber[6] in 11..19) && n > 1000) string.add("тысяч")
+    if (listnumber[2] != 0) string.add(hundreds[listnumber[2] - 1])
     when {
-        n1[7] in 11..19 -> string.add(twoten[n1[7] - 11])
+        listnumber[7] in 11..19 -> string.add(twoten[listnumber[7] - 11])
         else -> {
-            if (n1[1] != 0) string.add(ten[n1[1] - 1])
-            when {
-                n1[0] != 0 -> if (n1[0] < 5) string.add(oneend[n1[0] - 1]) else string.add(one[n1[0] - 5])
-            }
+            if (listnumber[1] != 0) string.add(ten[listnumber[1] - 1])
+            if (listnumber[0] != 0) string.add(if (listnumber[0] < 5) (oneend[listnumber[0] - 1]) else (one[listnumber[0] - 5]))
         }
     }
     return string.joinToString(separator = " ")
