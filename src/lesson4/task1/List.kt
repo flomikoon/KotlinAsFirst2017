@@ -196,7 +196,7 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
     var r = 0.0
     for (i in 0 until list.size) {
         list[i] += r
-        r += list[i] - r
+        r = list[i]
     }
     return list
 }
@@ -231,9 +231,7 @@ fun factorize(n: Int): List<Int> {
  */
 fun factorizeToString(n: Int): String {
     val result = factorize(n)
-    return result.joinToString(
-            separator = "*"
-    )
+    return result.joinToString(separator = "*")
 }
 
 /**
@@ -272,14 +270,14 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
 fun decimal(digits: List<Int>, base: Int): Int {
-    var r = 0.0
+    var r = 0
     val list = digits.reversed()
     var base1 = 1
     for (i in 0 until list.size) {
         r += list[i] * base1
         base1 *= base
     }
-    return r.toInt()
+    return r
 }
 
 /**
@@ -311,7 +309,9 @@ fun roman(n: Int): String {
             n1 -= integers[i]
             result.add(rnumbers[i])
         }
-        if (n1 == 0) break
+        if (n1 == 0) {
+            break
+        }
     }
     return result.joinToString(separator = "")
 }
@@ -346,9 +346,15 @@ fun russian(n: Int): String {
     when {
         listnumber[6] in 11..19 -> result.add(twoten[listnumber[6] - 11])
         else -> {
-            if (listnumber[4] != 0) result.add(ten[listnumber[4] - 1])
+            if (listnumber[4] != 0) {
+                result.add(ten[listnumber[4] - 1])
+            }
             if (listnumber[3] != 0) {
-                result.add(if (listnumber[3] < 5) (onet[listnumber[3] - 1]) else (one[listnumber[3] - 5]))
+                result.add(if (listnumber[3] < 5) {
+                    (onet[listnumber[3] - 1])
+                } else {
+                    (one[listnumber[3] - 5])
+                })
             }
         }
     }
@@ -357,9 +363,15 @@ fun russian(n: Int): String {
     when {
         listnumber[7] in 11..19 -> result.add(twoten[listnumber[7] - 11])
         else -> {
-            if (listnumber[1] != 0) result.add(ten[listnumber[1] - 1])
+            if (listnumber[1] != 0) {
+                result.add(ten[listnumber[1] - 1])
+            }
             if (listnumber[0] != 0) {
-                result.add(if (listnumber[0] < 5) (oneend[listnumber[0] - 1]) else (one[listnumber[0] - 5]))
+                result.add(if (listnumber[0] < 5) {
+                    (oneend[listnumber[0] - 1])
+                } else {
+                    (one[listnumber[0] - 5])
+                })
             }
         }
     }

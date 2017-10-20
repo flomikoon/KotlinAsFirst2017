@@ -69,34 +69,24 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
+val mon = listOf<String>("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
+val monnumber = listOf<String>("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
+
 fun dateStrToDigit(str: String): String {
     var result = ""
-    val mon = listOf<String>("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
-    val monnumber= listOf<String>("01.", "02.", "03.", "04.", "05.", "06.", "07.", "08.", "09.", "10.", "11.", "12.")
-    val list = mutableListOf<String>()
     var k = 0
-    if (str.matches(Regex("""^\d{1,2} [а-я]{3,} \d+$"""))) {
+    if (str matches Regex("""^\d{1,2} [а-я]{3,} \d+$""")) {
         val parks = str.split(" ")
-        for (park in parks) {
-            list.add(park)
-        }
-        for (i in 0 until list.size) {
-            val el = list[i]
-            if (i == 0 && list[i].toInt() < 10) {
-                result = "0" + list[i].toInt().toString() + "."
-            } else if (i == 1) {
-                for (j in 0 until mon.size) {
-                    if (mon[j] == el) {
-                        result += monnumber[j]
-                        k += 1
-                    }
-                }
-            } else if (i != 2) {
-                result = result + el + "."
-            } else {
-                result += el
+        result = if (parks[0].toInt() < 10) {
+            "0" + parks[0].toInt().toString() + "."
+        } else parks[0] + "."
+        for (j in 0 until mon.size) {
+            if (mon[j] == parks[1]) {
+                result += monnumber[j] + "."
+                k += 1
             }
         }
+        result += parks[2]
     }
     return if (k == 0) "" else result
 }
@@ -110,32 +100,17 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String {
     var result = ""
-    val mon = listOf<String>("января ", "февраля ", "марта ", "апреля ", "мая ", "июня ", "июля ", "августа ", "сентября ", "октября ", "ноября ", "декабря ")
-    val monnumber = listOf<String>("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
-    val list = mutableListOf<String>()
     var k = 0
-    if (digital.matches(Regex("""^\d{2}.\d{2}.\d+$"""))) {
+    if (digital matches Regex("""^\d{2}.\d{2}.\d+$""")) {
         val parks = digital.split(".")
-        for (park in parks) {
-            list.add(park)
-        }
-        for (i in 0 until list.size) {
-            val el = list[i]
-            if (i == 0 && list[i].toInt() < 10) {
-                result = result + list[i].toInt().toString() + " "
-            } else if (i == 1) {
-                for (j in 0 until monnumber.size) {
-                    if (monnumber[j] == el) {
-                        result += mon[j]
-                        k += 1
-                    }
-                }
-            } else if (i != 2) {
-                result = result + el + " "
-            } else {
-                result += el
+        result = parks[0].toInt().toString() + " "
+        for (j in 0 until monnumber.size) {
+            if (monnumber[j] == parks[1]) {
+                result += mon[j] + " "
+                k += 1
             }
         }
+        result += parks[2]
     }
     return if (k == 0) "" else result
 }
@@ -156,21 +131,16 @@ fun dateDigitToStr(digital: String): String {
 fun flattenPhoneNumber(phone: String): String {
     if (phone == "") return ""
     val s = phone.substring(0, 1)
-    val list = mutableListOf<String>()
     val result = mutableListOf<Int>()
     try {
-        var parts = if (s == "+") {
+        val parts = if (s == "+") {
             val p = phone.substring(1, phone.length)
             p.split(")", "(", "-")
         } else {
             phone.split(")", "(", "-", " ")
         }
-        for (part in parts) {
-            list.add(part)
-        }
-        val r = list.joinToString(separator = "")
-        parts = r.split(" ")
-        for (part in parts) {
+        val r = parts.joinToString(separator = "").split(" ")
+        for (part in r) {
             result.add(part.toInt())
         }
         return if (s == "+") {
@@ -216,25 +186,13 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    val l = jumps.split(" ", "%", "-", "+")
     var max = 0
-    val list = mutableListOf<String>()
-    val list1 = mutableListOf<String>()
-    if (l.joinToString(separator = "").matches(Regex("""\d+"""))) {
+    if (jumps.split(" ", "%", "-", "+").joinToString(separator = "").matches(Regex("""\d+"""))) {
         val parts = jumps.split(" ")
-        for (part in parts) {
-            list.add(part)
-        }
-        for (i in 0 until list.size) {
-            if ("+" in list[i]) {
-                list1.add(list[i - 1])
-                for (j in 0 until list1.size) {
-                    if (list1[j].toInt() > max) {
-                        max = list1[j].toInt()
-                    }
-                }
+        for (i in 0 until parts.size) {
+            if ("+" in parts[i] && parts[i - 1].toInt() > max) {
+                max = parts[i - 1].toInt()
             }
-
         }
         if (max == 0 && "+" !in jumps) {
             max -= 1
@@ -254,17 +212,12 @@ fun bestHighJump(jumps: String): Int {
  */
 fun plusMinus(expression: String): Int {
     var result = 0
-    val list = mutableListOf<String>()
-    val parts = expression.split(" ")
-    require(parts.joinToString("").matches(Regex("""\d+([+-]\d+)*""")))
-    for (part in parts) {
-        list.add(part)
-    }
-    for (i in 0 until list.size) {
-        if (i == 0) result = list[0].toInt()
-        val el = list[i]
-        if ("+" in el) result += list[i + 1].toInt()
-        if ("-" in el) result -= list[i + 1].toInt()
+    require(expression matches Regex("""\d+( [+-] \d+)*"""))
+    val parts=expression.split(" ")
+    for (i in 0 until parts.size) {
+        if (i == 0) result = parts[0].toInt()
+        if ("+" == parts[i]) result += parts[i + 1].toInt()
+        if ("-" == parts[i]) result -= parts[i + 1].toInt()
     }
     return result
 }
@@ -296,27 +249,17 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  */
 fun mostExpensive(description: String): String {
     val s = description.split(" ", "; ")
-    val name = mutableListOf<String>()
-    val list = mutableListOf<String>()
-    val result = mutableListOf<String>()
+    var result = ""
     var max = 0.0
-    var l = 0
     if (description == "") return ""
     try {
         for (i in 0 until s.size step 2) {
-            name.add(s[i])
-            list.add(s[i + 1])
-        }
-        for (j in 0 until list.size) {
-            if (list[j].toDouble() > max) {
-                max = list[j].toDouble()
-                l = j
+            if (s[i + 1].toDouble() > max) {
+                max = s[i+1].toDouble()
+                result=s[i]
             }
         }
-        result.add(name[l])
-        return result.joinToString(
-                separator = ""
-        )
+        return result
     } catch (e: NumberFormatException) {
         return ""
     }

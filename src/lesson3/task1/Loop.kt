@@ -98,7 +98,7 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    for (i in max(m, n)..n * m) {
+    for (i in max(m, n) until n * m) {
         if (i % m == 0 && i % n == 0) {
             return i
         }
@@ -142,7 +142,9 @@ fun maxDivisor(n: Int): Int {
 fun isCoPrime(m: Int, n: Int): Boolean {
     val d = Math.min(n, m)
     for (i in 2..d) {
-        if (n % i == 0 && m % i == 0) return false
+        if (n % i == 0 && m % i == 0) {
+            return false
+        }
     }
     return true
 }
@@ -156,7 +158,9 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
     for (i in sqrt(m.toDouble()).toInt()..sqrt(n.toDouble()).toInt()) {
-        if (i * i >= m) return true
+        if (i * i >= m) {
+            return true
+        }
     }
     return false
 }
@@ -170,26 +174,34 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
 s>0* Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun sin(x: Double, eps: Double): Double {
-    val d = coercion(x)
+    val d = reduce(x)
     var k = 0.0
     var i = 1
     var s = d
     while (abs(s) >= abs(eps)) {
         s = pow(d, i.toDouble()) / factorial(i)
-        if (i % 4 == 1) k += s
-        if (i % 4 == 3) k -= s
+        if (i % 4 == 1) {
+            k += s
+        }
+        if (i % 4 == 3) {
+            k -= s
+        }
         i += 2
     }
     return k
 }
 
-fun coercion(x: Double): Double {
+fun reduce(x: Double): Double {
     var d = x
     if (d > 2 * PI) {
-        while (d > 2 * PI) d -= 2 * PI
+        while (d > 2 * PI){
+            d -= 2 * PI
+        }
     }
     if (d < -2 * PI) {
-        while (d < 2 * PI) d += 2 * PI
+        while (d < 2 * PI) {
+            d += 2 * PI
+        }
     }
     return d
 }
@@ -203,14 +215,18 @@ fun coercion(x: Double): Double {
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun cos(x: Double, eps: Double): Double {
-    val d = coercion(x)
+    val d = reduce(x)
     var k = 1.0
     var s = d
     var i = 2
     while (abs(s) >= abs(eps)) {
         s = pow(d, i.toDouble()) / factorial(i)
-        if (i % 4 == 0) k += s
-        if (i % 4 == 2) k -= s
+        if (i % 4 == 0) {
+            k += s
+        }
+        if (i % 4 == 2) {
+            k -= s
+        }
         i += 2
     }
     return k
@@ -266,7 +282,9 @@ fun isPalindrome(n: Int): Boolean {
 fun hasDifferentDigits(n: Int): Boolean {
     var n1 = n
     while (n1 > 9) {
-        if (n1 % 10 != n1 % 100 / 10) return true
+        if (n1 % 10 != n1 % 100 / 10) {
+            return true
+        }
         n1 /= 10
     }
     return false
