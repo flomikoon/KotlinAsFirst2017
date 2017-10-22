@@ -82,6 +82,7 @@ fun square(notation: String): Square {
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
 fun rookMoveNumber(start: Square, end: Square): Int {
+    require(start.row in 1..8&&start.column in 1..8&&end.column in 1..8&&end.row in 1..8)
     if (start == end) return 0
     if (start.column == end.column || start.row == end.row) return 1
     else return 2
@@ -105,7 +106,7 @@ fun rookTrajectory(start: Square, end: Square): List<Square> {
     val result = mutableListOf<Square>(start)
     val maxc = max(start.column, end.column)
     if (start.column != end.column && start.row != end.row) {
-        result.add(Square(maxc, start.row))
+        result.add(Square(end.column, start.row))
     }
     if (start != end) {
         result.add(end)
@@ -137,6 +138,7 @@ fun rookTrajectory(start: Square, end: Square): List<Square> {
  * Слон может пройти через клетку (6, 4) к клетке (3, 7).
  */
 fun bishopMoveNumber(start: Square, end: Square): Int {
+    require(start.row in 1..8&&start.column in 1..8&&end.column in 1..8&&end.row in 1..8)
     if (start == end) return 0
     if (abs(start.row - end.row) == abs(start.column - end.column)) return 1
     if ((abs(start.row - end.row) % 2 != abs(start.column - end.column))) return -1
