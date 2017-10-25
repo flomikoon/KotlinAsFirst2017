@@ -163,16 +163,27 @@ fun bishopMoveNumber(start: Square, end: Square): Int {
  *          bishopTrajectory(Square(1, 3), Square(6, 8)) = listOf(Square(1, 3), Square(6, 8))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
-/**val result= mutableListOf<Square>()
-if ((abs(start.row-end.row)%2==1&&abs(start.column-end.column)%2==0)||
-(abs(start.row-end.row)%2==0&&abs(start.column-end.column)%2==1)) return result
-//if ((abs(start.row-end.row)%2!=abs(start.column-end.column))) return result
-result.add(start)
-if (abs(start.column - end.column) != abs(start.row - end.row)) result.add()
-if(start!=end) result.add(end)
-return result
-}**/
+fun bishopTrajectory(start: Square, end: Square): List<Square> {
+    val result = mutableListOf<Square>()
+    if ((abs(start.row - end.row) % 2 == 1 && abs(start.column - end.column) % 2 == 0) ||
+            (abs(start.row - end.row) % 2 == 0 && abs(start.column - end.column) % 2 == 1)) return result
+    result.add(start)
+    if (start != end) {
+        if (abs(start.row - end.row) != abs(start.column - end.column)) {
+            for (i in 1..8) {
+                for (j in 1..8) {
+                    if ((abs(start.row - i) == abs(start.column - j)) && (abs(end.row - i) == abs(end.column - j))) {
+                        result.add(Square(j, i))
+                        break
+                    }
+                }
+                if (result.size > 1) break
+            }
+        }
+        result.add(end)
+    }
+    return result
+}
 
 /**
  * Средняя

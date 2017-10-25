@@ -163,15 +163,9 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
-    val parts = jumps.split(" ", "%", "-")
-    var max = 0
-    if (parts.joinToString(separator = "").matches(Regex("""\d+"""))) {
-        for (part in parts) {
-            if (part != "" && part.toInt() > max) {
-                max = part.toInt()
-            }
-        }
-    } else max -= 1
+    var max = -1
+    if (Regex("""[^ %\-\d]""").findAll(jumps).count() > 0) return max
+    Regex("""\d+""").findAll(jumps).asIterable().map { it.value.toInt() }.forEach { max = Math.max(max, it) }
     return max
 }
 
@@ -314,15 +308,16 @@ fun fromRoman(roman: String): Int = TODO()
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
-/**
-{
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     var number=cells/2
     val com=commands.toMutableList()
     val list= mutableListOf<Int>()
     var k=0
     var i=0
-    //require(commands.matches(Regex("""[><+-]*""")))
+    require(commands.replace(" ", "") matches Regex("""[><+-\[\]]*"""))
+    val a = Regex("""\[""").findAll(commands, 0).count()
+    val b = Regex("""\]""").findAll(commands, 0).count()
+    require(a == b)
     for (l in 0 until cells){
         list.add(0)
     }
@@ -334,7 +329,6 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TO
         if (s == '<') number -= 1
         if (s == '+') list[number] += 1
         if (s == '-') list[number] -= 1
-        //if (s == ' ') continue
         if (s=='[' && list[number]==0){
             for (j in i until com.size){
                 if (com[j]==']'){
@@ -356,4 +350,3 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TO
     }
     return list
 }
-**/
