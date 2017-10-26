@@ -104,7 +104,6 @@ fun rookMoveNumber(start: Square, end: Square): Int {
  */
 fun rookTrajectory(start: Square, end: Square): List<Square> {
     val result = mutableListOf<Square>(start)
-    val maxc = max(start.column, end.column)
     if (start.column != end.column && start.row != end.row) {
         result.add(Square(end.column, start.row))
     }

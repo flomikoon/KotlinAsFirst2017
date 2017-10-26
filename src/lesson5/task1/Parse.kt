@@ -308,8 +308,8 @@ fun fromRoman(roman: String): Int = TODO()
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
-    var number=cells/2
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+    /**var number=cells/2
     val com=commands.toMutableList()
     val list= mutableListOf<Int>()
     var k=0
@@ -349,4 +349,4 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
         i+=1
     }
     return list
-}
+}**/
