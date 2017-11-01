@@ -173,7 +173,7 @@ fun bestHighJump(jumps: String): Int {
     return try {
         Regex("""\d+ [%]?[%]?[+]""").findAll(jumps).forEach { Regex("""\d+""").findAll(it.value).forEach { max = Math.max(max, it.value.toInt()) } }
         max
-    } catch (e:NumberFormatException) {
+    } catch (e: NumberFormatException) {
         -1
     }
 }
