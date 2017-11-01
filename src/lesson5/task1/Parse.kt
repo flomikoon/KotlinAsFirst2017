@@ -171,13 +171,7 @@ fun bestLongJump(jumps: String): Int {
 fun bestHighJump(jumps: String): Int {
     var max = -1
     if (jumps matches Regex("""(\d+ [+%-]*( )?)*""")) {
-        val parts = jumps.split(" ")
-        for (i in 1 until parts.size) {
-            val p = parts[i - 1]
-            if ("+" in parts[i] && p.toInt() > max) {
-                max = p.toInt()
-            }
-        }
+        Regex("""\d+ [%]?[%]?[+]""").findAll(jumps).forEach { Regex("""\d+""").findAll(it.groupValues.toString()).forEach { max=Math.max(max,it.value.toInt()) } }
     }
     return max
 }
