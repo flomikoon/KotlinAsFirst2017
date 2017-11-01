@@ -125,7 +125,7 @@ fun flattenPhoneNumber(phone: String): String {
     val s = phone.substring(0, 1)
     val result = mutableListOf<String>()
     var p = phone
-    return if (phone matches Regex("""([+])?\d+ ([ )(-](\d+)?)*""")) {
+    return if (phone matches Regex("""([+])?\d+( )?([ )(-](\d+)?)*""")) {
         if (s == "+") {
             p = p.substring(1, p.length)
         }

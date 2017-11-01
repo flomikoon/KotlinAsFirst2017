@@ -324,48 +324,42 @@ fun roman(n: Int): String {
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    val hundreds = listOf("сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот",
+    val hundreds = listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот",
             "семьсот", "восемьсот", "девятьсот")
-    val ten = listOf("десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят",
+    val ten = listOf("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят",
             "семьдесят", "восемьдесят", "девяносто")
     val twoTen = listOf("одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать",
             "семнадцать", "восемнадцать", "девятнадцать")
-    val oneT = listOf("одна тысяча", "две тысячи", "три тысячи", "четыре тысячи")
-    val oneEnd = listOf("один", "два", "три", "четыре")
-    val one = listOf("пять", "шесть", "семь", "восемь", "девять")
+    val oneT = listOf("", "одна тысяча", "две тысячи", "три тысячи", "четыре тысячи")
+    val one = listOf("","один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
     val result = mutableListOf<String>()
     val listNumber = mutableListOf<Int>()
-    var n2 = n
+    var n1 = n
     for (i in 0..5) {
-        listNumber.add(n2 % 10)
-        n2 /= 10
+        listNumber.add(n1 % 10)
+        n1 /= 10
     }
     listNumber.add(n / 1000 % 100)
     listNumber.add(n % 100)
-    if (listNumber[5] != 0) result.add(hundreds[listNumber[5] - 1])
+    result.add(hundreds[listNumber[5]])
     if (listNumber[6] in 11..19) result.add(twoTen[listNumber[6] - 11])
     else {
-        if (listNumber[4] != 0) result.add(ten[listNumber[4] - 1])
-        if (listNumber[3] != 0) {
-            result.add(if (listNumber[3] < 5) {
-                oneT[listNumber[3] - 1]
-            } else {
-                one[listNumber[3] - 5]
-            })
-        }
+        result.add(ten[listNumber[4]])
+        result.add(if (listNumber[3] < 5) {
+            oneT[listNumber[3]]
+        } else {
+            one[listNumber[3]]
+        })
     }
     if ((listNumber[3] == 0 || listNumber[3] > 4 || listNumber[6] in 11..19) && n > 1000) result.add("тысяч")
-    if (listNumber[2] != 0) result.add(hundreds[listNumber[2] - 1])
+    result.add(hundreds[listNumber[2]])
     if (listNumber[7] in 11..19) result.add(twoTen[listNumber[7] - 11])
     else {
-        if (listNumber[1] != 0) result.add(ten[listNumber[1] - 1])
-        if (listNumber[0] != 0) {
-            result.add(if (listNumber[0] < 5) {
-                oneEnd[listNumber[0] - 1]
-            } else {
-                one[listNumber[0] - 5]
-            })
-        }
+        result.add(ten[listNumber[1]])
+        result.add(one[listNumber[0]])
     }
-    return result.joinToString(separator = " ")
+    for (i in 1..6) {
+        result.remove("")
+    }
+        return result.joinToString(separator = " ")
 }
