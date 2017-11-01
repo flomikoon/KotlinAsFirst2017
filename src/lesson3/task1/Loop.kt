@@ -64,8 +64,8 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var k = 1
-    var n1 = n
-    while (abs(n1) > 9) {
+    var n1 = abs(n)
+    while (n1 > 9) {
         n1 /= 10
         k += 1
     }
@@ -100,8 +100,8 @@ fun fib(n: Int): Int {
 fun lcm(m: Int, n: Int): Int {
     var m1 = m
     var n1 = n
-    while (m1!=n1){
-        if (m1>n1) n1 += n
+    while (m1 != n1) {
+        if (m1 > n1) n1 += n
         else m1 += m
     }
     return m1
@@ -158,10 +158,8 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    for (i in sqrt(m.toDouble()).toInt()..sqrt(n.toDouble()).toInt()) {
-        if (i * i >= m) {
-            return true
-        }
+    for (i in Math.round(sqrt(m.toDouble()))..Math.round(sqrt(n.toDouble()))) {
+        if ((i * i >= m) && (i * i <= n)) return true
     }
     return false
 }
@@ -193,18 +191,9 @@ fun sin(x: Double, eps: Double): Double {
 }
 
 fun reduce(x: Double): Double {
-    var d = x
-    if (d > 2 * PI) {
-        while (d > 2 * PI){
-            d -= 2 * PI
-        }
-    }
-    if (d < -2 * PI) {
-        while (d < 2 * PI) {
-            d += 2 * PI
-        }
-    }
-    return d
+    var d = x/PI
+    d %= 2
+    return d*PI
 }
 
 
@@ -305,7 +294,6 @@ fun squareSequenceDigit(n: Int): Int {
     while (n > count) {
         k = i * i
         count += digitNumber(k)
-        k = i * i
         i += 1
     }
     return searchNumber(count, n, k)
@@ -326,7 +314,6 @@ fun fibSequenceDigit(n: Int): Int {
     while (n > count) {
         k = d + d1
         count += digitNumber(k)
-        k = d + d1
         val d2 = d
         d = d1
         d1 = d2 + d
@@ -339,9 +326,7 @@ fun searchNumber(count: Int, n: Int, k: Int): Int {
     var number = k
     val c = count - n
     if (count > n) {
-        for (j in 1..c) {
-            number /= 10
-        }
+            number /= pow(10.0, c.toDouble()).toInt()
     }
     return number % 10
 }

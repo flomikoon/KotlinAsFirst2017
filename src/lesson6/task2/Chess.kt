@@ -82,7 +82,7 @@ fun square(notation: String): Square {
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
 fun rookMoveNumber(start: Square, end: Square): Int {
-    require(start.row in 1..8&&start.column in 1..8&&end.column in 1..8&&end.row in 1..8)
+    require(start.row in 1..8 && start.column in 1..8 && end.column in 1..8 && end.row in 1..8)
     if (start == end) return 0
     if (start.column == end.column || start.row == end.row) return 1
     else return 2

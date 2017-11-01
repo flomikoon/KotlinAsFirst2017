@@ -76,10 +76,9 @@ data class Circle(val center: Point, val radius: Double) {
     fun distance(other: Circle): Double {
         val rX = sqr(center.x - other.center.x)
         val rY = sqr(center.y - other.center.y)
-        var rO = Math.sqrt(rX + rY)
-        rO = if (rO > radius + other.radius) rO - radius - other.radius
+        val rO = Math.sqrt(rX + rY)
+        return if (rO > radius + other.radius) rO - radius - other.radius
         else 0.0
-        return rO
     }
 
     /**
@@ -186,12 +185,16 @@ class Line private constructor(val b: Double, val angle: Double) {
  * Построить прямую по отрезку
  */
 fun lineBySegment(s: Segment): Line {
-    var angel = atan((s.end.y - s.begin.y) / (s.end.x - s.begin.x))
-    if (angel < 0) angel += PI
-    if (angel >= PI) angel -= PI
-    return Line(s.begin, angel)
+    val tiltAngel = atan((s.end.y - s.begin.y) / (s.end.x - s.begin.x))
+    return Line(s.begin, reduce(tiltAngel))
 }
 
+fun reduce(tiltAngle: Double):Double{
+    var tiltAngle1=tiltAngle
+    if (tiltAngle1 < 0) tiltAngle1 += PI
+    if (tiltAngle1 >= PI) tiltAngle1  -= PI
+    return tiltAngle1
+}
 /**
  * Средняя
  *
@@ -206,10 +209,8 @@ fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a,b))
  */
 fun bisectorByPoints(a: Point, b: Point): Line {
     val c = Point((a.x + b.x) / 2, (a.y + b.y) / 2)
-    var angel = PI / 2 + atan((a.y - b.y) / (a.x - b.x))
-    if (angel < 0) angel += PI
-    if (angel >= PI) angel -= PI
-    return Line(c, angel)
+    val tiltAngel = PI / 2 + atan((a.y - b.y) / (a.x - b.x))
+    return Line(c, reduce(tiltAngel))
 }
 
 /**
