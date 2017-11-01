@@ -351,7 +351,7 @@ fun russian(n: Int): String {
             one[listNumber[3]]
         })
     }
-    if ((listNumber[3] == 0 || listNumber[3] > 4 || listNumber[6] in 11..19) && n > 1000) result.add("тысяч")
+    if ((listNumber[3] !in 1..4 || listNumber[6] in 11..19) && n > 1000) result.add("тысяч")
     result.add(hundreds[listNumber[2]])
     if (listNumber[7] in 11..19) result.add(twoTen[listNumber[7] - 11])
     else {

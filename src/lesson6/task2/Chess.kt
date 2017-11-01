@@ -137,10 +137,10 @@ fun rookTrajectory(start: Square, end: Square): List<Square> {
  * Слон может пройти через клетку (6, 4) к клетке (3, 7).
  */
 fun bishopMoveNumber(start: Square, end: Square): Int {
-    require(start.row in 1..8&&start.column in 1..8&&end.column in 1..8&&end.row in 1..8)
+    require(start.row in 1..8 && start.column in 1..8 && end.column in 1..8 && end.row in 1..8)
     if (start == end) return 0
     if (abs(start.row - end.row) == abs(start.column - end.column)) return 1
-    if ((abs(start.row - end.row) % 2 != abs(start.column - end.column)%2)) return -1
+    if ((abs(start.row - end.row) % 2 != abs(start.column - end.column) % 2)) return -1
     else return 2
 }
 

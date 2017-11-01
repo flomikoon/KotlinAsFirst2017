@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson6.task1
 
 import lesson1.task1.sqr
@@ -30,7 +31,8 @@ class Triangle private constructor(private val points: Set<Point>) {
 
     val c: Point get() = pointList[2]
 
-    constructor(a: Point, b: Point, c: Point): this(linkedSetOf(a, b, c))
+    constructor(a: Point, b: Point, c: Point) : this(linkedSetOf(a, b, c))
+
     /**
      * Пример: полупериметр
      */
@@ -189,18 +191,19 @@ fun lineBySegment(s: Segment): Line {
     return Line(s.begin, reduce(tiltAngel))
 }
 
-fun reduce(tiltAngle: Double):Double{
-    var tiltAngle1=tiltAngle
+fun reduce(tiltAngle: Double): Double {
+    var tiltAngle1 = tiltAngle
     if (tiltAngle1 < 0) tiltAngle1 += PI
-    if (tiltAngle1 >= PI) tiltAngle1  -= PI
+    if (tiltAngle1 >= PI) tiltAngle1 -= PI
     return tiltAngle1
 }
+
 /**
  * Средняя
  *
  * Построить прямую по двум точкам
  */
-fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a,b))
+fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a, b))
 
 /**
  * Сложная
@@ -252,13 +255,13 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
  * (построить окружность по трём точкам, или
  * построить окружность, описанную вокруг треугольника - эквивалентная задача).
  */
-fun circleByThreePoints(a: Point, b: Point, c: Point): Circle= TODO()
+fun circleByThreePoints(a: Point, b: Point, c: Point): Circle = TODO()
 /**{
-    val x =((((b.y-a.y)/(b.x-a.x))/((c.y-b.y)/(c.x-b.x)))*(a.y-c.y)+((c.y-b.y)/(c.x-b.x))*(a.x+b.x)-((b.y-a.y)/(b.x-a.x))*(b.x+c.x))/(2*(((c.y-b.y)/(c.x-b.x))-((b.y-a.y)/(b.x-a.x))))
-    val y =(-1/((b.y-a.y)/(b.x-a.x)))*(x-(a.x+b.x)/2)+(a.y+b.y)/2
-    val center=Point(x,y)
-    val radius=Math.sqrt(sqr(a.x - center.x) + sqr(a.y - center.y))
-    return Circle(center,radius)
+val x =((((b.y-a.y)/(b.x-a.x))/((c.y-b.y)/(c.x-b.x)))*(a.y-c.y)+((c.y-b.y)/(c.x-b.x))*(a.x+b.x)-((b.y-a.y)/(b.x-a.x))*(b.x+c.x))/(2*(((c.y-b.y)/(c.x-b.x))-((b.y-a.y)/(b.x-a.x))))
+val y =(-1/((b.y-a.y)/(b.x-a.x)))*(x-(a.x+b.x)/2)+(a.y+b.y)/2
+val center=Point(x,y)
+val radius=Math.sqrt(sqr(a.x - center.x) + sqr(a.y - center.y))
+return Circle(center,radius)
 }**/
 
 /**
