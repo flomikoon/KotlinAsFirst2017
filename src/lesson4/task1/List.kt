@@ -2,7 +2,6 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
-import java.lang.Math.pow
 import java.lang.Math.sqrt
 
 /**
@@ -110,9 +109,7 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  */
 fun abs(v: List<Double>): Double {
     var r = 0.0
-    for (element in v) {
-        r += element * element
-    }
+    v.forEach { element -> r += element * element }
     return sqrt(r)
 }
 
@@ -122,12 +119,9 @@ fun abs(v: List<Double>): Double {
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double {
-    var r = 0.0
     val d = list.size
     if (d == 0) return 0.0
-    for (element in list) {
-        r += element
-    }
+    val r = list.sum()
     return r / d
 }
 
@@ -216,7 +210,7 @@ fun factorize(n: Int): List<Int> {
         if (n1 % i == 0) {
             result.add(i)
             n1 /= i
-            i-=1
+            i -= 1
         }
         i += 1
     }
@@ -323,15 +317,16 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
+val hundreds = listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот",
+        "семьсот", "восемьсот", "девятьсот")
+val ten = listOf("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят",
+        "семьдесят", "восемьдесят", "девяносто")
+val twoTen = listOf("одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать",
+        "семнадцать", "восемнадцать", "девятнадцать")
+val oneT = listOf("", "одна тысяча", "две тысячи", "три тысячи", "четыре тысячи")
+val one = listOf("", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+
 fun russian(n: Int): String {
-    val hundreds = listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот",
-            "семьсот", "восемьсот", "девятьсот")
-    val ten = listOf("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят",
-            "семьдесят", "восемьдесят", "девяносто")
-    val twoTen = listOf("одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать",
-            "семнадцать", "восемнадцать", "девятнадцать")
-    val oneT = listOf("", "одна тысяча", "две тысячи", "три тысячи", "четыре тысячи")
-    val one = listOf("","один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
     val result = mutableListOf<String>()
     val listNumber = mutableListOf<Int>()
     var n1 = n
@@ -339,11 +334,10 @@ fun russian(n: Int): String {
         listNumber.add(n1 % 10)
         n1 /= 10
     }
-    listNumber.add(n / 1000 % 100)
-    listNumber.add(n % 100)
     result.add(hundreds[listNumber[5]])
-    if (listNumber[6] in 11..19) result.add(twoTen[listNumber[6] - 11])
-    else {
+    if (n / 1000 % 100 in 11..19) {
+        result.add(twoTen[n / 1000 % 100 - 11])
+    } else {
         result.add(ten[listNumber[4]])
         result.add(if (listNumber[3] < 5) {
             oneT[listNumber[3]]
@@ -351,15 +345,18 @@ fun russian(n: Int): String {
             one[listNumber[3]]
         })
     }
-    if ((listNumber[3] !in 1..4 || listNumber[6] in 11..19) && n > 1000) result.add("тысяч")
+    if ((listNumber[3] !in 1..4 || n / 1000 % 100 in 11..19) && n > 1000) {
+        result.add("тысяч")
+    }
     result.add(hundreds[listNumber[2]])
-    if (listNumber[7] in 11..19) result.add(twoTen[listNumber[7] - 11])
-    else {
+    if (n % 100 in 11..19) {
+        result.add(twoTen[n % 100 - 11])
+    } else {
         result.add(ten[listNumber[1]])
         result.add(one[listNumber[0]])
     }
-    for (i in 1..6) {
+    while ("" in result) {
         result.remove("")
     }
-        return result.joinToString(separator = " ")
+    return result.joinToString(separator = " ")
 }

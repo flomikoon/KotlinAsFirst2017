@@ -2,8 +2,6 @@
 
 package lesson5.task1
 
-import lesson8.task2.parseExpr
-import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
 
 /**
  * Пример
@@ -68,8 +66,8 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
-val mon = listOf<String>("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
-val monNumber = listOf<String>("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
+val mon = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
+val monNumber = listOf("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
 
 fun dateStrToDigit(str: String): String {
     var result = ""
@@ -80,8 +78,7 @@ fun dateStrToDigit(str: String): String {
         result = if (p0.toInt() < 10) {
             "0" + p0.toInt().toString() + "."
         } else p0 + "."
-        val j = mon.indexOf(parks[1])
-        result += monNumber[j] + "."
+        result += monNumber[mon.indexOf(parks[1])] + "."
         result += parks[2]
     }
     return result
@@ -100,8 +97,7 @@ fun dateDigitToStr(digital: String): String {
         val parks = digital.split(".")
         result = parks[0].toInt().toString() + " "
         if (parks[1] !in monNumber) return ""
-        val j = monNumber.indexOf(parks[1])
-        result += mon[j] + " "
+        result += mon[monNumber.indexOf(parks[1])] + " "
         result += parks[2]
     }
     return result
@@ -123,20 +119,15 @@ fun dateDigitToStr(digital: String): String {
 fun flattenPhoneNumber(phone: String): String {
     if (phone == "") return ""
     val s = phone.substring(0, 1)
-    val result = mutableListOf<String>()
     var p = phone
     return if (phone matches Regex("""([+])?\d+( )?([ )(-](\d+)?)*""")) {
         if (s == "+") {
             p = p.substring(1, p.length)
         }
         val parts = p.split(")", "(", "-", " ")
-        for (part in parts) {
-            result.add(part)
-        }
-        result.remove(" ")
         if (s == "+") {
-            result.joinToString(prefix = "+", separator = "")
-        } else result.joinToString(separator = "")
+            parts.joinToString(prefix = "+", separator = "")
+        } else parts.joinToString(separator = "")
     } else ""
 }
 
@@ -174,7 +165,7 @@ fun bestHighJump(jumps: String): Int {
         Regex("""\d+ [%]?[%]?[+]""").findAll(jumps).forEach { Regex("""\d+""").findAll(it.value).forEach { max = Math.max(max, it.value.toInt()) } }
         max
     } catch (e: NumberFormatException) {
-        -1
+        max
     }
 }
 
