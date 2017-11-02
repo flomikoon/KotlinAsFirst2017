@@ -190,17 +190,7 @@ fun sin(x: Double, eps: Double): Double {
     return k
 }
 
-fun reduce(x: Double): Double {
-    var d = x
-    while (abs(d) >= 2 * PI) {
-        if (d <= -2 * PI) {
-            d += 2 * PI
-        }else{
-            d -= 2 * PI
-        }
-    }
-    return d
-}
+fun reduce(x: Double): Double = x % ( 2 * PI)
 
 
 /**
