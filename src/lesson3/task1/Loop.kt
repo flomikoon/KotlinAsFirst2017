@@ -195,8 +195,7 @@ fun reduce(x: Double): Double {
     while (abs(d) >= 2 * PI) {
         if (d <= -2 * PI) {
             d += 2 * PI
-        }
-        if (d >= 2 * PI) {
+        }else{
             d -= 2 * PI
         }
     }
