@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson4.task1
 
 import lesson1.task1.discriminant
@@ -207,10 +208,9 @@ fun factorize(n: Int): List<Int> {
     var n1 = n
     var i = 2
     while (n1 > 1) {
-        if (n1 % i == 0) {
+        while (n1 % i == 0) {
             result.add(i)
             n1 /= i
-            i -= 1
         }
         i += 1
     }

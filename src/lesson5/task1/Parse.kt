@@ -162,7 +162,10 @@ fun bestLongJump(jumps: String): Int {
 fun bestHighJump(jumps: String): Int {
     var max = -1
     return try {
-        Regex("""\d+ [%]?[%]?[+]""").findAll(jumps).forEach { Regex("""\d+""").findAll(it.value).forEach { max = Math.max(max, it.value.toInt()) } }
+        Regex("""\d+ [%]?[%]?[+]""").findAll(jumps).forEach {
+            Regex("""\d+""").findAll(it.value).
+                    forEach { max = Math.max(max, it.value.toInt()) }
+        }
         max
     } catch (e: NumberFormatException) {
         max
@@ -281,44 +284,3 @@ fun fromRoman(roman: String): Int = TODO()
  *
  */
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
-    /**var number=cells/2
-    val com=commands.toMutableList()
-    val list= mutableListOf<Int>()
-    var k=0
-    var i=0
-    require(commands.replace(" ", "") matches Regex("""[><+-\[\]]*"""))
-    val a = Regex("""\[""").findAll(commands, 0).count()
-    val b = Regex("""\]""").findAll(commands, 0).count()
-    require(a == b)
-    for (l in 0 until cells){
-        list.add(0)
-    }
-    //for (i in 0 until com.size) {
-    while (i < com.size){
-        k+=1
-        val s=com[i]
-        if (s == '>') number += 1
-        if (s == '<') number -= 1
-        if (s == '+') list[number] += 1
-        if (s == '-') list[number] -= 1
-        if (s=='[' && list[number]==0){
-            for (j in i until com.size){
-                if (com[j]==']'){
-                    i=j
-                    break
-                }
-            }
-        }
-        if (s==']'&&list[number]!=0){
-            for (j in i downTo 0){
-                if (com[j]=='['){
-                    i=j
-                    break
-                }
-            }
-        }
-        if (k==limit) break
-        i+=1
-    }
-    return list
-}**/

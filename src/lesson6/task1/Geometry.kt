@@ -187,15 +187,15 @@ class Line private constructor(val b: Double, val angle: Double) {
  * Построить прямую по отрезку
  */
 fun lineBySegment(s: Segment): Line {
-    val tiltAngel = atan((s.end.y - s.begin.y) / (s.end.x - s.begin.x))
-    return Line(s.begin, reduce(tiltAngel))
+    val Angel = atan((s.end.y - s.begin.y) / (s.end.x - s.begin.x))
+    return Line(s.begin, reduce(Angel))
 }
 
-fun reduce(tiltAngle: Double): Double {
-    var tiltAngle1 = tiltAngle
-    if (tiltAngle1 < 0) tiltAngle1 += PI
-    if (tiltAngle1 >= PI) tiltAngle1 -= PI
-    return tiltAngle1
+fun reduce(Angel: Double): Double {
+    var Angel1 = Angel
+    if (Angel1 < 0) Angel1 += PI
+    if (Angel1 >= PI) Angel1 -= PI
+    return Angel1
 }
 
 /**
@@ -212,8 +212,8 @@ fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a, b))
  */
 fun bisectorByPoints(a: Point, b: Point): Line {
     val c = Point((a.x + b.x) / 2, (a.y + b.y) / 2)
-    val tiltAngel = PI / 2 + atan((a.y - b.y) / (a.x - b.x))
-    return Line(c, reduce(tiltAngel))
+    val Angel = PI / 2 + atan((a.y - b.y) / (a.x - b.x))
+    return Line(c, reduce(Angel))
 }
 
 /**
@@ -256,13 +256,7 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
  * построить окружность, описанную вокруг треугольника - эквивалентная задача).
  */
 fun circleByThreePoints(a: Point, b: Point, c: Point): Circle = TODO()
-/**{
-val x =((((b.y-a.y)/(b.x-a.x))/((c.y-b.y)/(c.x-b.x)))*(a.y-c.y)+((c.y-b.y)/(c.x-b.x))*(a.x+b.x)-((b.y-a.y)/(b.x-a.x))*(b.x+c.x))/(2*(((c.y-b.y)/(c.x-b.x))-((b.y-a.y)/(b.x-a.x))))
-val y =(-1/((b.y-a.y)/(b.x-a.x)))*(x-(a.x+b.x)/2)+(a.y+b.y)/2
-val center=Point(x,y)
-val radius=Math.sqrt(sqr(a.x - center.x) + sqr(a.y - center.y))
-return Circle(center,radius)
-}**/
+
 
 /**
  * Очень сложная
