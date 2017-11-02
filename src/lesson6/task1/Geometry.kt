@@ -228,18 +228,12 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
     var o1 = circles[0]
     var o2 = circles[1]
     for (i in 0 until circles.size) {
-        for (j in 1 until circles.size) {
-            if (circles[i] != circles[j]) {
-                val rx = sqr(circles[i].center.x - circles[j].center.x)
-                val ry = sqr(circles[i].center.y - circles[j].center.y)
-                var ro = Math.sqrt(rx + ry)
-                ro = if (ro > circles[i].radius + circles[j].radius) ro - circles[i].radius - circles[j].radius
-                else 0.0
-                if (ro < min) {
-                    min = ro
-                    o1 = circles[i]
-                    o2 = circles[j]
-                }
+        for (j in i + 1 until circles.size) {
+            val ro = circles[i].distance(circles[j])
+            if (ro < min) {
+                min = ro
+                o1 = circles[i]
+                o2 = circles[j]
             }
         }
     }
