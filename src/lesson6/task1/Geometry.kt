@@ -191,7 +191,7 @@ fun lineBySegment(s: Segment): Line {
     return Line(s.begin, reduce(Angel))
 }
 
-fun reduce(Angel: Double): Double = Angel%PI
+fun reduce(Angel: Double): Double = Angel % PI
 
 /**
  * Средняя

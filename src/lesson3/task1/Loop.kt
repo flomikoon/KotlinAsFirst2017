@@ -190,7 +190,7 @@ fun sin(x: Double, eps: Double): Double {
     return k
 }
 
-fun reduce(x: Double): Double = x % ( 2 * PI)
+fun reduce(x: Double): Double = x % (2 * PI)
 
 
 /**
