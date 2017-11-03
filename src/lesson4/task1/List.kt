@@ -355,8 +355,5 @@ fun russian(n: Int): String {
         result.add(ten[listNumber[1]])
         result.add(one[listNumber[0]])
     }
-    while ("" in result) {
-        result.remove("")
-    }
-    return result.joinToString(separator = " ")
+    return result.filter { it!="" }.joinToString(separator = " ")
 }
