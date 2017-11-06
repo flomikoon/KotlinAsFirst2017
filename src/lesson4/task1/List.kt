@@ -171,8 +171,8 @@ fun polynom(p: List<Double>, x: Double): Double {
     var r = 0.0
     var x1 = 1.0
     for (i in 0 until p.size) {
-        r += p[i] * x1
-        x1 *= x
+        r = r + p[i] * x1
+        x1 =x1 * x
     }
     return r
 }
@@ -328,32 +328,30 @@ val one = listOf("", "один", "два", "три", "четыре", "пять",
 
 fun russian(n: Int): String {
     val result = mutableListOf<String>()
-    val listNumber = mutableListOf<Int>()
-    var n1 = n
-    for (i in 0..5) {
-        listNumber.add(n1 % 10)
-        n1 /= 10
+    val listNumber = convert(n, 10).toMutableList()
+    while (listNumber.size != 6) {
+        listNumber.add(0, 0)
     }
-    result.add(hundreds[listNumber[5]])
+    result.add(hundreds[listNumber[0]])
     if (n / 1000 % 100 in 11..19) {
         result.add(twoTen[n / 1000 % 100 - 11])
     } else {
-        result.add(ten[listNumber[4]])
-        result.add(if (listNumber[3] < 5) {
-            oneT[listNumber[3]]
+        result.add(ten[listNumber[1]])
+        result.add(if (listNumber[2] < 5) {
+            oneT[listNumber[2]]
         } else {
-            one[listNumber[3]]
+            one[listNumber[2]]
         })
     }
-    if ((listNumber[3] !in 1..4 || n / 1000 % 100 in 11..19) && n > 1000) {
+    if ((listNumber[2] !in 1..4 || n / 1000 % 100 in 11..19) && n > 1000) {
         result.add("тысяч")
     }
-    result.add(hundreds[listNumber[2]])
+    result.add(hundreds[listNumber[3]])
     if (n % 100 in 11..19) {
         result.add(twoTen[n % 100 - 11])
     } else {
-        result.add(ten[listNumber[1]])
-        result.add(one[listNumber[0]])
+        result.add(ten[listNumber[4]])
+        result.add(one[listNumber[5]])
     }
-    return result.filter { it!="" }.joinToString(separator = " ")
+    return result.filter { it != "" }.joinToString(separator = " ")
 }
