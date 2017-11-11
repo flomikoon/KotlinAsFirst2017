@@ -67,31 +67,31 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
     var width2 = 0
     var count = 1
     val hw = height * width
-    while (count < hw+1) {
+    while (count < hw + 1) {
         for (i in width2 until width1) {
             result[height2, i] = count
             count += 1
         }
         height2 += 1
-        if (count < hw+1) {
+        if (count < hw + 1) {
             for (j in height2 until height1) {
-                result[j, width1-1] = count
+                result[j, width1 - 1] = count
                 count += 1
             }
             width1 -= 1
             for (i in width1 - 1 downTo width2) {
-                result[height1-1, i] = count
+                result[height1 - 1, i] = count
                 count += 1
             }
             height1 -= 1
-        }
-        if (count < hw+1) {
+        } else break
+        if (count < hw + 1) {
             for (j in height1 - 1 downTo height2) {
                 result[j, width2] = count
                 count += 1
             }
             width2 += 1
-        }
+        } else break
     }
     return result
 }
@@ -127,7 +127,7 @@ fun generateRectangles(height: Int, width: Int): Matrix<Int> {
         height2 += 1
         if (count < hw) {
             for (j in height2 until height1) {
-                result[j, width1-1] = count1
+                result[j, width1 - 1] = count1
                 count += 1
             }
             width1 -= 1
@@ -136,15 +136,15 @@ fun generateRectangles(height: Int, width: Int): Matrix<Int> {
                 count += 1
             }
             height1 -= 1
-        }
+        } else break
         if (count < hw) {
             for (j in height1 - 1 downTo height2) {
                 result[j, width2] = count1
                 count += 1
             }
             width2 += 1
-        }
-        count1 +=1
+        } else break
+        count1 += 1
     }
     return result
 }
