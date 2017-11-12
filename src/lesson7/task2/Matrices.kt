@@ -66,14 +66,14 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
     var height2 = 0
     var width2 = 0
     var count = 1
-    val hw = height * width
-    while (count < hw + 1) {
+    val hw = height * width + 1
+    while (count < hw) {
         for (i in width2 until width1) {
             result[height2, i] = count
             count += 1
         }
         height2 += 1
-        if (count < hw + 1) {
+        if (count < hw) {
             for (j in height2 until height1) {
                 result[j, width1 - 1] = count
                 count += 1
@@ -85,7 +85,7 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
             }
             height1 -= 1
         } else break
-        if (count < hw + 1) {
+        if (count < hw) {
             for (j in height1 - 1 downTo height2) {
                 result[j, width2] = count
                 count += 1
