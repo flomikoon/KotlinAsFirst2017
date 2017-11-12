@@ -71,7 +71,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    val list = listOf("жы", "шы", "чы", "щы", "жя", "шя", "щя", "чя", "жю", "чю", "шю", "щю")
+    val list = listOf("жы", "шы", "чы", "щы", "жя", "шя", "щя", "чя", "жю", "чю", "щю", "шю")
     val outputStream = File(outputName).bufferedWriter()
     var string = ""
     var string1 = ""
