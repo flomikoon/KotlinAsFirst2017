@@ -1,6 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson8.task1
 
+import lesson5.task1.dateStrToDigit
 import java.io.File
 
 /**
@@ -70,7 +71,59 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val list = listOf("жы", "шы", "чы", "щы", "жя", "шя", "щя", "чя", "жю", "чю", "шю", "щю")
+    val outputStream = File(outputName).bufferedWriter()
+    var string = ""
+    var string1 = ""
+    var string3 = ""
+    var count = 0
+    var count1 = 0
+    for (line in File(inputName).readLines()) {
+        for (word in line.split(" ")) {
+            while (count < word.length) {
+                if (count + 1 != word.length) {
+                    string1 += word[count]
+                    string1 += word[count + 1]
+                    if (string1.toLowerCase() in list) {
+                        string += word[count]
+                        val stringTLC = word[count + 1].toLowerCase()
+                        if (stringTLC == word[count + 1]) {
+                            count1 += 1
+                        }
+                        if (stringTLC == 'ы') {
+                            string3 += 'и'
+                        }
+                        if (stringTLC == 'я') {
+                            string3 += 'а'
+                        }
+                        if (stringTLC == 'ю') {
+                            string3 += 'у'
+                        }
+                        if (count1 != 1) {
+                            string3 = string3.toUpperCase()
+                        }
+                        string += string3
+                        string3 = ""
+                        count1 = 0
+                        count += 2
+                    } else {
+                        string += word[count]
+                        count += 1
+                    }
+                    string1 = ""
+                } else {
+                    string += word[count]
+                    break
+                }
+            }
+            string += " "
+            count = 0
+        }
+        outputStream.write(string.substring(0, string.length - 1))
+        outputStream.newLine()
+        string = ""
+    }
+    outputStream.close()
 }
 
 /**
