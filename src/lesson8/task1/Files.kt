@@ -80,7 +80,6 @@ fun sibilants(inputName: String, outputName: String) {
     var count1 = 0
     for (line in File(inputName).readLines()) {
         for (word in line.split(" ")) {
-            line.replace("\\n", "\\\\n")
             while (count < word.length) {
                 if (count + 1 != word.length) {
                     string1 += word[count]
@@ -120,7 +119,11 @@ fun sibilants(inputName: String, outputName: String) {
             string += " "
             count = 0
         }
-        outputStream.write(string.substring(0, string.length - 1))
+        string = string.substring(0, string.length-1)
+        if ("""\n""" in line) {
+            string += """\n"""
+        }
+        outputStream.write(string)
         if (line != File(inputName).readLines().last()) {
             outputStream.newLine()
         }
