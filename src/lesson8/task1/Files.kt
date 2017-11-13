@@ -119,8 +119,8 @@ fun sibilants(inputName: String, outputName: String) {
             string += " "
             count = 0
         }
-        if ("\n" in line) string += "\n"
-        if ("\n" !in line) {
+        if ("\\n" in line) string += "\\n"
+        if ("\\n" !in line) {
             string = string.substring(0, string.length - 1)
         }
         outputStream.write(string)
