@@ -119,8 +119,12 @@ fun sibilants(inputName: String, outputName: String) {
             string += " "
             count = 0
         }
-        outputStream.write(string.substring(0, string.length - 1))
-        if (line != File(inputName).readLines().last() || "\n" in line) {
+        if ("\n" in line) string += "\n"
+        if ("\n" !in line) {
+            string = string.substring(0, string.length - 1)
+        }
+        outputStream.write(string)
+        if (line != File(inputName).readLines().last()) {
             outputStream.newLine()
         }
         string = ""
