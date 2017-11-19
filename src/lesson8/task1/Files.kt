@@ -78,13 +78,14 @@ fun sibilants(inputName: String, outputName: String) {
         for (i in 1 until line.length) {
             if (line[i] in "ЫЯЮыяю" && line[i - 1] in "ЖЧШЩжчшщ") {
                 var char = line[i].toLowerCase()
-                if (line[i] == char) count += 1
+                if (line[i] == char) count = 1
                 if (char == 'ы') char = 'и'
                 if (char == 'я') char = 'а'
                 if (char == 'ю') char = 'у'
                 if (count != 1) char = char.toUpperCase()
                 outputStream.write(char.toString())
             } else outputStream.write(line[i].toString())
+            count = 0
         }
         outputStream.newLine()
     }
