@@ -74,7 +74,7 @@ fun sibilants(inputName: String, outputName: String) {
     val outputStream = File(outputName).bufferedWriter()
     var count = 0
     for (line in File(inputName).readLines()) {
-        outputStream.write(line[0].toString())
+        outputStream.write(line.first().toString())
         for (i in 1 until line.length) {
             if (line[i] in "ЫЯЮыяю" && line[i - 1] in "ЖЧШЩжчшщ") {
                 var char = line[i].toLowerCase()
@@ -140,10 +140,42 @@ fun centerFile(inputName: String, outputName: String) {
  * 7) В самой длинной строке каждая пара соседних слов должна быть отделена В ТОЧНОСТИ одним пробелом
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
-fun alignFileByWidth(inputName: String, outputName: String) {
-    TODO()
-}
 
+fun alignFileByWidth(inputName: String, outputName: String) {
+    val outputStream = File(outputName).bufferedWriter()
+    var maxLength = 0
+    for (line in File(inputName).readLines()) {
+        val words = line.split(" ").filter { it != "" }
+        val length = words.joinToString(separator = " ").length
+        if (length > maxLength) {
+            maxLength = length
+        }
+    }
+    for (line in File(inputName).readLines()) {
+        var string: String
+        val words = line.split(" ").filter { it != "" }
+        if (words.size > 1) {
+            val word = mutableListOf<String>()
+            for (element in words) {
+                word.add(element)
+            }
+            for (i in 0 until word.size - 1) {
+                word[i] += " "
+            }
+            while (maxLength > word.joinToString(separator = "").length) {
+                for (i in 0 until word.size - 1) {
+                    if (maxLength > word.joinToString(separator = "").length) {
+                        word[i] += " "
+                    }
+                }
+            }
+            string = word.joinToString(separator = "")
+        } else string = line.trim()
+        outputStream.write(string)
+        outputStream.newLine()
+    }
+    outputStream.close()
+}
 /**
  * Средняя
  *
