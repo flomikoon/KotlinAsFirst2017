@@ -82,16 +82,12 @@ class MatrixImpl<E>(height1: Int, width1: Int, e: E) : Matrix<E> {
 
     override fun toString(): String {
         val sb = StringBuilder()
-        sb.append("[")
         for (row in 0 until height) {
-            sb.append("[")
             for (column in 0 until width) {
                 sb.append(this[row, column])
             }
-            sb.append("]")
+            sb.append("\n")
         }
-        sb.append("]")
         return "$sb"
     }
 }
-
