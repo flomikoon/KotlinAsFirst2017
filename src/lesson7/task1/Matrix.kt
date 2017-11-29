@@ -84,9 +84,10 @@ class MatrixImpl<E>(height1: Int, width1: Int, e: E) : Matrix<E> {
         val sb = StringBuilder()
         for (row in 0 until height) {
             for (column in 0 until width) {
+                sb.append("matrix [$row,$column] = ")
                 sb.append(this[row, column])
+                sb.append("\n")
             }
-            sb.append("\n")
         }
         return "$sb"
     }
