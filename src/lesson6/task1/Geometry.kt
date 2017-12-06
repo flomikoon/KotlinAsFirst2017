@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson6.task1
 
 import lesson1.task1.sqr
@@ -30,7 +31,8 @@ class Triangle private constructor(private val points: Set<Point>) {
 
     val c: Point get() = pointList[2]
 
-    constructor(a: Point, b: Point, c: Point): this(linkedSetOf(a, b, c))
+    constructor(a: Point, b: Point, c: Point) : this(linkedSetOf(a, b, c))
+
     /**
      * Пример: полупериметр
      */
@@ -76,10 +78,9 @@ data class Circle(val center: Point, val radius: Double) {
     fun distance(other: Circle): Double {
         val rX = sqr(center.x - other.center.x)
         val rY = sqr(center.y - other.center.y)
-        var rO = Math.sqrt(rX + rY)
-        rO = if (rO > radius + other.radius) rO - radius - other.radius
+        val rO = Math.sqrt(rX + rY)
+        return if (rO > radius + other.radius) rO - radius - other.radius
         else 0.0
-        return rO
     }
 
     /**
@@ -138,8 +139,8 @@ fun diameter(vararg points: Point): Segment {
  * Центр её должен находиться посередине между точками, а радиус составлять половину расстояния между ними
  */
 fun circleByDiameter(diameter: Segment): Circle {
-    val cy = abs(diameter.begin.y - diameter.end.y) / 2 + min(diameter.begin.y, diameter.end.y)
-    val cx = abs(diameter.begin.x - diameter.end.x) / 2 + min(diameter.begin.x, diameter.end.x)
+    val cy = (diameter.begin.y + diameter.end.y) / 2
+    val cx = (diameter.begin.x + diameter.end.x) / 2
     val radius = Point(cx, cy).distance(Point(diameter.begin.x, diameter.begin.y))
     return Circle(Point(cx, cy), radius)
 }
@@ -186,18 +187,18 @@ class Line private constructor(val b: Double, val angle: Double) {
  * Построить прямую по отрезку
  */
 fun lineBySegment(s: Segment): Line {
-    var angel = atan((s.end.y - s.begin.y) / (s.end.x - s.begin.x))
-    if (angel < 0) angel += PI
-    if (angel >= PI) angel -= PI
-    return Line(s.begin, angel)
+    val angle = atan((s.end.y - s.begin.y) / (s.end.x - s.begin.x))
+    return Line(s.begin, reduce(angle))
 }
+
+fun reduce(angle: Double): Double = angle % PI
 
 /**
  * Средняя
  *
  * Построить прямую по двум точкам
  */
-fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a,b))
+fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a, b))
 
 /**
  * Сложная
@@ -206,10 +207,8 @@ fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a,b))
  */
 fun bisectorByPoints(a: Point, b: Point): Line {
     val c = Point((a.x + b.x) / 2, (a.y + b.y) / 2)
-    var angel = PI / 2 + atan((a.y - b.y) / (a.x - b.x))
-    if (angel < 0) angel += PI
-    if (angel >= PI) angel -= PI
-    return Line(c, angel)
+    val angle = PI / 2 + atan((a.y - b.y) / (a.x - b.x))
+    return Line(c, reduce(angle))
 }
 
 /**
@@ -224,18 +223,12 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
     var o1 = circles[0]
     var o2 = circles[1]
     for (i in 0 until circles.size) {
-        for (j in 1 until circles.size) {
-            if (circles[i] != circles[j]) {
-                val rx = sqr(circles[i].center.x - circles[j].center.x)
-                val ry = sqr(circles[i].center.y - circles[j].center.y)
-                var ro = Math.sqrt(rx + ry)
-                ro = if (ro > circles[i].radius + circles[j].radius) ro - circles[i].radius - circles[j].radius
-                else 0.0
-                if (ro < min) {
-                    min = ro
-                    o1 = circles[i]
-                    o2 = circles[j]
-                }
+        for (j in i + 1 until circles.size) {
+            val ro = circles[i].distance(circles[j])
+            if (ro < min) {
+                min = ro
+                o1 = circles[i]
+                o2 = circles[j]
             }
         }
     }
@@ -251,14 +244,8 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
  * (построить окружность по трём точкам, или
  * построить окружность, описанную вокруг треугольника - эквивалентная задача).
  */
-fun circleByThreePoints(a: Point, b: Point, c: Point): Circle= TODO()
-/**{
-    val x =((((b.y-a.y)/(b.x-a.x))/((c.y-b.y)/(c.x-b.x)))*(a.y-c.y)+((c.y-b.y)/(c.x-b.x))*(a.x+b.x)-((b.y-a.y)/(b.x-a.x))*(b.x+c.x))/(2*(((c.y-b.y)/(c.x-b.x))-((b.y-a.y)/(b.x-a.x))))
-    val y =(-1/((b.y-a.y)/(b.x-a.x)))*(x-(a.x+b.x)/2)+(a.y+b.y)/2
-    val center=Point(x,y)
-    val radius=Math.sqrt(sqr(a.x - center.x) + sqr(a.y - center.y))
-    return Circle(center,radius)
-}**/
+fun circleByThreePoints(a: Point, b: Point, c: Point): Circle = TODO()
+
 
 /**
  * Очень сложная
@@ -272,4 +259,3 @@ fun circleByThreePoints(a: Point, b: Point, c: Point): Circle= TODO()
  * соединяющий две самые удалённые точки в данном множестве.
  */
 fun minContainingCircle(vararg points: Point): Circle = TODO()
-

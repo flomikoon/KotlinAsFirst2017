@@ -59,7 +59,42 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  * 10 11 12  5
  *  9  8  7  6
  */
-fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateSpiral(height: Int, width: Int): Matrix<Int> {
+    val result = createMatrix(height, width, 0)
+    var height1 = height
+    var width1 = width
+    var height2 = 0
+    var width2 = 0
+    var count = 1
+    val hw = height * width + 1
+    while (count < hw) {
+        for (i in width2 until width1) {
+            result[height2, i] = count
+            count += 1
+        }
+        height2 += 1
+        if (count < hw) {
+            for (j in height2 until height1) {
+                result[j, width1 - 1] = count
+                count += 1
+            }
+            width1 -= 1
+            for (i in width1 - 1 downTo width2) {
+                result[height1 - 1, i] = count
+                count += 1
+            }
+            height1 -= 1
+        } else break
+        if (count < hw) {
+            for (j in height1 - 1 downTo height2) {
+                result[j, width2] = count
+                count += 1
+            }
+            width2 += 1
+        } else break
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -75,7 +110,44 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
  *  1  2  2  2  2  1
  *  1  1  1  1  1  1
  */
-fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateRectangles(height: Int, width: Int): Matrix<Int> {
+    val result = createMatrix(height, width, 0)
+    var height1 = height
+    var width1 = width
+    var height2 = 0
+    var width2 = 0
+    var count = 0
+    var count1 = 1
+    val hw = height * width
+    while (count < hw) {
+        for (i in width2 until width1) {
+            result[height2, i] = count1
+            count += 1
+        }
+        height2 += 1
+        if (count < hw) {
+            for (j in height2 until height1) {
+                result[j, width1 - 1] = count1
+                count += 1
+            }
+            width1 -= 1
+            for (i in width1 - 1 downTo width2) {
+                result[height1 - 1, i] = count1
+                count += 1
+            }
+            height1 -= 1
+        } else break
+        if (count < hw) {
+            for (j in height1 - 1 downTo height2) {
+                result[j, width2] = count1
+                count += 1
+            }
+            width2 += 1
+        } else break
+        count1 += 1
+    }
+    return result
+}
 
 /**
  * Сложная

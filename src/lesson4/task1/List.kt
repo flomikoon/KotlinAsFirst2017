@@ -1,8 +1,8 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson4.task1
 
 import lesson1.task1.discriminant
-import java.lang.Math.pow
 import java.lang.Math.sqrt
 
 /**
@@ -110,9 +110,7 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  */
 fun abs(v: List<Double>): Double {
     var r = 0.0
-    for (element in v) {
-        r += element * element
-    }
+    v.forEach { element -> r += element * element }
     return sqrt(r)
 }
 
@@ -122,12 +120,9 @@ fun abs(v: List<Double>): Double {
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double {
-    var r = 0.0
     val d = list.size
     if (d == 0) return 0.0
-    for (element in list) {
-        r += element
-    }
+    val r = list.sum()
     return r / d
 }
 
@@ -176,8 +171,8 @@ fun polynom(p: List<Double>, x: Double): Double {
     var r = 0.0
     var x1 = 1.0
     for (i in 0 until p.size) {
-        r += p[i] * x1
-        x1 *= x
+        r = r + p[i] * x1
+        x1 =x1 * x
     }
     return r
 }
@@ -213,14 +208,13 @@ fun factorize(n: Int): List<Int> {
     var n1 = n
     var i = 2
     while (n1 > 1) {
-        if (n1 % i == 0) {
+        while (n1 % i == 0) {
             result.add(i)
             n1 /= i
-            i = 1
         }
         i += 1
     }
-    return result.sorted()
+    return result
 }
 
 /**
@@ -272,10 +266,10 @@ fun convertToString(n: Int, base: Int): String = TODO()
 fun decimal(digits: List<Int>, base: Int): Int {
     var r = 0
     val list = digits.reversed()
-    var base1 = 1
-    for (i in 0 until list.size) {
-        r += list[i] * base1
-        base1 *= base
+    var baseInDegree = 1
+    for (element in list) {
+        r += element * baseInDegree
+        baseInDegree *= base
     }
     return r
 }
@@ -323,57 +317,41 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
+val hundreds = listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот",
+        "семьсот", "восемьсот", "девятьсот")
+val ten = listOf("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят",
+        "семьдесят", "восемьдесят", "девяносто")
+val twoTen = listOf("одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать",
+        "семнадцать", "восемнадцать", "девятнадцать")
+val oneT = listOf("", "одна тысяча", "две тысячи", "три тысячи", "четыре тысячи")
+val one = listOf("", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+
 fun russian(n: Int): String {
-    val hundreds = listOf("сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот",
-            "семьсот", "восемьсот", "девятьсот")
-    val ten = listOf("десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят",
-            "семьдесят", "восемьдесят", "девяносто")
-    val twoTen = listOf("одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать",
-            "семнадцать", "восемнадцать", "девятнадцать")
-    val onet = listOf("одна тысяча", "две тысячи", "три тысячи", "четыре тысячи")
-    val oneend = listOf("один", "два", "три", "четыре")
-    val one = listOf("пять", "шесть", "семь", "восемь", "девять")
     val result = mutableListOf<String>()
-    val listNumber = mutableListOf<Int>()
-    var n2 = n
-    for (i in 0..5) {
-        listNumber.add(n2 % 10)
-        n2 /= 10
+    val listNumber = convert(n, 10).toMutableList()
+    while (listNumber.size != 6) {
+        listNumber.add(0, 0)
     }
-    listNumber.add(n / 1000 % 100)
-    listNumber.add(n % 100)
-    if (listNumber[5] != 0) result.add(hundreds[listNumber[5] - 1])
-    when {
-        listNumber[6] in 11..19 -> result.add(twoTen[listNumber[6] - 11])
-        else -> {
-            if (listNumber[4] != 0) {
-                result.add(ten[listNumber[4] - 1])
-            }
-            if (listNumber[3] != 0) {
-                result.add(if (listNumber[3] < 5) {
-                    (onet[listNumber[3] - 1])
-                } else {
-                    (one[listNumber[3] - 5])
-                })
-            }
-        }
+    result.add(hundreds[listNumber[0]])
+    if (n / 1000 % 100 in 11..19) {
+        result.add(twoTen[n / 1000 % 100 - 11])
+    } else {
+        result.add(ten[listNumber[1]])
+        result.add(if (listNumber[2] < 5) {
+            oneT[listNumber[2]]
+        } else {
+            one[listNumber[2]]
+        })
     }
-    if ((listNumber[3] == 0 || listNumber[3] > 4 || listNumber[6] in 11..19) && n > 1000) result.add("тысяч")
-    if (listNumber[2] != 0) result.add(hundreds[listNumber[2] - 1])
-    when {
-        listNumber[7] in 11..19 -> result.add(twoTen[listNumber[7] - 11])
-        else -> {
-            if (listNumber[1] != 0) {
-                result.add(ten[listNumber[1] - 1])
-            }
-            if (listNumber[0] != 0) {
-                result.add(if (listNumber[0] < 5) {
-                    (oneend[listNumber[0] - 1])
-                } else {
-                    (one[listNumber[0] - 5])
-                })
-            }
-        }
+    if ((listNumber[2] !in 1..4 || n / 1000 % 100 in 11..19) && n > 1000) {
+        result.add("тысяч")
     }
-    return result.joinToString(separator = " ")
+    result.add(hundreds[listNumber[3]])
+    if (n % 100 in 11..19) {
+        result.add(twoTen[n % 100 - 11])
+    } else {
+        result.add(ten[listNumber[4]])
+        result.add(one[listNumber[5]])
+    }
+    return result.filter { it != "" }.joinToString(separator = " ")
 }

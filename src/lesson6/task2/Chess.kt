@@ -25,8 +25,9 @@ data class Square(val column: Int, val row: Int) {
      * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
      * Для клетки не в пределах доски вернуть пустую строку
      */
+    val list = "abcdefgh"
+
     fun notation(): String {
-        val list = listOf("a", "b", "c", "d", "e", "f", "g", "h")
         var string = ""
         if (column in 1..8 && row in 1..8) {
             string += list[column - 1]
@@ -45,16 +46,9 @@ data class Square(val column: Int, val row: Int) {
  */
 fun square(notation: String): Square {
     require(notation matches Regex("""[a-h][12345678]"""))
-    var row = 0
-    if ("a" in notation) row = 1
-    if ("b" in notation) row = 2
-    if ("c" in notation) row = 3
-    if ("d" in notation) row = 4
-    if ("e" in notation) row = 5
-    if ("f" in notation) row = 6
-    if ("g" in notation) row = 7
-    if ("h" in notation) row = 8
-    val column = notation.substring(1, 2).toInt()
+    val list = "abcdefgh"
+    val row = list.indexOf(notation.first()) + 1
+    val column = notation.last().toString().toInt()
     return Square(row, column)
 }
 
@@ -82,7 +76,7 @@ fun square(notation: String): Square {
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
 fun rookMoveNumber(start: Square, end: Square): Int {
-    require(start.row in 1..8&&start.column in 1..8&&end.column in 1..8&&end.row in 1..8)
+    require(start.row in 1..8 && start.column in 1..8 && end.column in 1..8 && end.row in 1..8)
     if (start == end) return 0
     if (start.column == end.column || start.row == end.row) return 1
     else return 2
@@ -137,11 +131,13 @@ fun rookTrajectory(start: Square, end: Square): List<Square> {
  * Слон может пройти через клетку (6, 4) к клетке (3, 7).
  */
 fun bishopMoveNumber(start: Square, end: Square): Int {
-    require(start.row in 1..8&&start.column in 1..8&&end.column in 1..8&&end.row in 1..8)
-    if (start == end) return 0
-    if (abs(start.row - end.row) == abs(start.column - end.column)) return 1
-    if ((abs(start.row - end.row) % 2 != abs(start.column - end.column)%2)) return -1
-    else return 2
+    require(start.row in 1..8 && start.column in 1..8 && end.column in 1..8 && end.row in 1..8)
+    return when {
+        start == end -> 0
+        abs(start.row - end.row) == abs(start.column - end.column) -> 1
+        abs(start.row - end.row) % 2 != abs(start.column - end.column) % 2 -> -1
+        else -> 2
+    }
 }
 
 /**
@@ -205,22 +201,6 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> {
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
 fun kingMoveNumber(start: Square, end: Square): Int = TODO()
-/**{
-    var count=0
-    val k=abs(start.row - end.row)
-    val k1=abs(start.column - end.column)
-    if (start==end) return 0
-    if (start.row==end.row) {
-        count = k1
-    } else
-    if (start.column==end.column) {
-        count = k
-    } else
-    if (k == k1){
-        count = sqrt(sqr((start.row-end.row).toDouble())+ sqr((start.column-end.column).toDouble())).toInt()
-    }
-    return  count
-}**/
 
 /**
  * Сложная
