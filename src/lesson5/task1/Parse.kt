@@ -1,8 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson5.task1
 
-import lesson8.task2.parseExpr
-import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
 
 /**
  * Пример
@@ -51,12 +50,10 @@ fun main(args: Array<String>) {
         val seconds = timeStrToSeconds(line)
         if (seconds == -1) {
             println("Введённая строка $line не соответствует формату ЧЧ:ММ:СС")
-        }
-        else {
+        } else {
             println("Прошло секунд с начала суток: $seconds")
         }
-    }
-    else {
+    } else {
         println("Достигнут <конец файла> в процессе чтения строки. Программа прервана")
     }
 }
@@ -69,26 +66,22 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
-val mon = listOf<String>("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
-val monnumber = listOf<String>("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
+val mon = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
+val monNumber = listOf("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
 
 fun dateStrToDigit(str: String): String {
     var result = ""
-    var k = 0
     if (str matches Regex("""^\d{1,2} [а-я]{3,} \d+$""")) {
         val parks = str.split(" ")
-        result = if (parks[0].toInt() < 10) {
-            "0" + parks[0].toInt().toString() + "."
-        } else parks[0] + "."
-        for (j in 0 until mon.size) {
-            if (mon[j] == parks[1]) {
-                result += monnumber[j] + "."
-                k += 1
-            }
-        }
+        if (parks[1] !in mon) return ""
+        val p0 = parks[0]
+        result = if (p0.toInt() < 10) {
+            "0" + p0.toInt().toString() + "."
+        } else p0 + "."
+        result += monNumber[mon.indexOf(parks[1])] + "."
         result += parks[2]
     }
-    return if (k == 0) "" else result
+    return result
 }
 
 /**
@@ -100,19 +93,14 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String {
     var result = ""
-    var k = 0
     if (digital matches Regex("""^\d{2}.\d{2}.\d+$""")) {
         val parks = digital.split(".")
         result = parks[0].toInt().toString() + " "
-        for (j in 0 until monnumber.size) {
-            if (monnumber[j] == parks[1]) {
-                result += mon[j] + " "
-                k += 1
-            }
-        }
+        if (parks[1] !in monNumber) return ""
+        result += mon[monNumber.indexOf(parks[1])] + " "
         result += parks[2]
     }
-    return if (k == 0) "" else result
+    return result
 }
 
 /**
@@ -131,24 +119,16 @@ fun dateDigitToStr(digital: String): String {
 fun flattenPhoneNumber(phone: String): String {
     if (phone == "") return ""
     val s = phone.substring(0, 1)
-    val result = mutableListOf<Int>()
-    try {
-        val parts = if (s == "+") {
-            val p = phone.substring(1, phone.length)
-            p.split(")", "(", "-")
-        } else {
-            phone.split(")", "(", "-", " ")
+    var p = phone
+    return if (phone matches Regex("""([+])?\d+( )?([ )(-](\d+)?)*""")) {
+        if (s == "+") {
+            p = p.substring(1, p.length)
         }
-        val r = parts.joinToString(separator = "").split(" ")
-        for (part in r) {
-            result.add(part.toInt())
-        }
-        return if (s == "+") {
-            result.joinToString(prefix = "+", separator = "")
-        } else result.joinToString(separator = "")
-    } catch (e: NumberFormatException) {
-        return ""
-    }
+        val parts = p.split(")", "(", "-", " ")
+        if (s == "+") {
+            parts.joinToString(prefix = "+", separator = "")
+        } else parts.joinToString(separator = "")
+    } else ""
 }
 
 
@@ -165,7 +145,7 @@ fun flattenPhoneNumber(phone: String): String {
 fun bestLongJump(jumps: String): Int {
     var max = -1
     if (Regex("""[^ %\-\d]""").findAll(jumps).count() > 0) return max
-    Regex("""\d+""").findAll(jumps).asIterable().map { it.value.toInt() }.forEach { max = Math.max(max, it) }
+    Regex("""\d+""").findAll(jumps).forEach { max = Math.max(max, it.value.toInt()) }
     return max
 }
 
@@ -180,19 +160,16 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    var max = 0
-    if (jumps.split(" ", "%", "-", "+").joinToString(separator = "").matches(Regex("""\d+"""))) {
-        val parts = jumps.split(" ")
-        for (i in 0 until parts.size) {
-            if ("+" in parts[i] && parts[i - 1].toInt() > max) {
-                max = parts[i - 1].toInt()
-            }
+    var max = -1
+    return try {
+        Regex("""\d+ [%]?[%]?[+]""").findAll(jumps).forEach {
+            Regex("""\d+""").findAll(it.value).
+                    forEach { max = Math.max(max, it.value.toInt()) }
         }
-        if (max == 0 && "+" !in jumps) {
-            max -= 1
-        }
-    } else max -= 1
-    return max
+        max
+    } catch (e: NumberFormatException) {
+        max
+    }
 }
 
 /**
@@ -205,18 +182,15 @@ fun bestHighJump(jumps: String): Int {
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    var result = 0
     require(expression matches Regex("""\d+( [+-] \d+)*"""))
-    val parts=expression.split(" ")
-    for (i in 0 until parts.size) {
-        if (i == 0) result = parts[0].toInt()
+    val parts = expression.split(" ")
+    var result = parts[0].toInt()
+    for (i in 1 until parts.size) {
         if ("+" == parts[i]) result += parts[i + 1].toInt()
         if ("-" == parts[i]) result -= parts[i + 1].toInt()
     }
     return result
 }
-
-
 
 
 /**
@@ -246,16 +220,17 @@ fun mostExpensive(description: String): String {
     var result = ""
     var max = -1.0
     if (description == "") return ""
-    try {
+    return try {
         for (i in 0 until s.size step 2) {
-            if (s[i + 1].toDouble() > max) {
-                max = s[i+1].toDouble()
-                result=s[i]
+            val s1 = s[i + 1].toDouble()
+            if (s1 > max) {
+                max = s1
+                result = s[i]
             }
         }
-        return result
+        result
     } catch (e: NumberFormatException) {
-        return ""
+        ""
     }
 }
 
@@ -308,3 +283,4 @@ fun fromRoman(roman: String): Int = TODO()
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
